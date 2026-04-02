@@ -1,0 +1,87 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: #176b8a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.sidebar-header p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* Menu */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.menu li {
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu li:hover {
+  opacity: 0.8;
+}
+
+/* Dropdown */
+.dropdown span {
+  font-size: 12px;
+}
+
+.submenu {
+  list-style: none;
+  padding-left: 15px;
+  margin-top: 5px;
+}
+
+.submenu li {
+  padding: 6px 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.submenu li:hover {
+  opacity: 1;
+}
+
+/* Footer */
+.footer {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 20px;
+  text-align: center;
+}
