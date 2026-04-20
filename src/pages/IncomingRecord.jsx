@@ -1,604 +1,2399 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Search, Filter, Plus, Trash2, Edit, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Filter, Download, Eye, Edit2, Trash2, X, FileText, ChevronLeft, ChevronRight, Calendar , Plus, Edit} from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const RecordPage = () => {
-  const { recordId } = useParams();
-  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+const IncomingRecords = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [fileName, setFileName] = useState('');
+  const [selectedRecipient, setSelectedRecipient] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 20;
-  
-  // Map record IDs to display names and descriptions
-  const recordInfo = {
-    'bugs01': { name: 'BUGS-01', description: 'Budget Utilization and General Services' },
-    'bucal03': { name: 'BUCAL-03', description: 'College of Arts and Letters' },
-    'bucl39': { name: 'BUCL-39', description: 'College of Law' },
-    'buou52': { name: 'BUOU-52', description: 'Open University' },
-    'bujmrigd53': { name: 'BUJMRIGD-53', description: 'John M. Rice Graduate School' },
-    'bucdm80': { name: 'BUCDM-80', description: 'College of Dentistry and Medicine' }
+  const rowsPerPage = 20;
+
+  // Filter modal states
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filterMonth, setFilterMonth] = useState('');
+  const [filterDay, setFilterDay] = useState('');
+  const [filterYear, setFilterYear] = useState('');
+  const [filterReceivedBy, setFilterReceivedBy] = useState('');
+
+  // File upload modal states
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadRecipient, setUploadRecipient] = useState('');
+
+  // Delete confirmation modal states
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [fileToDelete, setFileToDelete] = useState(null);
+
+  const [files, setFiles] = useState([
+    {
+      id: 1,
+      date: '02/03/2025',
+      pageNumber: '1-5',
+      title: 'Elaine Mae Bertiz',
+      particulars: 'The table now efficiently handles long particulars without disrupting the layout, and users can easily expand to read full descriptions when needed.',
+      admin: 'Mitch',
+      dean: 'Dr. Smith',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Chabs'
+    },
+    {
+      id: 2,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      title: 'Document Processing',
+      particulars: 'This document requires immediate attention from the administrative department for proper processing and verification.',
+      admin: 'Mau',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 3,
+      date: '02/03/2025',
+      pageNumber: '2-8',
+      title: 'Budget Approval',
+      particulars: 'Budget proposal for the upcoming fiscal year needs to be reviewed and approved by the finance committee before implementation.',
+      admin: 'Jing',
+      dean: 'Dr. Johnson',
+      bac: '',
+      budget: 'Malyn',
+      accounting: 'Jay'
+    },
+    {
+      id: 4,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      title: 'Academic Records',
+      particulars: 'Student academic records need to be updated with the latest semester grades and attendance information for the registrar office.',
+      admin: 'Ruby',
+      dean: 'Dr. Williams',
+      bac: 'Jhen',
+      budget: '',
+      accounting: 'Eliza'
+    },
+    {
+      id: 5,
+      date: '02/03/2025',
+      pageNumber: '3-7',
+      title: 'Research Proposal',
+      particulars: 'New research proposal submission requires departmental review and approval before forwarding to the research committee for final evaluation.',
+      admin: 'Mitch',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 6,
+      date: '02/03/2025',
+      pageNumber: '1-4',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Brown',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Jenny'
+    },
+    {
+      id: 7,
+      date: '02/03/2025',
+      pageNumber: '2-6',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: 'Dr. Davis',
+      bac: '',
+      budget: 'Malyn',
+      accounting: 'Eliza'
+    },
+    {
+      id: 8,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: '',
+      bac: 'Jhen',
+      budget: '',
+      accounting: 'Karen'
+    },
+    {
+      id: 9,
+      date: '02/03/2025',
+      pageNumber: '4-9',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: 'Dr. Miller',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 10,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Wilson',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Sarah'
+    },
+    {
+      id: 11,
+      date: '02/03/2025',
+      pageNumber: '3-5',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Saroh'
+    },
+    {
+      id: 12,
+      date: '02/03/2025',
+      pageNumber: '1-4',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: 'Dr. Moore',
+      bac: '',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 13,
+      date: '02/03/2025',
+      pageNumber: '2-7',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: 'Dr. Taylor',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Chabs'
+    },
+    {
+      id: 14,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: '',
+      bac: 'Jhen',
+      budget: '',
+      accounting: 'Jay'
+    },
+    {
+      id: 15,
+      date: '02/03/2025',
+      pageNumber: '4-8',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: 'Dr. Anderson',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 16,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: 'Dr. Thomas',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Eliza'
+    },
+    {
+      id: 17,
+      date: '02/03/2025',
+      pageNumber: '3-6',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: '',
+      bac: '',
+      budget: 'Malyn',
+      accounting: 'Jenny'
+    },
+    {
+      id: 18,
+      date: '02/03/2025',
+      pageNumber: '1-5',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Jackson',
+      bac: 'Jhen',
+      budget: '',
+      accounting: ''
+    },
+    {
+      id: 19,
+      date: '02/03/2025',
+      pageNumber: '2-4',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: 'Dr. White',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Karen'
+    },
+    {
+      id: 20,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Sarah'
+    },
+    {
+      id: 21,
+      date: '02/03/2025',
+      pageNumber: '5-9',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: 'Dr. Harris',
+      bac: '',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 22,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Martin',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Saroh'
+    },
+    {
+      id: 23,
+      date: '02/03/2025',
+      pageNumber: '3-7',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: '',
+      bac: 'Jhen',
+      budget: '',
+      accounting: 'Chabs'
+    },
+    {
+      id: 24,
+      date: '02/03/2025',
+      pageNumber: '1-4',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: 'Dr. Thompson',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 25,
+      date: '02/03/2025',
+      pageNumber: '2-6',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: 'Dr. Garcia',
+      bac: '',
+      budget: 'Malyn',
+      accounting: 'Jay'
+    },
+    {
+      id: 26,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Eliza'
+    },
+    {
+      id: 27,
+      date: '02/03/2025',
+      pageNumber: '4-8',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: 'Dr. Martinez',
+      bac: 'Jhen',
+      budget: '',
+      accounting: ''
+    },
+    {
+      id: 28,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: 'Dr. Robinson',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Jenny'
+    },
+    {
+      id: 29,
+      date: '02/03/2025',
+      pageNumber: '3-5',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: '',
+      bac: '',
+      budget: 'Malyn',
+      accounting: 'Karen'
+    },
+    {
+      id: 30,
+      date: '02/03/2025',
+      pageNumber: '1-4',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Clark',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 31,
+      date: '02/03/2025',
+      pageNumber: '2-7',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: 'Dr. Rodriguez',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Sarah'
+    },
+    {
+      id: 32,
+      date: '02/03/2025',
+      pageNumber: '1-3',
+      particulars: 'Incoming Document',
+      admin: 'Ruby',
+      dean: '',
+      bac: 'Jhen',
+      budget: '',
+      accounting: 'Saroh'
+    },
+    {
+      id: 33,
+      date: '02/03/2025',
+      pageNumber: '5-9',
+      particulars: 'Incoming Document',
+      admin: 'Mitch',
+      dean: 'Dr. Lewis',
+      bac: '',
+      budget: 'Malyn',
+      accounting: ''
+    },
+    {
+      id: 34,
+      date: '02/03/2025',
+      pageNumber: '1-2',
+      particulars: 'Incoming Document',
+      admin: 'Mau',
+      dean: 'Dr. Lee',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Chabs'
+    },
+    {
+      id: 35,
+      date: '02/03/2025',
+      pageNumber: '3-6',
+      particulars: 'Incoming Document',
+      admin: 'Jing',
+      dean: '',
+      bac: 'Jhen',
+      budget: 'Malyn',
+      accounting: 'Jay'
+    }
+  ]);
+
+  // Department recipients
+  const adminRecipients = ['Mitch', 'Mau', 'Jing', 'Ruby'];
+  const bacRecipients = ['Jhen', 'Marj'];
+  const budgetRecipients = ['Malyn', 'Cindy'];
+  const accountingRecipients = ['Chabs', 'Jay', 'Eliza', 'Jenny', 'Karen', 'Sarah', 'Saroh'];
+
+  // Pagination logic with search filtering
+  const filteredFiles = files.filter(file => 
+    file.particulars.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredFiles.slice(indexOfFirstRow, indexOfLastRow);
+  const totalPages = Math.ceil(filteredFiles.length / rowsPerPage);
+
+  // Reset to page 1 when search term changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  // Handler functions
+  const handleViewFile = (file) => {
+    // In a real app, this would open the PDF file
+    // For demo, we'll open in a new window with a placeholder
+    window.open(`data:application/pdf;base64,placeholder`, '_blank');
   };
 
-  const currentRecord = recordInfo[recordId] || { name: 'Unknown Record', description: 'Record not found' };
+  const handleDownloadFile = (file) => {
+    // In a real app, this would download the actual file
+    // For demo, we'll create a dummy download
+    const element = document.createElement('a');
+    element.href = `data:application/pdf;base64,placeholder`;
+    element.download = file.name;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
 
-  // Sample data for the records with separate section columns
-  const records = [
-    { id: 1, date: '01/15/2025', pageNumber: '001', particulars: 'Budget Report Q1 2025 - Comprehensive financial analysis of first quarter expenditures including operational costs, capital investments, and departmental budgets with detailed breakdowns and variance analysis.', admin: '', bac: '', dean: '', budget: 'Ms. Mitch', accounting: '' },
-    { id: 2, date: '01/14/2025', pageNumber: '002', particulars: 'Service Request Form - Request for additional office supplies including printer paper, ink cartridges, and filing cabinets for the administrative department to ensure smooth operations.', admin: '', bac: '', dean: '', budget: '', accounting: 'Ms. Mau' },
-    { id: 3, date: '01/13/2025', pageNumber: '003', particulars: 'Procurement Order #1234 - Official purchase order for new computer equipment including laptops, monitors, and docking stations for the IT department upgrade project.', admin: '', bac: 'Ms. Jing', dean: '', budget: '', accounting: '' },
-    { id: 4, date: '01/12/2025', pageNumber: '004', particulars: 'Memorandum Circular - Important notice regarding upcoming policy changes in document management procedures and new guidelines for record keeping across all departments.', admin: '', bac: '', dean: 'Ms. Rubz', budget: '', accounting: '' },
-    { id: 5, date: '01/11/2025', pageNumber: '005', particulars: 'Annual Report 2024 - Complete yearly summary including financial statements, operational achievements, challenges faced, and strategic goals for the upcoming fiscal year.', admin: '', bac: '', dean: '', budget: 'Ms. Mitch', accounting: '' },
-    { id: 6, date: '01/10/2025', pageNumber: '006', particulars: 'Employee Training Manual - Comprehensive guide for new employee onboarding including company policies, procedures, and best practices for workplace conduct and performance expectations.', admin: 'Ms. Chen', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 7, date: '01/09/2025', pageNumber: '007', particulars: 'Facility Maintenance Request - Request for urgent repairs to building infrastructure including electrical systems, plumbing, and HVAC maintenance to ensure safe working conditions.', admin: '', bac: 'Mr. Santos', dean: '', budget: '', accounting: '' },
-    { id: 8, date: '01/08/2025', pageNumber: '008', particulars: 'Academic Curriculum Update - Proposed changes to degree program requirements and course offerings for the upcoming academic year with detailed justification and implementation timeline.', admin: '', bac: '', dean: 'Dr. Reyes', budget: '', accounting: '' },
-    { id: 9, date: '01/07/2025', pageNumber: '009', particulars: 'Quarterly Financial Statement - Detailed financial report including revenue, expenses, profit margins, and cash flow analysis for the fourth quarter of fiscal year 2024.', admin: '', bac: '', dean: '', budget: 'Ms. Garcia', accounting: '' },
-    { id: 10, date: '01/06/2025', pageNumber: '010', particulars: 'Audit Compliance Report - Annual audit findings and recommendations for improving internal controls and financial reporting processes across all university departments.', admin: '', bac: '', dean: '', budget: '', accounting: 'Mr. Lopez' },
-    { id: 11, date: '01/05/2025', pageNumber: '011', particulars: 'Research Grant Proposal - Detailed proposal for government research funding including project objectives, methodology, budget requirements, and expected outcomes.', admin: '', bac: 'Dr. Kim', dean: '', budget: '', accounting: '' },
-    { id: 12, date: '01/04/2025', pageNumber: '012', particulars: 'Student Enrollment Report - Comprehensive analysis of student enrollment trends, demographic data, and projections for future academic planning and resource allocation.', admin: '', bac: '', dean: 'Prof. Lee', budget: '', accounting: '' },
-    { id: 13, date: '01/03/2025', pageNumber: '013', particulars: 'Capital Expenditure Budget - Proposed budget for major capital improvements including building renovations, equipment purchases, and infrastructure upgrades for the next fiscal year.', admin: '', bac: '', dean: '', budget: 'Mr. Wilson', accounting: '' },
-    { id: 14, date: '01/02/2025', pageNumber: '014', particulars: 'Tax Compliance Documentation - Complete set of tax documents and filings required for annual tax compliance including income statements, expense reports, and supporting documentation.', admin: '', bac: '', dean: '', budget: '', accounting: 'Ms. Davis' },
-    { id: 15, date: '01/01/2025', pageNumber: '015', particulars: 'Strategic Plan 2025-2030 - Long-term strategic planning document outlining university goals, objectives, and key performance indicators for the next five years with detailed implementation roadmap.', admin: 'Dr. Johnson', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 16, date: '12/31/2024', pageNumber: '016', particulars: 'Year-End Financial Closing - Documentation and procedures for closing the fiscal year 2024 including account reconciliations and year-end adjustments.', admin: 'Ms. Chen', bac: '', dean: '', budget: '', accounting: 'Mr. Reyes' },
-    { id: 17, date: '12/30/2024', pageNumber: '017', particulars: 'Staff Performance Evaluation - Annual performance review forms and documentation for all administrative staff members.', admin: '', bac: '', dean: 'Ms. Santos', budget: '', accounting: '' },
-    { id: 18, date: '12/29/2024', pageNumber: '018', particulars: 'Vendor Contract Renewal - Updated contracts and agreements with existing suppliers and service providers for the upcoming year.', admin: '', bac: 'Mr. Lim', dean: '', budget: '', accounting: '' },
-    { id: 19, date: '12/28/2024', pageNumber: '019', particulars: 'IT Security Audit Report - Comprehensive assessment of cybersecurity measures and recommendations for system improvements.', admin: '', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 20, date: '12/27/2024', pageNumber: '020', particulars: 'Library Acquisition Request - List of new books, journals, and digital resources requested for the university library collection.', admin: '', bac: '', dean: 'Dr. Martinez', budget: '', accounting: '' },
-    { id: 21, date: '12/26/2024', pageNumber: '021', particulars: 'Research Ethics Approval - Documentation for research projects requiring ethical review and approval from the university ethics committee.', admin: '', bac: 'Dr. Park', dean: '', budget: '', accounting: '' },
-    { id: 22, date: '12/25/2024', pageNumber: '022', particulars: 'Holiday Schedule Memo - Official announcement of university holidays and non-working days for the calendar year.', admin: 'Mr. Garcia', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 23, date: '12/24/2024', pageNumber: '023', particulars: 'Equipment Inventory Report - Complete listing of all university assets including computers, furniture, and laboratory equipment.', admin: '', bac: '', dean: '', budget: 'Ms. Lee', accounting: '' },
-    { id: 24, date: '12/23/2024', pageNumber: '024', particulars: 'Student Scholarship Awards - List of scholarship recipients with award amounts and terms for the academic year.', admin: '', bac: '', dean: 'Prof. Wang', budget: '', accounting: '' },
-    { id: 25, date: '12/22/2024', pageNumber: '025', particulars: 'Building Permit Application - Documents submitted for approval of new construction and renovation projects on campus.', admin: '', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 26, date: '12/21/2024', pageNumber: '026', particulars: 'Alumni Donation Records - Documentation of contributions from alumni and friends of the university for development projects.', admin: '', bac: '', dean: '', budget: '', accounting: 'Ms. Taylor' },
-    { id: 27, date: '12/20/2024', pageNumber: '027', particulars: 'International Student Visa - Processing documents for foreign students requiring visa extensions and renewals.', admin: 'Ms. Anderson', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 28, date: '12/19/2024', pageNumber: '028', particulars: 'Conference Registration Forms - Applications for faculty members attending international academic conferences and symposiums.', admin: '', bac: 'Dr. Brown', dean: '', budget: '', accounting: '' },
-    { id: 29, date: '12/18/2024', pageNumber: '029', particulars: 'Medical Insurance Claims - Health insurance documentation and claims processing for university employees.', admin: '', bac: '', dean: '', budget: '', accounting: 'Mr. White' },
-    { id: 30, date: '12/17/2024', pageNumber: '030', particulars: 'Curriculum Accreditation - Self-study reports and documentation for program accreditation by professional bodies.', admin: '', bac: '', dean: 'Dr. Green', budget: '', accounting: '' },
-    { id: 31, date: '12/16/2024', pageNumber: '031', particulars: 'Transportation Service Contract - Agreement with bus service providers for student and staff transportation.', admin: '', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 32, date: '12/15/2024', pageNumber: '032', particulars: 'Dormitory Assignment List - Room allocations and housing arrangements for residential students.', admin: '', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 33, date: '12/14/2024', pageNumber: '033', particulars: 'Graduation Ceremony Plan - Schedule, venue arrangements, and protocol for the upcoming commencement exercises.', admin: '', bac: '', dean: 'Prof. Black', budget: '', accounting: '' },
-    { id: 34, date: '12/13/2024', pageNumber: '034', particulars: 'Faculty Recruitment Package - Job offers and employment contracts for newly hired professors and instructors.', admin: '', bac: '', dean: '', budget: '', accounting: '' },
-    { id: 35, date: '12/12/2024', pageNumber: '035', particulars: 'Environmental Compliance Report - Documentation of sustainability initiatives and environmental impact assessments.', admin: '', bac: '', dean: '', budget: 'Ms. Gray', accounting: '' },
-  ];
+  const handleDeleteClick = (file) => {
+    setFileToDelete(file);
+    setShowDeleteModal(true);
+  };
 
-  const getStatusColor = (status) => {
-    switch(status) {
-      case 'Approved': return '#10b981';
-      case 'Pending': return '#f59e0b';
-      case 'Processing': return '#0074AD';
-      case 'Draft': return '#6b7280';
-      default: return '#6b7280';
+  const confirmDelete = () => {
+    if (fileToDelete) {
+      setFiles(files.filter(file => file.id !== fileToDelete.id));
+      setShowDeleteModal(false);
+      setFileToDelete(null);
     }
+  };
+
+  // Calculate page range to display
+  const getPageRange = () => {
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    return { startPage, endPage };
+  };
+
+  const { startPage, endPage } = getPageRange();
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/Incoming') {
+      console.log('Incoming page is active - sidebar should show Incoming as active');
+    }
+  }, [location.pathname]);
+ 
+  //MODAL
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedPageNumber, setSelectedPageNumber] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('');
+  const [selectedAdmin, setSelectedAdmin] = useState('');
+  const [selectedDean, setSelectedDean] = useState('');
+  const [selectedBac, setSelectedBac] = useState('');
+  const [selectedBudget, setSelectedBudget] = useState('');
+  const [selectedAccounting, setSelectedAccounting] = useState('');
+  
+  // Date picker state
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [pickerMonth, setPickerMonth] = useState(new Date().getMonth());
+  const [pickerYear, setPickerYear] = useState(new Date().getFullYear());
+
+  // State for expanded rows
+  const [expandedRows, setExpandedRows] = useState(new Set());
+
+  // Utility functions
+  const validateAndFormatDate = (dateString) => {
+    if (!dateString) return '';
+    
+    // Remove any non-digit characters except slash
+    const cleanDate = dateString.replace(/[^0-9/]/g, '');
+    
+    // Check if it matches MM/DD/YYYY format
+    const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+    
+    if (dateRegex.test(cleanDate)) {
+      return cleanDate;
+    }
+    
+    // Try to auto-format if user enters digits only
+    if (/^\d{8}$/.test(cleanDate)) {
+      const month = cleanDate.substring(0, 2);
+      const day = cleanDate.substring(2, 4);
+      const year = cleanDate.substring(4, 8);
+      return `${month}/${day}/${year}`;
+    }
+    
+    return dateString; // Return original if invalid format
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    return validateAndFormatDate(dateString);
+  };
+
+  const displayDate = (dateString) => {
+    if (!dateString) return '';
+    const formatted = validateAndFormatDate(dateString);
+    return formatted || dateString;
+  };
+
+  const handleDateChange = (e) => {
+    let value = e.target.value;
+    
+    // Only allow digits and slashes
+    value = value.replace(/[^0-9/]/g, '');
+    
+    // Auto-add slashes as user types
+    if (value.length === 2 && !value.includes('/')) {
+      value += '/';
+    } else if (value.length === 5 && value.split('/').length === 2) {
+      value += '/';
+    }
+    
+    // Limit to MM/DD/YYYY format (10 characters)
+    if (value.length <= 10) {
+      setSelectedDate(value);
+    }
+  };
+
+  // Date picker functions
+  const getDaysInMonth = (month, year) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (month, year) => {
+    return new Date(year, month, 1).getDay();
+  };
+
+  const handleDateSelect = (day) => {
+    const month = String(pickerMonth + 1).padStart(2, '0');
+    const dayStr = String(day).padStart(2, '0');
+    const formattedDate = `${month}/${dayStr}/${pickerYear}`;
+    setSelectedDate(formattedDate);
+    setShowDatePicker(false);
+  };
+
+  const handleMonthChange = (direction) => {
+    if (direction === 'prev') {
+      if (pickerMonth === 0) {
+        setPickerMonth(11);
+        setPickerYear(pickerYear - 1);
+      } else {
+        setPickerMonth(pickerMonth - 1);
+      }
+    } else {
+      if (pickerMonth === 11) {
+        setPickerMonth(0);
+        setPickerYear(pickerYear + 1);
+      } else {
+        setPickerMonth(pickerMonth + 1);
+      }
+    }
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(pickerMonth, pickerYear);
+    const firstDay = getFirstDayOfMonth(pickerMonth, pickerYear);
+    const days = [];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                      'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    // Add empty cells for days before month starts
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} style={{ width: '30px', height: '30px' }}></div>);
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const isSelected = selectedDate === `${String(pickerMonth + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}/${pickerYear}`;
+      days.push(
+        <div
+          key={day}
+          onClick={() => handleDateSelect(day)}
+          style={{
+            width: '30px',
+            height: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            borderRadius: '4px',
+            backgroundColor: isSelected ? '#0074AD' : 'transparent',
+            color: isSelected ? 'white' : '#374151',
+            fontSize: '14px',
+            border: isSelected ? 'none' : '1px solid #e5e7eb',
+            '&:hover': {
+              backgroundColor: isSelected ? '#0056b3' : '#f3f4f6'
+            }
+          }}
+        >
+          {day}
+        </div>
+      );
+    }
+    
+    return (
+      <div style={{
+        position: 'absolute',
+        top: '100%',
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        border: '1px solid #e5e7eb',
+        borderRadius: '8px',
+        padding: '16px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        zIndex: 1000,
+        marginTop: '4px'
+      }}>
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '12px'
+        }}>
+          <button
+            onClick={() => handleMonthChange('prev')}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '4px'
+            }}
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <div style={{
+            fontSize: '14px',
+            fontWeight: '600',
+            color: '#374151'
+          }}>
+            {monthNames[pickerMonth]} {pickerYear}
+          </div>
+          <button
+            onClick={() => handleMonthChange('next')}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '4px'
+            }}
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+        
+        {/* Days of week */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(7, 1fr)',
+          gap: '2px',
+          marginBottom: '8px'
+        }}>
+          {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
+            <div key={day} style={{
+              fontSize: '12px',
+              fontWeight: '600',
+              color: '#6b7280',
+              textAlign: 'center'
+            }}>
+              {day}
+            </div>
+          ))}
+        </div>
+        
+        {/* Calendar days */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(7, 1fr)',
+          gap: '2px'
+        }}>
+          {days}
+        </div>
+      </div>
+    );
+  };
+
+  const truncateText = (text, maxLength = 50) => {
+    if (!text || text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
+  const toggleRowExpansion = (fileId) => {
+    setExpandedRows(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(fileId)) {
+        newSet.delete(fileId);
+      } else {
+        newSet.add(fileId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleViewClick = (file) => {
+    setSelectedFile(file);
+    setSelectedDate(displayDate(file.date || ''));
+    setSelectedPageNumber(file.pageNumber || '');
+    setSelectedTitle(file.title || '');
+    setFileName(file.particulars || '');
+    setSelectedAdmin(file.admin || '');
+    setSelectedDean(file.dean || '');
+    setSelectedBac(file.bac || '');
+    setSelectedBudget(file.budget || '');
+    setSelectedAccounting(file.accounting || '');
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedFile(null);
+    setSelectedDate('');
+    setSelectedPageNumber('');
+    setSelectedTitle('');
+    setFileName('');
+    setSelectedAdmin('');
+    setSelectedDean('');
+    setSelectedBac('');
+    setSelectedBudget('');
+    setSelectedAccounting('');
+  };
+
+  const handleSaveChanges = () => {
+    if (selectedFile) {
+      // Validate and format the date before saving
+      const formattedDate = validateAndFormatDate(selectedDate);
+      
+      // Update the file in the files array
+      setFiles(prevFiles => 
+        prevFiles.map(file => 
+          file.id === selectedFile.id 
+            ? { 
+                ...file, 
+                date: formattedDate !== undefined ? formattedDate : file.date,
+                pageNumber: selectedPageNumber !== undefined ? selectedPageNumber : file.pageNumber,
+                title: selectedTitle !== undefined ? selectedTitle : file.title,
+                particulars: fileName !== undefined ? fileName : file.particulars,
+                admin: selectedAdmin !== undefined ? selectedAdmin : file.admin,
+                dean: selectedDean !== undefined ? selectedDean : file.dean,
+                bac: selectedBac !== undefined ? selectedBac : file.bac,
+                budget: selectedBudget !== undefined ? selectedBudget : file.budget,
+                accounting: selectedAccounting !== undefined ? selectedAccounting : file.accounting
+              }
+            : file
+        )
+      );
+      
+      console.log('File updated:', {
+        id: selectedFile.id,
+        date: formattedDate,
+        pageNumber: selectedPageNumber,
+        title: selectedTitle,
+        particulars: fileName,
+        admin: selectedAdmin,
+        dean: selectedDean,
+        bac: selectedBac,
+        budget: selectedBudget,
+        accounting: selectedAccounting
+      });
+    }
+    
+    handleCloseModal();
   };
 
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
       backgroundColor: '#f8f9fa',
-      height: 'calc(100vh - 48px)',
+      height: 'calc(100vh - 48px)', // Account for padding
       padding: '24px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '24px',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      boxSizing: 'border-box'
     }}>
-      {/* Header with New Entry button and controls */}
+      {/* Header - Fixed */}
+      <div style={{ marginBottom: '32px', flexShrink: 0 }}>
+        <h1 style={{ 
+          fontSize: '28px', 
+          fontWeight: '600', 
+          color: '#0074AD', 
+          margin: 0,
+          fontFamily: "'Public Sans', sans-serif"
+        }}>
+          INCOMING DOCUMENTS BU-LB-CLUSTER II-04
+        </h1>
+        <p style={{
+          fontSize: '16px',
+          color: '#6b7280',
+          margin: '8px 2px 0',
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: '400'
+        }}>
+          Bicol University Cluster II Administrative Office
+        </p>
+      </div>
+
+      {/* Search and Filter Section - Fixed */}
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
-        alignItems: 'center', 
-        flexWrap: 'wrap', 
-        gap: '8px' 
+        alignItems: 'center',
+        marginBottom: '24px',
+        gap: '16px',
+        flexShrink: 0
       }}>
-        <div>
-          <h1 style={{ 
-            fontSize: '20px', 
-            fontWeight: '600', 
-            color: '#0074AD', 
-            margin: 0, 
-            fontFamily: "'Public Sans', sans-serif" 
-          }}>
-            {currentRecord.name}
-          </h1>
-          <p style={{
-            fontSize: '14px',
-            color: '#6b7280',
-            margin: '8px 0 0 0',
-            fontFamily: "'Inter', sans-serif"
-          }}>
-            {currentRecord.description}
-          </p>
+        {/* Search Bar */}
+        <div style={{ 
+          position: 'relative', 
+          flex: 1,
+          maxWidth: '400px'
+        }}>
+          <button
+            onClick={() => console.log('Search clicked')}
+            style={{
+              position: 'absolute',
+              left: '12px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0
+            }}
+          >
+            <Search size={20} color="#6b7280" />
+          </button>
+          <input
+type="text"
+            placeholder="Search File"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: '198%',
+              padding: '12px 16px 12px 44px',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontFamily: "'Inter', sans-serif",
+              outline: 'none',
+              boxSizing: 'border-box',
+              backgroundColor: '#ffffff'
+            }}
+          />
         </div>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ position: 'relative' }}>
-            <input 
-              type="text" 
-              placeholder="Search" 
-              style={{ 
-                padding: '8px 12px',
-                border: '1px solid #e5e7eb',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontFamily: "'Inter', sans-serif",
-                outline: 'none',
-                width: '200px' 
-              }} 
-            />
-            <Search 
-              size={16} 
-              color="#6b7280" 
-              style={{ 
-                position: 'absolute', 
-                left: '12px', 
-                top: '50%', 
-                transform: 'translateY(-50%)' 
-              }} 
-            />
-          </div>
-          <div style={{ position: 'relative' }}>
-            <button 
-              onClick={() => setShowFilterDropdown(!showFilterDropdown)} 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '6px',
-                padding: '8px 12px',
-                backgroundColor: 'white',
-                color: '#6b7280',
-                border: '1px solid #e5e7eb',
-                borderRadius: '6px',
-                fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                fontFamily: "'Inter', sans-serif"
-              }}
-            >
-              <Filter size={16} />
-              Filter
-              <ChevronDown size={14} />
-            </button>
-            
-            {showFilterDropdown && (
-              <div style={{
-                position: 'absolute',
-                top: 'calc(100% + 8px)',
-                right: '0',
-                backgroundColor: 'white',
-                border: '1px solid #e5e7eb',
-                borderRadius: '8px',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-                minWidth: '180px',
-                overflow: 'hidden',
-                zIndex: 1000
-              }}>
-                <div style={{
-                  padding: '8px 12px',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  color: '#6b7280',
-                  backgroundColor: '#f9fafb',
-                  borderBottom: '1px solid #e5e7eb',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
-                  FILTER BY SECTION
-                </div>
-                {['All', 'BAC', 'DEAN', 'BUDGET', 'ACCOUNTING'].map((section) => (
-                  <button
-                    key={section}
-                    onClick={() => {
-                      // Handle filter selection
-                      setShowFilterDropdown(false);
-                    }}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      padding: '10px 12px',
-                      backgroundColor: 'transparent',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                      color: '#374151',
-                      fontFamily: "'Inter', sans-serif",
-                      transition: 'background-color 0.2s',
-                      textAlign: 'left'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#f9fafb';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                    }}
-                  >
-                    {section}
-                  </button>
-                ))}
-              </div>
-            )}
-            
-            {showFilterDropdown && (
-              <div
-                onClick={() => setShowFilterDropdown(false)}
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  zIndex: 999
-                }}
-              />
-            )}
-          </div>
-          <button style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '12px 20px',
-            backgroundColor: '#0074AD',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '14px',
-            fontWeight: '500',
-            cursor: 'pointer',
-            fontFamily: "'Inter', sans-serif",
-            transition: 'background-color 0.2s'
-          }}>
+
+        {/* Filter and Add Buttons */}
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button 
+            onClick={() => setShowFilterModal(true)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 16px',
+              backgroundColor: '#ffffff',
+              color: '#6b7280',
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              fontFamily: "'Inter', sans-serif",
+              transition: 'all 0.2s'
+            }}>
+            <Filter size={20} />
+            Filter
+          </button>
+          <button 
+            onClick={() => setShowUploadModal(true)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 16px',
+              backgroundColor: '#FF9500',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              fontFamily: "'Inter', sans-serif",
+              transition: 'background-color 0.2s'
+            }}>
             <Plus size={20} />
-            New Entry
+            Add New File
           </button>
         </div>
       </div>
 
-    {/* Records Table */}
-      <div style={{ 
+      {/* Files Table - Scrollable Rows Only */}
+      <div style={{
         flex: 1,
-        overflowY: 'auto',
-        overflowX: 'hidden',
+        overflow: 'hidden',
         backgroundColor: 'white',
         borderRadius: '12px',
         border: '1px solid #e5e7eb',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
-        minHeight: 0
+        minHeight: 0 // Important for flex child to shrink properly
       }}>
+        {/* Table Header - Fixed */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '100px 50px 2fr 1fr 1fr 1fr 1fr 1fr 120px',
+          padding: '16px 20px',
+          backgroundColor: '#f9fafb',
+          borderBottom: '1px solid #e5e7eb',
+          fontSize: '12px',
+          fontWeight: '600',
+          color: '#6b7280',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          fontFamily: "'Inter', sans-serif",
+          flexShrink: 0
+        }}>
+          <div style={{ textAlign: 'left' }}>DATE</div>
+          <div style={{ textAlign: 'left' }}>PN</div>
+          <div style={{ textAlign: 'left' }}>PARTICULARS</div>
+          <div style={{ textAlign: 'left' }}>ADMIN</div>
+          <div style={{ textAlign: 'left' }}>DEAN</div>
+          <div style={{ textAlign: 'left' }}>BAC</div>
+          <div style={{ textAlign: 'left' }}>BUDGET</div>
+          <div style={{ textAlign: 'left' }}>ACCOUNTING</div>
+          <div style={{ textAlign: 'left' }}>ACTIONS</div>
+        </div>
+
+        {/* File Rows - Paginated */}
         <div style={{ 
-          flex: 1,
+          flex: 1, 
           overflow: 'auto',
           minHeight: 0
         }}>
-        <table style={{
-          width: '100%', 
-          minWidth: '1100px',
-          borderCollapse: 'collapse',
-          fontFamily: "'Inter', sans-serif",
-          tableLayout: 'fixed'
-        }}>
-          <colgroup>
-            <col style={{ width: '120px' }} /> {/* Date */}
-            <col style={{ width: '100px' }} /> {/* Page Number */}
-            <col style={{ width: 'auto', minWidth: '400px' }} /> {/* Particulars - flexible width */}
-            <col style={{ width: '100px' }} /> {/* Admin */}
-            <col style={{ width: '100px' }} /> {/* BAC */}
-            <col style={{ width: '100px' }} /> {/* Dean */}
-            <col style={{ width: '100px' }} /> {/* Budget */}
-            <col style={{ width: '120px' }} /> {/* Accounting */}
-            <col style={{ width: '200px' }} /> {/* Actions */}
-          </colgroup>
-          <thead style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 100,
-            backgroundColor: '#f9fafb'
-          }}>
-          <tr style={{ backgroundColor: '#f9fafb' }}>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'left',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
+          {currentRows.map((file) => (
+            <div key={file.id} style={{
+              display: 'grid',
+              gridTemplateColumns: '100px 50px 2fr 1fr 1fr 1fr 1fr 1fr 120px',
+              padding: expandedRows.has(file.id) ? '20px' : '16px 20px',
+              borderBottom: '1px solid #f3f4f6',
+              alignItems: expandedRows.has(file.id) ? 'start' : 'center',
+              backgroundColor: selectedFile && selectedFile.id === file.id ? '#f0f9ff' : 'white',
+              transition: 'all 0.2s',
+              cursor: 'pointer',
+              minHeight: expandedRows.has(file.id) ? 'auto' : '60px'
             }}>
-              Date
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'left',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Page Number
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'left',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Particulars
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Admin
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              BAC
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Dean
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Budget
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Accounting
-            </th>
-            <th style={{
-              padding: '12px 20px',
-              textAlign: 'center',
-              fontSize: '12px',
-              fontWeight: '600',
-              color: '#6b7280',
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px',
-              borderBottom: '1px solid #e5e7eb'
-            }}>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {records.slice((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage).map((record) => (
-            <tr key={record.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937' }}>
-                {record.date}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937' }}>
-                {record.pageNumber}
-              </td>
-              <td style={{ 
-                padding: '16px 20px', 
+
+              {/* Date */}
+              <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                {displayDate(file.date)}
+              </div>
+
+              {/* Page Number */}
+              <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                {file.pageNumber}
+              </div>
+
+              {/* Particulars */}
+              <div style={{ 
                 fontSize: '14px', 
-                color: '#1f2937',
-                verticalAlign: 'top',
-                lineHeight: '1.5'
-              }}>
-                {record.particulars}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937', textAlign: 'center' }}>
-                {record.admin || '-'}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937', textAlign: 'center' }}>
-                {record.bac || '-'}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937', textAlign: 'center' }}>
-                {record.dean || '-'}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937', textAlign: 'center' }}>
-                {record.budget || '-'}
-              </td>
-              <td style={{ padding: '16px 20px', fontSize: '14px', color: '#1f2937', textAlign: 'center' }}>
-                {record.accounting || '-'}
-              </td>
-              <td style={{ padding: '16px 20px' }}>
-                <div style={{ display: 'flex', gap: '4px', justifyContent: 'center' }}>
-                  <button
-                    title="Edit"
-                    style={{
-                      padding: '6px',
-                      backgroundColor: 'transparent',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <Edit size={16} color="#6b7280" />
-                  </button>
-                  <button
-                    title="Delete"
-                    style={{
-                      padding: '6px',
-                      backgroundColor: 'transparent',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    <Trash2 size={16} color="#dc3545" />
-                  </button>
+                color: '#1f2937', 
+                fontWeight: '500',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+                cursor: file.particulars && file.particulars.length > 50 ? 'pointer' : 'default'
+              }}
+              onClick={() => file.particulars && file.particulars.length > 50 && !expandedRows.has(file.id) && toggleRowExpansion(file.id)}>
+                {/* Title */}
+                <div style={{ fontWeight: '600' }}>
+                  {file.title || '-'}
                 </div>
-              </td>
-            </tr>
+                
+                {/* Expandable particulars */}
+                {file.particulars && (
+                  <div>
+                    {expandedRows.has(file.id) ? (
+                      <div>
+                        <div style={{ 
+                          whiteSpace: 'pre-wrap',
+                          wordBreak: 'break-word',
+                          lineHeight: '1.5',
+                          fontSize: '13px',
+                          color: '#4b5563',
+                          marginBottom: '8px',
+                          textAlign: 'justify',
+                          textJustify: 'inter-word'
+                        }}>
+                          {file.particulars}
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleRowExpansion(file.id);
+                          }}
+                          style={{
+                            color: '#0074AD',
+                            fontSize: '12px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          see less
+                        </button>
+                      </div>
+                    ) : (
+                      file.particulars.length > 50 && (
+                        <div>
+                          <span style={{ 
+                            color: '#0074AD',
+                            fontSize: '12px',
+                            cursor: 'pointer'
+                          }}>
+                            (view full particulars)
+                          </span>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Admin */}
+              <div style={{ 
+                fontSize: '14px', 
+                color: file.admin ? '#1f2937' : '#6b7280',
+                fontWeight: file.admin ? '500' : '400'
+              }}>
+                {file.admin || '-'}
+              </div>
+
+              {/* Dean */}
+              <div style={{ 
+                fontSize: '14px', 
+                color: file.dean ? '#1f2937' : '#6b7280',
+                fontWeight: file.dean ? '500' : '400'
+              }}>
+                {file.dean || '-'}
+              </div>
+
+              {/* BAC */}
+              <div style={{ 
+                fontSize: '14px', 
+                color: file.bac ? '#1f2937' : '#6b7280',
+                fontWeight: file.bac ? '500' : '400'
+              }}>
+                {file.bac || '-'}
+              </div>
+
+              {/* Budget */}
+              <div style={{ 
+                fontSize: '14px', 
+                color: file.budget ? '#1f2937' : '#6b7280',
+                fontWeight: file.budget ? '500' : '400'
+              }}>
+                {file.budget || '-'}
+              </div>
+
+              {/* Accounting */}
+              <div style={{ 
+                fontSize: '14px', 
+                color: file.accounting ? '#1f2937' : '#6b7280',
+                fontWeight: file.accounting ? '500' : '400'
+              }}>
+                {file.accounting || '-'}
+              </div>
+
+              {/* Actions */}
+              <div style={{ display: 'flex', gap: '2px', justifyContent: 'flex-end' }}>
+
+                <button
+                  onClick={() => handleViewClick(file)}
+                  title="Edit"
+                  style={{
+                    padding: '6px',
+                    backgroundColor: 'transparent',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <Edit size={16} color="#6b7280" />
+                </button>
+
+                <button
+                  onClick={() => handleDeleteClick(file)}
+                  title="Delete"
+                  style={{
+                    padding: '6px',
+                    backgroundColor: 'transparent',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <Trash2 size={16} color="#dc3545" />
+                </button>
+              </div>
+            </div>
           ))}
-        </tbody>
-        </table>
         </div>
       </div>
-      
-      {/* Pagination */}
+
+      {/* Pagination Bar */}
       <div style={{
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '10px 16px',
+        justifyContent: 'space-between',
+        marginTop: '16px',
+        padding: '12px 16px',
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        border: '1px solid #e5e7eb',
         fontFamily: "'Inter', sans-serif",
-        fontSize: '13px',
-        flexWrap: 'wrap',
-        gap: '8px'
+        flexShrink: 0
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-              disabled={currentPage === 1}
-              style={{
-                padding: '4px 8px',
-                border: '1px solid #e5e7eb',
-                borderRadius: '4px',
-                backgroundColor: currentPage === 1 ? '#f3f4f6' : 'white',
-                color: currentPage === 1 ? '#9ca3af' : '#6b7280',
-                fontSize: '13px',
-                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                fontFamily: "'Inter', sans-serif",
-                whiteSpace: 'nowrap'
-              }}
-            >
-              Previous
-            </button>
-            
-            {Array.from({ length: Math.ceil(records.length / recordsPerPage) }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                style={{
-                  padding: '4px 8px',
-                  border: '1px solid ' + (page === currentPage ? '#0074AD' : '#e5e7eb'),
-                  borderRadius: '4px',
-                  backgroundColor: page === currentPage ? '#0074AD' : 'white',
-                  color: page === currentPage ? 'white' : '#374151',
-                  fontSize: '13px',
-                  cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  minWidth: '24px'
-                }}
-              >
-                {page}
-              </button>
-            ))}
-            
-            <button
-              onClick={() => setCurrentPage(prev => Math.min(Math.ceil(records.length / recordsPerPage), prev + 1))}
-              disabled={currentPage === Math.ceil(records.length / recordsPerPage)}
-              style={{
-                padding: '4px 8px',
-                border: '1px solid #e5e7eb',
-                borderRadius: '4px',
-                backgroundColor: currentPage === Math.ceil(records.length / recordsPerPage) ? '#f3f4f6' : 'white',
-                color: currentPage === Math.ceil(records.length / recordsPerPage) ? '#9ca3af' : '#6b7280',
-                fontSize: '13px',
-                cursor: currentPage === Math.ceil(records.length / recordsPerPage) ? 'not-allowed' : 'pointer',
-                fontFamily: "'Inter', sans-serif",
-                whiteSpace: 'nowrap'
-              }}
-            >
-              Next
-            </button>
-          </div>
-          
-          <span style={{ color: '#6b7280', whiteSpace: 'nowrap' }}>
-            Showing {(currentPage - 1) * recordsPerPage + 1} to {Math.min(currentPage * recordsPerPage, records.length)} of {records.length} entries
-          </span>
+        <div style={{ fontSize: '14px', color: '#6b7280' }}>
+          Showing {indexOfFirstRow + 1} to {Math.min(indexOfLastRow, files.length)} of {files.length} entries
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {/* Previous Button */}
           <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              padding: '4px 10px',
-              backgroundColor: '#f59e0b',
-              color: 'white',
+              padding: '8px 12px',
+              backgroundColor: currentPage === 1 ? '#f3f4f6' : '#0074AD',
+              color: currentPage === 1 ? '#9ca3af' : 'white',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '13px',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
+              borderRadius: '6px',
+              fontSize: '14px',
               fontWeight: '500',
-              whiteSpace: 'nowrap'
+              cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            Print
+            Previous
           </button>
           
+          {/* Page Numbers */}
+          {startPage > 1 && (
+            <>
+              <button
+                onClick={() => handlePageChange(1)}
+                style={{
+                  padding: '8px 12px',
+                  backgroundColor: 'transparent',
+                  color: '#6b7280',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer'
+                }}
+              >
+                1
+              </button>
+              {startPage > 2 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+            </>
+          )}
+          
+          {[...Array(endPage - startPage + 1)].map((_, index) => (
+            <button
+              key={startPage + index}
+              onClick={() => handlePageChange(startPage + index)}
+              style={{
+                padding: '8px 12px',
+                backgroundColor: currentPage === startPage + index ? '#0074AD' : 'transparent',
+                color: currentPage === startPage + index ? 'white' : '#6b7280',
+                border: currentPage === startPage + index ? 'none' : '1px solid #e5e7eb',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                cursor: 'pointer'
+              }}
+            >
+              {startPage + index}
+            </button>
+          ))}
+          
+          {endPage < totalPages && (
+            <>
+              {endPage < totalPages - 1 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+              <button
+                onClick={() => handlePageChange(totalPages)}
+                style={{
+                  padding: '8px 12px',
+                  backgroundColor: 'transparent',
+                  color: '#6b7280',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer'
+                }}
+              >
+                {totalPages}
+              </button>
+            </>
+          )}
+          
+          {/* Next Button */}
           <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-              padding: '4px 10px',
-              backgroundColor: '#f59e0b',
-              color: 'white',
+              padding: '8px 12px',
+              backgroundColor: currentPage === totalPages ? '#f3f4f6' : '#0074AD',
+              color: currentPage === totalPages ? '#9ca3af' : 'white',
               border: 'none',
-              borderRadius: '4px',
-              fontSize: '13px',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
+              borderRadius: '6px',
+              fontSize: '14px',
               fontWeight: '500',
-              whiteSpace: 'nowrap'
+              cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Download
+            Next
           </button>
         </div>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            width: '90%',
+            maxWidth: '500px',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '24px',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#1f2937',
+                margin: 0,
+                fontFamily: "'Public Sans', sans-serif"
+              }}>
+                Document Details
+              </h2>
+              <button
+                onClick={handleCloseModal}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <X size={20} color="#6b7280" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '24px' }}>
+              {/* Date Input */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Date (MM/DD/YYYY)
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type="text"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    placeholder="MM/DD/YYYY"
+                    maxLength={10}
+                    onFocus={() => setShowDatePicker(false)}
+                    style={{
+                      width: '100%',
+                      padding: '12px 40px 12px 12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      fontFamily: "'Inter', sans-serif",
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowDatePicker(!showDatePicker)}
+                    style={{
+                      position: 'absolute',
+                      right: '8px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Calendar size={18} color="#6b7280" />
+                  </button>
+                  
+                  {/* Date Picker Popup */}
+                  {showDatePicker && renderCalendar()}
+                </div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#6b7280',
+                  marginTop: '4px'
+                }}>
+                  Format: MM/DD/YYYY (e.g., 02/15/2025)
+                </div>
+              </div>
+
+              {/* Page Number Input */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Page Number
+                </label>
+                <input
+                  type="text"
+                  value={selectedPageNumber}
+                  onChange={(e) => setSelectedPageNumber(e.target.value)}
+                  placeholder="e.g., 1-5, 3, 7-12"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontFamily: "'Inter', sans-serif",
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {/* Title Input */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Title
+                </label>
+                <input
+                  type="text"
+                  value={selectedTitle}
+                  onChange={(e) => setSelectedTitle(e.target.value)}
+                  placeholder="Enter document title..."
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontFamily: "'Inter', sans-serif",
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {/* Particulars Textarea */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Particulars
+                </label>
+                <textarea
+                  value={fileName}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 1000) {
+                      setFileName(e.target.value);
+                    }
+                  }}
+                  placeholder="Enter one or two sentences describing the document..."
+                  rows={3}
+                  maxLength={1000}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontFamily: "'Inter', sans-serif",
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    resize: 'vertical',
+                    minHeight: '80px'
+                  }}
+                />
+                <div style={{
+                  fontSize: '12px',
+                  color: '#6b7280',
+                  marginTop: '4px',
+                  textAlign: 'right'
+                }}>
+                  {fileName.length}/1000 characters
+                </div>
+              </div>
+
+              {/* Admin Selection */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Admin
+                </label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {adminRecipients.map((recipient) => (
+                    <button
+                      key={recipient}
+                      onClick={() => setSelectedAdmin(selectedAdmin === recipient ? '' : recipient)}
+                      style={{
+                        padding: '12px 16px',
+                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        backgroundColor: selectedAdmin === recipient ? '#f0f9ff' : 'white',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedAdmin !== recipient) {
+                          e.target.style.backgroundColor = '#f8f9fa';
+                          e.target.style.borderColor = '#0074AD';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedAdmin !== recipient) {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e5e7eb';
+                        }
+                      }}
+                    >
+                      {recipient}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dean Input */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Dean
+                </label>
+                <input
+                  type="text"
+                  value={selectedDean}
+                  onChange={(e) => setSelectedDean(e.target.value)}
+                  placeholder="Enter dean name or leave empty"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontFamily: "'Inter', sans-serif",
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              {/* BAC Selection */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  BAC
+                </label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {bacRecipients.map((recipient) => (
+                    <button
+                      key={recipient}
+                      onClick={() => setSelectedBac(selectedBac === recipient ? '' : recipient)}
+                      style={{
+                        padding: '12px 16px',
+                        border: selectedBac === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        backgroundColor: selectedBac === recipient ? '#f0f9ff' : 'white',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedBac !== recipient) {
+                          e.target.style.backgroundColor = '#f8f9fa';
+                          e.target.style.borderColor = '#0074AD';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedBac !== recipient) {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e5e7eb';
+                        }
+                      }}
+                    >
+                      {recipient}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Budget Selection */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Budget
+                </label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {budgetRecipients.map((recipient) => (
+                    <button
+                      key={recipient}
+                      onClick={() => setSelectedBudget(selectedBudget === recipient ? '' : recipient)}
+                      style={{
+                        padding: '12px 16px',
+                        border: selectedBudget === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        backgroundColor: selectedBudget === recipient ? '#f0f9ff' : 'white',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedBudget !== recipient) {
+                          e.target.style.backgroundColor = '#f8f9fa';
+                          e.target.style.borderColor = '#0074AD';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedBudget !== recipient) {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e5e7eb';
+                        }
+                      }}
+                    >
+                      {recipient}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Accounting Selection */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Public Sans', sans-serif"
+                }}>
+                  Accounting
+                </label>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {accountingRecipients.map((recipient) => (
+                    <button
+                      key={recipient}
+                      onClick={() => setSelectedAccounting(selectedAccounting === recipient ? '' : recipient)}
+                      style={{
+                        padding: '12px 16px',
+                        border: selectedAccounting === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        backgroundColor: selectedAccounting === recipient ? '#f0f9ff' : 'white',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedAccounting !== recipient) {
+                          e.target.style.backgroundColor = '#f8f9fa';
+                          e.target.style.borderColor = '#0074AD';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedAccounting !== recipient) {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e5e7eb';
+                        }
+                      }}
+                    >
+                      {recipient}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '12px',
+              padding: '24px',
+              borderTop: '1px solid #e5e7eb'
+            }}>
+              <button
+                onClick={handleCloseModal}
+                style={{
+                  padding: '12px 24px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                  color: '#6b7280',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSaveChanges}
+                style={{
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: '#0074AD',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Filter Modal */}
+      {showFilterModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            width: '90%',
+            maxWidth: '500px',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '24px',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <h2 style={{
+                margin: 0,
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#1f2937',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Filter Documents
+              </h2>
+              <button
+                onClick={() => setShowFilterModal(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <X size={20} color="#6b7280" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '24px' }}>
+              {/* Date Filter */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Date
+                </label>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <select
+                    value={filterMonth}
+                    onChange={(e) => setFilterMonth(e.target.value)}
+                    style={{
+                      flex: 1,
+                      padding: '10px 12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontFamily: "'Inter', sans-serif",
+                      backgroundColor: '#ffffff'
+                    }}
+                  >
+                    <option value="">Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                  <select
+                    value={filterDay}
+                    onChange={(e) => setFilterDay(e.target.value)}
+                    style={{
+                      flex: 1,
+                      padding: '10px 12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontFamily: "'Inter', sans-serif",
+                      backgroundColor: '#ffffff'
+                    }}
+                  >
+                    <option value="">Day</option>
+                    {Array.from({ length: 31 }, (_, i) => (
+                      <option key={i + 1} value={String(i + 1).padStart(2, '0')}>
+                        {i + 1}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={filterYear}
+                    onChange={(e) => setFilterYear(e.target.value)}
+                    style={{
+                      flex: 1,
+                      padding: '10px 12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontFamily: "'Inter', sans-serif",
+                      backgroundColor: '#ffffff'
+                    }}
+                  >
+                    <option value="">Year</option>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <option key={2024 - i} value={2024 - i}>
+                        {2024 - i}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Modal Footer */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '12px',
+              padding: '24px',
+              borderTop: '1px solid #e5e7eb'
+            }}>
+              <button
+                onClick={() => {
+                  setShowFilterModal(false);
+                  // Reset filters
+                  setFilterMonth('');
+                  setFilterDay('');
+                  setFilterYear('');
+                  setFilterReceivedBy('');
+                }}
+                style={{
+                  padding: '12px 24px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                  color: '#6b7280',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Clear
+              </button>
+              <button
+                onClick={() => setShowFilterModal(false)}
+                style={{
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: '#0074AD',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Apply Filter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* File Upload Modal */}
+      {showUploadModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            width: '90%',
+            maxWidth: '500px',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '24px',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <h2 style={{
+                margin: 0,
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#1f2937',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Add New File
+              </h2>
+              <button
+                onClick={() => {
+                  setShowUploadModal(false);
+                  setUploadedFile(null);
+                  setUploadRecipient('');
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <X size={20} color="#6b7280" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '24px' }}>
+              {/* File Upload */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Choose File (Max 10MB)
+                </label>
+                <div style={{
+                  border: '2px dashed #e5e7eb',
+                  borderRadius: '8px',
+                  padding: '32px',
+                  textAlign: 'center',
+                  backgroundColor: '#f9fafb',
+                  transition: 'border-color 0.2s'
+                }}>
+                  <input
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        // Check file type (PDF only)
+                        if (file.type !== 'application/pdf') {
+                          alert('Only PDF files are allowed');
+                          e.target.value = '';
+                          return;
+                        }
+                        // Check file size (10MB = 10 * 1024 * 1024 bytes)
+                        if (file.size > 10 * 1024 * 1024) {
+                          alert('File size must be less than 10MB');
+                          e.target.value = '';
+                          return;
+                        }
+                        setUploadedFile(file);
+                      }
+                    }}
+                    style={{ display: 'none' }}
+                    id="file-upload"
+                  />
+                  <label
+                    htmlFor="file-upload"
+                    style={{
+                      cursor: 'pointer',
+                      display: 'inline-block'
+                    }}
+                  >
+                    <div style={{ marginBottom: '12px' }}>
+                      <FileText size={48} color="#6b7280" />
+                    </div>
+                    <p style={{
+                      margin: 0,
+                      fontSize: '14px',
+                      color: '#6b7280',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {uploadedFile ? uploadedFile.name : 'Click to browse or drag and drop'}
+                    </p>
+                    {uploadedFile && (
+                      <p style={{
+                        margin: '4px 0 0 0',
+                        fontSize: '12px',
+                        color: '#10b981',
+                        fontFamily: "'Inter', sans-serif"
+                      }}>
+                        {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Received By Selection */}
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Received By
+                </label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {['Ms. Mitch', 'Ms. Mau', 'Ms. Jing', 'Ms. Rubz'].map((recipient) => (
+                    <button
+                      key={recipient}
+                      onClick={() => setUploadRecipient(recipient)}
+                      style={{
+                        padding: '12px 16px',
+                        border: uploadRecipient === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        backgroundColor: uploadRecipient === recipient ? '#f0f9ff' : 'white',
+                        color: '#374151',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        fontFamily: "'Inter', sans-serif",
+                        transition: 'all 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (uploadRecipient !== recipient) {
+                          e.target.style.backgroundColor = '#f8f9fa';
+                          e.target.style.borderColor = '#0074AD';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (uploadRecipient !== recipient) {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e5e7eb';
+                        }
+                      }}
+                    >
+                      {recipient}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '12px',
+              padding: '24px',
+              borderTop: '1px solid #e5e7eb'
+            }}>
+              <button
+                onClick={() => {
+                  setShowUploadModal(false);
+                  setUploadedFile(null);
+                  setUploadRecipient('');
+                }}
+                style={{
+                  padding: '12px 24px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                  color: '#6b7280',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  if (uploadedFile && uploadRecipient) {
+                    // Add new file to the list
+                    const newFile = {
+                      id: files.length + 1,
+                      name: uploadedFile.name,
+                      type: uploadedFile.name.split('.').pop().toUpperCase(),
+                      date: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+                      size: (uploadedFile.size / 1024 / 1024).toFixed(1) + ' MB',
+                      receivedBy: uploadRecipient
+                    };
+                    setFiles([newFile, ...files]);
+                    setShowUploadModal(false);
+                    setUploadedFile(null);
+                    setUploadRecipient('');
+                  } else {
+                    alert('Please select a file and choose a recipient');
+                  }
+                }}
+                style={{
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: '#0074AD',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontFamily: "'Inter', sans-serif"
+                }}
+              >
+                Upload File
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '12px',
+            width: '90%',
+            maxWidth: '400px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+          }}>
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '24px',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <h2 style={{
+                margin: 0,
+                fontSize: '20px',
+                fontWeight: '600',
+                color: '#1f2937',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Confirm Delete
+              </h2>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setFileToDelete(null);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <X size={20} color="#6b7280" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '24px' }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '16px'
+              }}>
+                <Trash2 size={24} color="#dc3545" />
+                <div>
+                  <p style={{
+                    margin: 0,
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    color: '#1f2937',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Are you sure you want to delete this record?
+                  </p>
+                  <p style={{
+                    margin: '4px 0 0 0',
+                    fontSize: '14px',
+                    color: '#6b7280',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    {fileToDelete?.name}
+                  </p>
+                </div>
+              </div>
+              <p style={{
+                margin: 0,
+                fontSize: '14px',
+                color: '#6b7280',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                This action cannot be undone. The file will be permanently removed from the system.
+              </p>
+            </div>
+
+            {/* Modal Footer */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '12px',
+              padding: '24px',
+              borderTop: '1px solid #e5e7eb'
+            }}>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setFileToDelete(null);
+                }}
+                style={{
+                  padding: '12px 24px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '8px',
+                  backgroundColor: 'white',
+                  color: '#6b7280',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                style={{
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: '#dc3545',
+                  color: 'white',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.2s'
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default RecordPage;
+export default IncomingRecords;
