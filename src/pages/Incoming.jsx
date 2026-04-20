@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Plus, FileText, Download, Trash2, Eye, User, Filter, MoreVertical, X, Edit } from 'lucide-react';
+import { Search, Plus, FileText, Download, Trash2, Eye, User, MoreVertical, Filter, X, Edit } from 'lucide-react';
 
 const Incoming = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -313,18 +313,36 @@ const Incoming = () => {
   const recipients = ['Ms Mitch', 'Ms. Mau', 'Ms. Jing', 'Ms. Rubs'];
 
   // Pagination logic with search filtering
-  const filteredFiles = files.filter(file => 
-    file.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredFiles = files.filter(file => {
+    // Search term filtering (name search)
+    const matchesSearch = (file.name || '').toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // Officer filtering (filter by who received the document)
+    const matchesOfficer = !filterReceivedBy || 
+      (file.receivedBy || '').toLowerCase().includes(filterReceivedBy.toLowerCase());
+    
+    // Date filtering
+    let matchesDate = true;
+    if (filterMonth || filterDay || filterYear) {
+      const fileDate = file.date || '';
+      const [fileMonth, fileDay, fileYear] = fileDate.split('/');
+      
+      if (filterMonth && fileMonth !== filterMonth) matchesDate = false;
+      if (filterDay && fileDay !== filterDay) matchesDate = false;
+      if (filterYear && fileYear !== filterYear) matchesDate = false;
+    }
+    
+    return matchesSearch && matchesOfficer && matchesDate;
+  });
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = filteredFiles.slice(indexOfFirstRow, indexOfLastRow);
   const totalPages = Math.ceil(filteredFiles.length / rowsPerPage);
 
-  // Reset to page 1 when search term changes
+  // Reset to page 1 when search or filter terms change
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+  }, [searchTerm, filterReceivedBy, filterMonth, filterDay, filterYear]);
 
   // Handler functions
   const handleViewFile = (file) => {

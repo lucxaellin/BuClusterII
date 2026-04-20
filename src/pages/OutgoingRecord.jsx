@@ -878,7 +878,7 @@ const IncomingRecords = () => {
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          INCOMING DOCUMENTS BU-LB-CLUSTER II-04
+          OUTGOING DOCUMENTS BU-LB-CLUSTER II-04
         </h1>
         <p style={{
           fontSize: '16px',

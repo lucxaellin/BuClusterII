@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Filter, Download, Eye, Edit2, Trash2, X, FileText, ChevronLeft, ChevronRight, Calendar , Plus, Edit} from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const IncomingRecords = () => {
+const BUCDM80 = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -878,7 +878,7 @@ const IncomingRecords = () => {
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          INCOMING DOCUMENTS BU-LB-CLUSTER II-04
+          BUCDM DOCUMENTS BU-LB-CLUSTER II-80
         </h1>
         <p style={{
           fontSize: '16px',
@@ -3078,4 +3078,4 @@ type="text"
   );
 };
 
-export default IncomingRecords;
+export default BUCDM80;

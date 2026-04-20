@@ -88,11 +88,29 @@ function RecordsNavItem({ active, onSubSelect, activeSubItem }) {
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
 
-  const handleRecordClick = (record) => {
-    onSubSelect(record);
-    // Navigate to the specific record page
-    navigate(`/record/${record.toLowerCase().replace(/[^a-z0-9]/g, '')}`);
-  };
+const handleRecordClick = (record) => {
+  onSubSelect(record);
+  // Navigate to the specific record page
+  if (record === "Incoming") {
+    navigate("/IncomingRecord");
+  } else if (record === "Outgoing") {
+    navigate("/OutgoingRecord");
+  } else if (record === "BUGS-01") {
+    navigate("/BUGS01");
+  } else if (record === "BUCAL-03") {
+    navigate("/BUCAL03");
+  } else if (record === "BUCL-39") {
+    navigate("/BUCL39");
+  } else if (record === "BUOU-52") {
+    navigate("/BUOU52");
+  } else if (record === "BUJMRIGD-53") {
+    navigate("/BUJMRIGD53");
+  } else if (record === "BUCDM-80") {
+    navigate("/BUCDM80");
+  } else {
+    navigate(`/${record}`);
+  }
+};
 
   return (
     <>
