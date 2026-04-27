@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, User, Clock, TrendingUp, Search, Filter, Plus, ChevronDown } from 'lucide-react';
+import { FileText, Calendar, User, Clock, TrendingUp, Search, Filter, Plus } from 'lucide-react';
 
-const ServiceLeaveCredit = () => {
+const AccruedLeave = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
   const [searchTerm, setSearchTerm] = useState('');
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState(false);
@@ -16,16 +16,11 @@ const ServiceLeaveCredit = () => {
     'BUCDM'
   ];
 
-  
   const credits = [
     { id: 1, employee: 'John Doe', type: 'Service Credit', days: 15, used: 3, balance: 12, date: '01/15/2025', status: 'Active', department: 'BUGS' },
-    { id: 2, employee: 'Jane Smith', type: 'Leave Credit', days: 10, used: 5, balance: 5, date: '01/14/2025', status: 'Active', department: 'BUCAL' },
-    { id: 3, employee: 'Mike Johnson', type: 'Service Credit', days: 20, used: 8, balance: 12, date: '01/13/2025', status: 'Active', department: 'BUCL' },
-    { id: 4, employee: 'Sarah Williams', type: 'Leave Credit', days: 15, used: 12, balance: 3, date: '01/12/2025', status: 'Low Balance', department: 'BUJMRIGD' },
-    { id: 5, employee: 'Robert Brown', type: 'Service Credit', days: 18, used: 2, balance: 16, date: '01/11/2025', status: 'Active', department: 'BUOU' },
-    { id: 6, employee: 'Emily Davis', type: 'Leave Credit', days: 12, used: 3, balance: 9, date: '01/10/2025', status: 'Active', department: 'BUCDM' },
     { id: 7, employee: 'Michael Wilson', type: 'Service Credit', days: 25, used: 5, balance: 20, date: '01/09/2025', status: 'Active', department: 'BUGS' },
-    { id: 8, employee: 'Lisa Anderson', type: 'Leave Credit', days: 8, used: 7, balance: 1, date: '01/08/2025', status: 'Low Balance', department: 'BUCAL' },
+    { id: 3, employee: 'Mike Johnson', type: 'Service Credit', days: 20, used: 8, balance: 12, date: '01/13/2025', status: 'Active', department: 'BUCL' },
+    { id: 5, employee: 'Robert Brown', type: 'Service Credit', days: 18, used: 2, balance: 16, date: '01/11/2025', status: 'Active', department: 'BUOU' },
   ];
 
   // Filter credits based on department and search term
@@ -63,7 +58,7 @@ const ServiceLeaveCredit = () => {
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          Service/Leave Credit
+          Accrued Leave
         </h1>
         <p style={{
           fontSize: '16px',
@@ -71,7 +66,7 @@ const ServiceLeaveCredit = () => {
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
-          Manage employee service and leave credits
+          Manage employee service credits and accrued leave
         </p>
       </div>
 
@@ -105,7 +100,7 @@ const ServiceLeaveCredit = () => {
                 Total Employees
               </p>
               <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
-                45
+                4
               </p>
             </div>
           </div>
@@ -132,10 +127,10 @@ const ServiceLeaveCredit = () => {
             </div>
             <div>
               <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
-                Total Leave Days
+                Total Service Days
               </p>
               <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
-                675
+                78
               </p>
             </div>
           </div>
@@ -165,27 +160,12 @@ const ServiceLeaveCredit = () => {
                 Used This Month
               </p>
               <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
-                28
+                18
               </p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Click outside to close dropdown */}
-      {showDepartmentDropdown && (
-        <div
-          onClick={() => setShowDepartmentDropdown(false)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 999
-          }}
-        />
-      )}
 
       {/* Department Selection Header */}
       <div style={{
@@ -214,7 +194,7 @@ const ServiceLeaveCredit = () => {
             color: '#6b7280',
             fontFamily: "'Inter', sans-serif"
           }}>
-            Choose a department to view employee credits
+            Choose a department to view accrued leave
           </p>
         </div>
         <div style={{ position: 'relative' }}>
@@ -238,7 +218,7 @@ const ServiceLeaveCredit = () => {
             }}
           >
             <span>{selectedDepartment}</span>
-            <ChevronDown size={16} color="#6b7280" />
+            <Search size={16} color="#6b7280" />
           </button>
           
           {showDepartmentDropdown && (
@@ -290,7 +270,21 @@ const ServiceLeaveCredit = () => {
         </div>
       </div>
 
-      
+      {/* Click outside to close dropdown */}
+      {showDepartmentDropdown && (
+        <div
+          onClick={() => setShowDepartmentDropdown(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 999
+          }}
+        />
+      )}
+
       {/* Search and Actions */}
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <div style={{ flex: 1, position: 'relative', maxWidth: '800px' }}>
@@ -358,7 +352,7 @@ const ServiceLeaveCredit = () => {
           transition: 'background-color 0.2s'
         }}>
           <Plus size={20} />
-          Add Credit
+          Add Service Credit
         </button>
       </div>
 
@@ -373,7 +367,7 @@ const ServiceLeaveCredit = () => {
         {/* Table Header */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 120px',
+          gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 120px',
           padding: '16px 20px',
           backgroundColor: '#f9fafb',
           borderBottom: '1px solid #e5e7eb',
@@ -465,4 +459,4 @@ const ServiceLeaveCredit = () => {
   );
 };
 
-export default ServiceLeaveCredit;
+export default AccruedLeave;

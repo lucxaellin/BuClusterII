@@ -24,20 +24,7 @@ const Navbar = () => {
         alignItems: 'center',
         gap: '12px'
       }}>
-        <div style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '6px',
-          backgroundColor: '#0074AD',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 'bold',
-          color: 'white',
-          fontSize: '14px'
-        }}>
-          BU
-        </div>
+ 
         <h1 style={{
           margin: 0,
           fontSize: '18px',
@@ -45,7 +32,7 @@ const Navbar = () => {
           color: '#1f2937',
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          CLUSTER2
+          CLUSTER II
         </h1>
       </div>
 

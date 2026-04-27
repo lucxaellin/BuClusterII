@@ -18,6 +18,8 @@ import BUCDM80 from "../pages/BUCDM80";
 import BUGS01 from "../pages/BUGS01";
 import BUCL39 from "../pages/BUCL39";
 import BUCAL03 from "../pages/BUCAL03";
+import AccruedLeave from "../pages/AccruedLeave";
+import TeachersLeave from "../pages/TeachersLeave";
 
 export default function AppRoutes() {
   return (
@@ -30,6 +32,8 @@ export default function AppRoutes() {
         <Route path="/Outgoing" element={<Outgoing />} />
         <Route path="/DisbursementVoucher" element={<DisbursementVoucher />} />
         <Route path="/TemplateCopies" element={<TemplateCopies />} />
+        <Route path="/AccruedLeave" element={<AccruedLeave />} />
+        <Route path="/TeachersLeave" element={<TeachersLeave />} />
         <Route path="/ServiceLeaveCredit" element={<ServiceLeaveCredit />} />
         <Route path="/SupplyProperty" element={<SupplyProperty />} />
         <Route path="/AccountManagement" element={<AccountManagement />} />

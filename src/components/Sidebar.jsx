@@ -207,6 +207,84 @@ function SubItem({ label, active, onClick }) {
   );
 }
 
+// ── Service/Leave Dropdown Component ──────────────────────────────────────────
+function ServiceLeaveDropdown({ active, onSubSelect, activeSubItem }) {
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const leaveTypes = [
+    { label: "Accrued Leave", path: "/AccruedLeave" },
+    { label: "Teachers Leave", path: "/TeachersLeave" }
+  ];
+
+  const handleLeaveClick = (leaveType) => {
+    onSubSelect(leaveType.label);
+    navigate(leaveType.path);
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(o => !o)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display:       "flex",
+          alignItems:    "center",
+          gap:           12,
+          width:         "100%",
+          padding:       "11px 20px",
+          background:    active
+            ? "rgba(255,255,255,0.15)"
+            : hovered
+            ? "rgba(255,255,255,0.08)"
+            : "transparent",
+          border:        "none",
+          borderLeft:    active ? `3px solid ${C.accent}` : "3px solid transparent",
+          cursor:        "pointer",
+          color:         active ? C.text : "rgba(255,255,255,0.85)",
+          fontFamily:    C.font,
+          fontSize:      15,
+          fontWeight:    active ? 700 : 500,
+          letterSpacing:  0.2,
+          textAlign:     "left",
+          transition:    "background .15s, color .15s",
+        }}
+      >
+        <FileText size={18} strokeWidth={1.8} style={{ flexShrink: 0 }} />
+        <span style={{ flex: 1 }}>Service/Leave Credit</span>
+        {open
+          ? <ChevronDown size={15} color="rgba(255,255,255,0.6)" />
+          : <ChevronRight size={15} color="rgba(255,255,255,0.6)" />
+        }
+      </button>
+
+      {/* Dropdown panel */}
+      <div
+        style={{
+          maxHeight:   open ? `${leaveTypes.length * 44}px` : "0px",
+          overflow:    "hidden",
+          transition:  "max-height .25s ease",
+          background:  C.primaryDark,
+        }}
+      >
+        {leaveTypes.map(type => {
+          const isActive = activeSubItem === type.label;
+          return (
+            <SubItem
+              key={type.label}
+              label={type.label}
+              active={isActive}
+              onClick={() => handleLeaveClick(type)}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
 // ── Collapsed Nav Item Component ─────────────────────────────────────────────────
 function CollapsedNavItem({ icon: Icon, label, active, onClick }) {
   const [hovered, setHovered] = useState(false);
@@ -301,7 +379,7 @@ function BurgerButton({ isCollapsed, onToggle }) {
 
 // ── MAIN SIDEBAR ──────────────────────────────────────────────────────────────
 export default function Sidebar() {
-  const [active,       setActive]       = useState("Incoming");
+  const [active,       setActive]       = useState("Dashboard");
   const [activeSubItem, setActiveSubItem] = useState(null);
   const [isCollapsed, setIsCollapsed]   = useState(false);
 
@@ -481,22 +559,11 @@ export default function Sidebar() {
                 active={active === "Records"}
                 onClick={() => handleNav("Records")}
               />
-              <Link to="/TemplateCopies" style={{ textDecoration: 'none' }}>
-                <CollapsedNavItem
-                  icon={Copy}
-                  label="Template Copies"
-                  active={active === "Template Copies"}
-                  onClick={() => handleNav("Template Copies")}
-                />
-              </Link>
-              <Link to="/ServiceLeaveCredit" style={{ textDecoration: 'none' }}>
-                <CollapsedNavItem
-                  icon={FileText}
-                  label="Service/Leave Credit"
-                  active={active === "Service/Leave Credit"}
-                  onClick={() => handleNav("Service/Leave Credit")}
-                />
-              </Link>
+              <ServiceLeaveDropdown
+                active={active === "Service/Leave Credit"}
+                onSubSelect={handleSubSelect}
+                activeSubItem={activeSubItem}
+              />
               <Link to="/SupplyProperty" style={{ textDecoration: 'none' }}>
                 <CollapsedNavItem
                   icon={Package}
@@ -540,23 +607,11 @@ export default function Sidebar() {
             onSubSelect={handleSubSelect}
             activeSubItem={activeSubItem}
           />
-
-          <Link to="/TemplateCopies" style={{ textDecoration: 'none' }}>
-            <NavItem
-              icon={Copy}
-              label="Template Copies"
-              active={active === "Template Copies"}
-              onClick={() => handleNav("Template Copies")}
-            />
-          </Link>
-          <Link to="/ServiceLeaveCredit" style={{ textDecoration: 'none' }}>
-            <NavItem
-              icon={FileText}
-              label="Service/Leave Credit"
-              active={active === "Service/Leave Credit"}
-              onClick={() => handleNav("Service/Leave Credit")}
-            />
-          </Link>
+          <ServiceLeaveDropdown
+            active={active === "Service/Leave Credit"}
+            onSubSelect={handleSubSelect}
+            activeSubItem={activeSubItem}
+          />
           <Link to="/SupplyProperty" style={{ textDecoration: 'none' }}>
             <NavItem
               icon={Package}
