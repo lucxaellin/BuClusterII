@@ -661,12 +661,7 @@ const TeachersLeave = () => {
               gap: '8px'
             }}>
               <User size={20} color="#6b7280" />
-              <div>
-                {credit.facultyName}
-                <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-                  {credit.reason || 'N/A'}
-                </div>
-              </div>
+              {credit.facultyName}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
               {credit.position || 'N/A'}
@@ -683,7 +678,10 @@ const TeachersLeave = () => {
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
               {credit.asOf || new Date().toLocaleDateString()}
             </div>
-            <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end' }}>
+            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+              {credit.reason || 'N/A'}
+            </div>
+            <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-start' }}>
               <button
                 title="Edit"
                 onClick={() => handleEditClick(credit)}
@@ -700,6 +698,35 @@ const TeachersLeave = () => {
                 }}
               >
                 <User size={16} color="#6b7280" />
+              </button>
+              <button
+                title="Delete"
+                onClick={() => {
+                  if (window.confirm(`Are you sure you want to delete ${credit.facultyName}?`)) {
+                    setCredits(prevCredits => prevCredits.filter(c => c.id !== credit.id));
+                  }
+                }}
+                style={{
+                  padding: '6px',
+                  backgroundColor: 'transparent',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#fee2e2';
+                  e.target.style.borderColor = '#ef4444';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = 'transparent';
+                  e.target.style.borderColor = '#e5e7eb';
+                }}
+              >
+                <FileText size={16} color="#ef4444" />
               </button>
             </div>
           </div>

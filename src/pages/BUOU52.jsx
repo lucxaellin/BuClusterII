@@ -93,6 +93,7 @@ const BUOU52 = () => {
       id: 6,
       date: '02/03/2025',
       pageNumber: '1-4',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Brown',
@@ -104,6 +105,7 @@ const BUOU52 = () => {
       id: 7,
       date: '02/03/2025',
       pageNumber: '2-6',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: 'Dr. Davis',
@@ -115,6 +117,7 @@ const BUOU52 = () => {
       id: 8,
       date: '02/03/2025',
       pageNumber: '1-3',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: '',
@@ -126,6 +129,7 @@ const BUOU52 = () => {
       id: 9,
       date: '02/03/2025',
       pageNumber: '4-9',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: 'Dr. Miller',
@@ -137,6 +141,7 @@ const BUOU52 = () => {
       id: 10,
       date: '02/03/2025',
       pageNumber: '1-2',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Wilson',
@@ -148,6 +153,7 @@ const BUOU52 = () => {
       id: 11,
       date: '02/03/2025',
       pageNumber: '3-5',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: '',
@@ -159,6 +165,7 @@ const BUOU52 = () => {
       id: 12,
       date: '02/03/2025',
       pageNumber: '1-4',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: 'Dr. Moore',
@@ -170,6 +177,7 @@ const BUOU52 = () => {
       id: 13,
       date: '02/03/2025',
       pageNumber: '2-7',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: 'Dr. Taylor',
@@ -181,6 +189,7 @@ const BUOU52 = () => {
       id: 14,
       date: '02/03/2025',
       pageNumber: '1-3',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: '',
@@ -192,6 +201,7 @@ const BUOU52 = () => {
       id: 15,
       date: '02/03/2025',
       pageNumber: '4-8',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: 'Dr. Anderson',
@@ -203,6 +213,7 @@ const BUOU52 = () => {
       id: 16,
       date: '02/03/2025',
       pageNumber: '1-2',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: 'Dr. Thomas',
@@ -214,6 +225,7 @@ const BUOU52 = () => {
       id: 17,
       date: '02/03/2025',
       pageNumber: '3-6',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: '',
@@ -225,6 +237,7 @@ const BUOU52 = () => {
       id: 18,
       date: '02/03/2025',
       pageNumber: '1-5',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Jackson',
@@ -236,6 +249,7 @@ const BUOU52 = () => {
       id: 19,
       date: '02/03/2025',
       pageNumber: '2-4',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: 'Dr. White',
@@ -247,6 +261,7 @@ const BUOU52 = () => {
       id: 20,
       date: '02/03/2025',
       pageNumber: '1-3',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: '',
@@ -258,6 +273,7 @@ const BUOU52 = () => {
       id: 21,
       date: '02/03/2025',
       pageNumber: '5-9',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: 'Dr. Harris',
@@ -269,6 +285,7 @@ const BUOU52 = () => {
       id: 22,
       date: '02/03/2025',
       pageNumber: '1-2',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Martin',
@@ -280,6 +297,7 @@ const BUOU52 = () => {
       id: 23,
       date: '02/03/2025',
       pageNumber: '3-7',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: '',
@@ -291,6 +309,7 @@ const BUOU52 = () => {
       id: 24,
       date: '02/03/2025',
       pageNumber: '1-4',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: 'Dr. Thompson',
@@ -302,6 +321,7 @@ const BUOU52 = () => {
       id: 25,
       date: '02/03/2025',
       pageNumber: '2-6',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: 'Dr. Garcia',
@@ -313,6 +333,7 @@ const BUOU52 = () => {
       id: 26,
       date: '02/03/2025',
       pageNumber: '1-3',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: '',
@@ -324,6 +345,7 @@ const BUOU52 = () => {
       id: 27,
       date: '02/03/2025',
       pageNumber: '4-8',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: 'Dr. Martinez',
@@ -335,6 +357,7 @@ const BUOU52 = () => {
       id: 28,
       date: '02/03/2025',
       pageNumber: '1-2',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: 'Dr. Robinson',
@@ -346,6 +369,7 @@ const BUOU52 = () => {
       id: 29,
       date: '02/03/2025',
       pageNumber: '3-5',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: '',
@@ -357,6 +381,7 @@ const BUOU52 = () => {
       id: 30,
       date: '02/03/2025',
       pageNumber: '1-4',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Clark',
@@ -368,6 +393,7 @@ const BUOU52 = () => {
       id: 31,
       date: '02/03/2025',
       pageNumber: '2-7',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: 'Dr. Rodriguez',
@@ -379,6 +405,7 @@ const BUOU52 = () => {
       id: 32,
       date: '02/03/2025',
       pageNumber: '1-3',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Ruby',
       dean: '',
@@ -390,6 +417,7 @@ const BUOU52 = () => {
       id: 33,
       date: '02/03/2025',
       pageNumber: '5-9',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mitch',
       dean: 'Dr. Lewis',
@@ -401,6 +429,7 @@ const BUOU52 = () => {
       id: 34,
       date: '02/03/2025',
       pageNumber: '1-2',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Mau',
       dean: 'Dr. Lee',
@@ -412,6 +441,7 @@ const BUOU52 = () => {
       id: 35,
       date: '02/03/2025',
       pageNumber: '3-6',
+      title: 'Incoming Document',
       particulars: 'Incoming Document',
       admin: 'Jing',
       dean: '',
@@ -878,7 +908,7 @@ const BUOU52 = () => {
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          BUOU DOCUMENTS BU-LB-CLUSTER II-52
+          BU OPEN UNIVERSITY RECORDS BU-LB-CLUSTER II-52
         </h1>
         <p style={{
           fontSize: '16px',
@@ -1061,10 +1091,10 @@ type="text"
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '4px',
-                cursor: file.particulars && file.particulars.length > 50 ? 'pointer' : 'default',
+                cursor: file.particulars ? 'pointer' : 'default',
                 textAlign: 'left'
               }}
-              onClick={() => file.particulars && file.particulars.length > 50 && !expandedRows.has(file.id) && toggleRowExpansion(file.id)}>
+              onClick={() => file.particulars && !expandedRows.has(file.id) && toggleRowExpansion(file.id)}>
                 {/* Title */}
                 <div style={{ fontWeight: '600' }}>
                   {file.title || '-'}
@@ -1104,18 +1134,16 @@ type="text"
                         </span>
                       </div>
                     ) : (
-                      file.particulars.length > 50 && (
-                        <div>
-                          <span style={{ 
-                            color: '#0074AD',
-                            fontSize: '12px',
-                            cursor: 'pointer',
-                            textDecoration: 'underline'
-                          }}>
-                            view full particulars
-                          </span>
-                        </div>
-                      )
+                      <div>
+                        <span style={{ 
+                          color: '#0074AD',
+                          fontSize: '12px',
+                          cursor: 'pointer',
+                          textDecoration: 'underline'
+                        }}>
+                          view full particulars
+                        </span>
+                      </div>
                     )}
                   </div>
                 )}
@@ -2450,7 +2478,7 @@ type="text"
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
-                  Date (MM/DD/YYYY)
+                  Date (MM/DD/YYYY) *
                 </label>
                 <div style={{ position: 'relative' }}>
                   <input
@@ -2466,7 +2494,7 @@ type="text"
                       border: '1px solid #e5e7eb',
                       borderRadius: '8px',
                       fontSize: '14px',
-                      fontFamily: "'Inter', sans-serif",
+                      fontFamily: "Inter, sans-serif",
                       outline: 'none',
                       boxSizing: 'border-box'
                     }}
@@ -2513,12 +2541,16 @@ type="text"
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
-                  Page Number
+                  Page Number *
                 </label>
                 <input
                   type="text"
                   value={selectedPageNumber}
-                  onChange={(e) => setSelectedPageNumber(e.target.value)}
+                  onChange={(e) => {
+                    // Only allow numbers and hyphens
+                    const value = e.target.value.replace(/[^0-9-]/g, '');
+                    setSelectedPageNumber(value);
+                  }}
                   placeholder="e.g., 1-5, 3, 7-12"
                   style={{
                     width: '100%',
@@ -2878,7 +2910,13 @@ type="text"
               </button>
               <button
                 onClick={() => {
-                  if (selectedTitle && fileName) {
+                  // Validate required fields
+                  const dateValid = selectedDate && selectedDate.trim() !== '';
+                  const titleValid = selectedTitle && selectedTitle.trim() !== '';
+                  const particularsValid = fileName && fileName.trim() !== '';
+                  const pageNumberValid = selectedPageNumber && selectedPageNumber.trim() !== '';
+                  
+                  if (dateValid && titleValid && particularsValid && pageNumberValid) {
                     // Add new record to the list
                     const newRecord = {
                       id: files.length + 1,
@@ -2905,18 +2943,30 @@ type="text"
                     setSelectedBudget('');
                     setSelectedAccounting('');
                   } else {
-                    alert('Please fill in the title and particulars fields');
+                    alert('Please fill in all required fields: Date, Page Number, Title, and Particulars');
                   }
                 }}
+                disabled={!(selectedDate && selectedDate.trim() !== '' && 
+                         selectedTitle && selectedTitle.trim() !== '' && 
+                         fileName && fileName.trim() !== '' && 
+                         selectedPageNumber && selectedPageNumber.trim() !== '')}
                 style={{
                   padding: '12px 24px',
                   border: 'none',
                   borderRadius: '8px',
-                  backgroundColor: '#0074AD',
+                  backgroundColor: (selectedDate && selectedDate.trim() !== '' && 
+                                   selectedTitle && selectedTitle.trim() !== '' && 
+                                   fileName && fileName.trim() !== '' && 
+                                   selectedPageNumber && selectedPageNumber.trim() !== '') 
+                                   ? '#0074AD' : '#9ca3af',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
-                  cursor: 'pointer',
+                  cursor: (selectedDate && selectedDate.trim() !== '' && 
+                          selectedTitle && selectedTitle.trim() !== '' && 
+                          fileName && fileName.trim() !== '' && 
+                          selectedPageNumber && selectedPageNumber.trim() !== '') 
+                          ? 'pointer' : 'not-allowed',
                   transition: 'all 0.2s',
                   fontFamily: "'Inter', sans-serif"
                 }}
