@@ -1,22 +1,564 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, User, Clock, TrendingUp, Search, Filter, Plus, ChevronDown } from 'lucide-react';
+import { FileText, User, Search, Filter, Plus, ChevronDown } from 'lucide-react';
 
 const TeachersLeave = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
   const [searchTerm, setSearchTerm] = useState('');
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [filterValues, setFilterValues] = useState({
+    asOfDate: '',
+    position: ''
+  });
   const [credits, setCredits] = useState([
-    { id: 2, facultyName: 'Jane Smith', employeeId: 'T-001', department: 'BUCAL', leaveType: 'Sick Leave', totalDays: 10, used: 5, balance: 5, dateFrom: '01/10/2025', dateTo: '01/14/2025', status: 'Active', asOf: '01/15/2025' },
-    { id: 4, facultyName: 'Sarah Williams', employeeId: 'T-002', department: 'BUJMRIGD', leaveType: 'Personal Leave', totalDays: 15, used: 12, balance: 3, dateFrom: '01/05/2025', dateTo: '01/12/2025', status: 'Low Balance', asOf: '01/13/2025' },
-    { id: 6, facultyName: 'Emily Davis', employeeId: 'T-003', department: 'BUCDM', leaveType: 'Vacation Leave', totalDays: 12, used: 3, balance: 9, dateFrom: '01/08/2025', dateTo: '01/10/2025', status: 'Active', asOf: '01/11/2025' },
-    { id: 8, facultyName: 'Lisa Anderson', employeeId: 'T-004', department: 'BUCAL', leaveType: 'Maternity Leave', totalDays: 8, used: 7, balance: 1, dateFrom: '01/01/2025', dateTo: '01/08/2025', status: 'Low Balance', asOf: '01/09/2025' },
+    { id: 2, facultyName: 'Jane Smith', employeeId: 'T-001', department: 'BUCAL', leaveType: 'Sick Leave', balance: 5, status: 'Active', asOf: '01/15/2025', position: 'Professor' },
+    { id: 4, facultyName: 'Sarah Williams', employeeId: 'T-002', department: 'BUJMRIGD', leaveType: 'Personal Leave', balance: 3, status: 'Low Balance', asOf: '01/13/2025', position: 'Instructor' },
+    { id: 6, facultyName: 'Emily Davis', employeeId: 'T-003', department: 'BUCDM', leaveType: 'Vacation Leave', balance: 9, status: 'Active', asOf: '01/11/2025', position: 'Associate Professor' },
+    { id: 8, facultyName: 'Lisa Anderson', employeeId: 'T-004', department: 'BUCAL', leaveType: 'Maternity Leave', balance: 1, status: 'Low Balance', asOf: '01/09/2025', position: 'Assistant Professor' },
   ]);
 
   const handleEditClick = (faculty) => {
     setSelectedFaculty(faculty);
     setShowEditForm(true);
+  };
+
+  const handleAddClick = () => {
+    setShowAddForm(true);
+  };
+
+  const handleFilterClick = () => {
+    setShowFilterModal(true);
+  };
+
+  const FilterModal = ({ onClose, onApply, onClear }) => {
+    const [localFilterValues, setLocalFilterValues] = useState(filterValues);
+
+    const handleInputChange = (field, value) => {
+      setLocalFilterValues(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    };
+
+    const handleApply = () => {
+      setFilterValues(localFilterValues);
+      onApply(localFilterValues);
+      onClose();
+    };
+
+    const handleClear = () => {
+      const clearedValues = { asOfDate: '', position: '' };
+      setLocalFilterValues(clearedValues);
+      setFilterValues(clearedValues);
+      onClear();
+      onClose();
+    };
+
+    // Get unique positions from credits for dropdown
+    const uniquePositions = [...new Set(credits.map(c => c.position).filter(Boolean))];
+
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          padding: '24px',
+          width: '90%',
+          maxWidth: '500px',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+        }}>
+          {/* Header */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '20px'
+          }}>
+            <h2 style={{
+              margin: 0,
+              fontSize: '20px',
+              fontWeight: '600',
+              color: '#1f2937',
+              fontFamily: "'Inter', sans-serif"
+            }}>
+              Filter Faculty
+            </h2>
+            <button
+              onClick={onClose}
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: '24px',
+                cursor: 'pointer',
+                color: '#6b7280'
+              }}
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Filter Fields */}
+          <div style={{
+            backgroundColor: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            padding: '20px'
+          }}>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '8px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                As Of Date
+              </label>
+              <input
+                type="date"
+                value={localFilterValues.asOfDate}
+                onChange={(e) => handleInputChange('asOfDate', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '8px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Position
+              </label>
+              <select
+                value={localFilterValues.position}
+                onChange={(e) => handleInputChange('position', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  backgroundColor: '#ffffff'
+                }}
+              >
+                <option value="">All Positions</option>
+                {uniquePositions.map((position, index) => (
+                  <option key={index} value={position}>
+                    {position}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'flex-end',
+            marginTop: '20px'
+          }}>
+            <button
+              onClick={handleClear}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e5e7eb',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#6b7280',
+                cursor: 'pointer',
+                fontFamily: "'Inter', sans-serif"
+              }}
+            >
+              Clear
+            </button>
+            <button
+              onClick={onClose}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e5e7eb',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#6b7280',
+                cursor: 'pointer',
+                fontFamily: "'Inter', sans-serif"
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleApply}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#0074AD',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#ffffff',
+                cursor: 'pointer',
+                fontFamily: "'Inter', sans-serif"
+              }}
+            >
+              Apply Filter
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const AddFacultyForm = ({ onClose, onSave }) => {
+    const [formData, setFormData] = useState({
+      facultyName: '',
+      divisionOffice: '',
+      firstDayService: '',
+      position: '',
+      department: 'BUCAL',
+      serviceCreditEarned: '',
+      leaveTakenUndertime: '',
+      remarks: ''
+    });
+
+    const handleInputChange = (field, value) => {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    };
+
+    const handleSave = () => {
+      // Validate required fields
+      if (!formData.facultyName.trim() || !formData.divisionOffice.trim() || !formData.position.trim()) {
+        alert('Please fill in all required fields: Faculty Name, Division/Office, and Position');
+        return;
+      }
+      onSave(formData);
+      onClose();
+    };
+
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          padding: '20px',
+          width: '90%',
+          maxWidth: '600px',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
+        }}>
+          {/* Header */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '16px'
+          }}>
+            <h2 style={{
+              margin: 0,
+              fontSize: '24px',
+              fontWeight: '600',
+              color: '#1f2937',
+              fontFamily: "'Inter', sans-serif"
+            }}>
+              Add New Faculty
+            </h2>
+            <button
+              onClick={onClose}
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: '24px',
+                cursor: 'pointer',
+                color: '#6b7280'
+              }}
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Form Fields */}
+          <div style={{
+            backgroundColor: '#f8fafc',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            padding: '20px'
+          }}>
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Faculty Name <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.facultyName}
+                onChange={(e) => handleInputChange('facultyName', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+                placeholder="Enter faculty name"
+              />
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Division/Office <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.divisionOffice}
+                onChange={(e) => handleInputChange('divisionOffice', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+                placeholder="Enter division or office"
+              />
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                1st Day of Service
+              </label>
+              <input
+                type="date"
+                value={formData.firstDayService}
+                onChange={(e) => handleInputChange('firstDayService', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Position <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.position}
+                onChange={(e) => handleInputChange('position', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+                placeholder="Enter position"
+              />
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Department
+              </label>
+              <select
+                value={formData.department}
+                onChange={(e) => handleInputChange('department', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  backgroundColor: '#ffffff'
+                }}
+              >
+                <option value="BUGS">BUGS</option>
+                <option value="BUCAL">BUCAL</option>
+                <option value="BUCL">BUCL</option>
+                <option value="BUJMRIGD">BUJMRIGD</option>
+                <option value="BUOU">BUOU</option>
+                <option value="BUCDM">BUCDM</option>
+              </select>
+            </div>
+
+            
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#374151',
+                marginBottom: '6px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Remarks
+              </label>
+              <textarea
+                value={formData.remarks}
+                onChange={(e) => handleInputChange('remarks', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  minHeight: '80px',
+                  resize: 'vertical'
+                }}
+                placeholder="Enter any additional remarks"
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'flex-end',
+            marginTop: '20px'
+          }}>
+            <button
+              onClick={onClose}
+              style={{
+                padding: '12px 24px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e5e7eb',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#6b7280',
+                cursor: 'pointer',
+                fontFamily: "'Inter', sans-serif"
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              style={{
+                padding: '12px 24px',
+                backgroundColor: '#0074AD',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#ffffff',
+                cursor: 'pointer',
+                fontFamily: "'Inter', sans-serif"
+              }}
+            >
+              Add Faculty
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const FacultyLeaveForm = ({ faculty, onClose, onSave }) => {
@@ -43,13 +585,28 @@ const TeachersLeave = () => {
     });
 
     const handleInputChange = (field, value) => {
-      setFormData(prev => ({
-        ...prev,
-        [field]: value
-      }));
+      // Validate numeric fields
+      if (field === 'serviceCreditEarned' || field === 'leaveTakenUndertime') {
+        // Allow only numbers and empty string
+        const numericValue = value.replace(/[^0-9]/g, '');
+        setFormData(prev => ({
+          ...prev,
+          [field]: numericValue
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [field]: value
+        }));
+      }
     };
 
     const handleSave = () => {
+      // Validate required fields
+      if (!formData.name.trim() || !formData.position.trim()) {
+        alert('Please fill in all required fields: Faculty Name and Position');
+        return;
+      }
       onSave(formData);
       onClose();
     };
@@ -381,11 +938,23 @@ const TeachersLeave = () => {
   ];
 
   
-  // Filter credits based on department and search term
+  // Filter credits based on department, search term, asOf date, and position
   const filteredCredits = credits.filter(credit => {
     const matchesDepartment = selectedDepartment === 'All Departments' || credit.department === selectedDepartment;
     const matchesSearch = credit.facultyName.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesDepartment && matchesSearch;
+    
+    // As Of date filtering
+    let matchesAsOfDate = true;
+    if (filterValues.asOfDate) {
+      const creditDate = new Date(credit.asOf);
+      const filterDate = new Date(filterValues.asOfDate);
+      matchesAsOfDate = creditDate.toDateString() === filterDate.toDateString();
+    }
+    
+    // Position filtering
+    const matchesPosition = !filterValues.position || credit.position === filterValues.position;
+    
+    return matchesDepartment && matchesSearch && matchesAsOfDate && matchesPosition;
   });
 
   return (
@@ -485,7 +1054,7 @@ const TeachersLeave = () => {
               borderRadius: '8px',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               zIndex: 1000,
-              maxHeight: '200px',
+              maxHeight: '500px',
               overflowY: 'auto'
             }}>
               {departments.map((dept) => (
@@ -555,7 +1124,7 @@ const TeachersLeave = () => {
           </button>
           <input
             type="text"
-            placeholder="Search faculty..."
+            placeholder="Search faculty"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
@@ -571,42 +1140,46 @@ const TeachersLeave = () => {
             }}
           />
         </div>
-        <button style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '12px 16px',
-          backgroundColor: '#ffffff',
-          color: '#6b7280',
-          border: '1px solid #e5e7eb',
-          borderRadius: '8px',
-          fontSize: '14px',
-          fontWeight: '500',
-          cursor: 'pointer',
-          fontFamily: "'Inter', sans-serif",
-          transition: 'all 0.2s'
-        }}>
-          <Filter size={20} />
-          Filter
-        </button>
-        <button style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '12px 16px',
-          backgroundColor: '#0074AD',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '14px',
-          fontWeight: '500',
-          cursor: 'pointer',
-          fontFamily: "'Inter', sans-serif",
-          transition: 'background-color 0.2s'
-        }}>
-          <Plus size={20} />
-          Add Faculty
-        </button>
+        <button 
+          onClick={handleFilterClick}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: '#ffffff',
+            color: '#6B7280',
+            border: '1px solid #E5E7EB',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            fontFamily: "'Inter', sans-serif",
+            transition: 'all 0.2s'
+          }}>
+            <Filter size={20} />
+            Filter
+          </button>
+        <button 
+          onClick={handleAddClick}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: '#0074AD',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            fontFamily: "'Inter', sans-serif",
+            transition: 'background-color 0.2s'
+          }}>
+            <Plus size={20} />
+            Add Faculty
+          </button>
       </div>
 
       {/* Credits Table */}
@@ -655,25 +1228,21 @@ const TeachersLeave = () => {
             <div style={{ 
               fontSize: '14px', 
               color: '#1f2937', 
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
+              fontWeight: '500'
             }}>
-              <User size={20} color="#6b7280" />
               {credit.facultyName}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
-              {credit.position || 'N/A'}
+              {credit.position || '0'}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
-              {credit.serviceCreditEarned || 'N/A'}
+              {credit.serviceCreditEarned || '0'}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
-              {credit.leaveTakenUndertime || 'N/A'}
+              {credit.leaveTakenUndertime || '0'}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
-              {credit.balance || 'N/A'}
+              {credit.balance || '0'}
             </div>
             <div style={{ fontSize: '14px', color: '#6b7280' }}>
               {credit.asOf || new Date().toLocaleDateString()}
@@ -783,6 +1352,49 @@ const TeachersLeave = () => {
               };
               setCredits(prevCredits => [...prevCredits, newFaculty]);
             }
+          }}
+        />
+      )}
+
+      {/* Add Faculty Form Modal */}
+      {showAddForm && (
+        <AddFacultyForm
+          onClose={() => {
+            setShowAddForm(false);
+          }}
+          onSave={(formData) => {
+            // Add new faculty to the credits array
+            const newFaculty = {
+              id: Math.max(...credits.map(c => c.id)) + 1,
+              facultyName: formData.facultyName,
+              position: formData.position,
+              department: formData.department,
+              serviceCreditEarned: formData.serviceCreditEarned || '0',
+              leaveTakenUndertime: formData.leaveTakenUndertime || '0',
+              balance: 0,
+              asOf: new Date().toISOString().split('T')[0],
+              reason: formData.remarks,
+              leaveType: 'General',
+              status: 'Active',
+              divisionOffice: formData.divisionOffice,
+              firstDayService: formData.firstDayService
+            };
+            setCredits(prevCredits => [...prevCredits, newFaculty]);
+          }}
+        />
+      )}
+
+      {/* Filter Modal */}
+      {showFilterModal && (
+        <FilterModal
+          onClose={() => {
+            setShowFilterModal(false);
+          }}
+          onApply={(filters) => {
+            // Filter logic is already applied in filteredCredits function
+          }}
+          onClear={() => {
+            // Clear logic is already handled in FilterModal component
           }}
         />
       )}

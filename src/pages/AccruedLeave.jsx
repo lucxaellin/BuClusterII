@@ -1052,9 +1052,9 @@ const AccuredLeave = () => {
               backgroundColor: 'white',
               border: '1px solid #e5e7eb',
               borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 4px 6px rgba(0, 71, 151, 0.1)',
               zIndex: 1000,
-              maxHeight: '200px',
+              maxHeight: '500px',
               overflowY: 'auto'
             }}>
               {departments.map((dept) => (
@@ -1124,7 +1124,7 @@ const AccuredLeave = () => {
           </button>
           <input
             type="text"
-            placeholder="Search faculty..."
+            placeholder="Search faculty"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
