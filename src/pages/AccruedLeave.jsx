@@ -74,7 +74,7 @@ const AccuredLeave = () => {
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '12px',
           padding: '24px',
           width: '90%',
@@ -94,7 +94,7 @@ const AccuredLeave = () => {
               margin: 0,
               fontSize: '20px',
               fontWeight: '600',
-              color: '#1f2937',
+              color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               Filter Faculty
@@ -125,7 +125,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '8px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -138,7 +138,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -153,7 +153,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '8px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -165,7 +165,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -196,11 +196,11 @@ const AccuredLeave = () => {
               style={{
                 padding: '10px 20px',
                 backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -212,11 +212,11 @@ const AccuredLeave = () => {
               style={{
                 padding: '10px 20px',
                 backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -288,7 +288,7 @@ const AccuredLeave = () => {
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '12px',
           padding: '20px',
           width: '90%',
@@ -308,7 +308,7 @@ const AccuredLeave = () => {
               margin: 0,
               fontSize: '24px',
               fontWeight: '600',
-              color: '#1f2937',
+              color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               Add New Faculty
@@ -339,7 +339,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -352,7 +352,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -368,7 +368,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -381,7 +381,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -397,7 +397,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -410,7 +410,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -425,7 +425,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -438,7 +438,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -454,7 +454,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -466,7 +466,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -490,7 +490,7 @@ const AccuredLeave = () => {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#374151',
+                color: 'var(--text-primary)',
                 marginBottom: '6px',
                 fontFamily: "'Inter', sans-serif"
               }}>
@@ -502,7 +502,7 @@ const AccuredLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
@@ -528,11 +528,11 @@ const AccuredLeave = () => {
               style={{
                 padding: '12px 24px',
                 backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -625,7 +625,7 @@ const AccuredLeave = () => {
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '12px',
           padding: '20px',
           width: '90%',
@@ -645,7 +645,7 @@ const AccuredLeave = () => {
               margin: 0,
               fontSize: '24px',
               fontWeight: '600',
-              color: '#1f2937',
+              color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               Bicol University
@@ -692,7 +692,7 @@ const AccuredLeave = () => {
               marginBottom: '8px',
               fontSize: '14px',
               fontWeight: '600',
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif",
               marginLeft: '1px'
             }}>
@@ -713,7 +713,7 @@ const AccuredLeave = () => {
               gap: '8px',
               borderBottom: '1px solid #e2e8f0',
               fontSize: '14px',
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               <div style={{
@@ -885,11 +885,11 @@ const AccuredLeave = () => {
               style={{
                 padding: '12px 24px',
                 backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -980,7 +980,7 @@ const AccuredLeave = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
@@ -990,10 +990,10 @@ const AccuredLeave = () => {
 
       {/* Department Selection Header */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         padding: '20px',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         justifyContent: 'space-between',
@@ -1004,7 +1004,7 @@ const AccuredLeave = () => {
             margin: 0,
             fontSize: '16px',
             fontWeight: '600',
-            color: '#1f2937',
+            color: 'var(--text-primary)',
             fontFamily: "'Inter', sans-serif"
           }}>
             Select Department
@@ -1012,7 +1012,7 @@ const AccuredLeave = () => {
           <p style={{
             margin: '4px 0 0 0',
             fontSize: '14px',
-            color: '#6b7280',
+            color: 'var(--text-secondary)',
             fontFamily: "'Inter', sans-serif"
           }}>
             Choose a department to view teacher leave credits
@@ -1028,11 +1028,11 @@ const AccuredLeave = () => {
               gap: '8px',
               padding: '12px 16px',
               backgroundColor: '#ffffff',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
-              color: '#374151',
+              color: 'var(--text-primary)',
               cursor: 'pointer',
               fontFamily: "'Inter', sans-serif",
               minWidth: '200px',
@@ -1049,8 +1049,8 @@ const AccuredLeave = () => {
               top: 'calc(100% + 4px)',
               left: 0,
               right: 0,
-              backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               boxShadow: '0 4px 6px rgba(0, 71, 151, 0.1)',
               zIndex: 1000,
@@ -1074,7 +1074,7 @@ const AccuredLeave = () => {
                     cursor: 'pointer',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    color: '#374151',
+                    color: 'var(--text-primary)',
                     transition: 'background-color 0.2s'
                   }}
                   onMouseEnter={(e) => {
@@ -1130,7 +1130,7 @@ const AccuredLeave = () => {
             style={{
               width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
@@ -1184,9 +1184,9 @@ const AccuredLeave = () => {
 
       {/* Credits Table */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden'
       }}>
@@ -1199,7 +1199,7 @@ const AccuredLeave = () => {
           borderBottom: '1px solid #e5e7eb',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
           fontFamily: "'Inter', sans-serif"
@@ -1227,7 +1227,7 @@ const AccuredLeave = () => {
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: '#1f2937', 
+              color: 'var(--text-primary)', 
               fontWeight: '500'
             }}>
               {credit.facultyName}
@@ -1257,7 +1257,7 @@ const AccuredLeave = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
@@ -1278,7 +1278,7 @@ const AccuredLeave = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',

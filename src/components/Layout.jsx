@@ -1,46 +1,43 @@
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { SIDEBAR_W, SIDEBAR_W_COLLAPSED } from "./Tokens";
 
-function Layout() {
-  const [sidebarWidth, setSidebarWidth] = useState(280);
+export default function Layout() {
+  const [collapsed, setCollapsed] = useState(false);
 
-  // Listen for sidebar width changes
-  useEffect(() => {
-    const handleSidebarChange = (event) => {
-      setSidebarWidth(event.detail.isCollapsed ? 60 : 280);
-    };
+  const handleToggle = () => setCollapsed(v => !v);
 
-    window.addEventListener('sidebarToggle', handleSidebarChange);
-    
-    // Set initial width
-    setSidebarWidth(280);
-
-    return () => {
-      window.removeEventListener('sidebarToggle', handleSidebarChange);
-    };
-  }, []);
+  const sidebarWidth = collapsed ? SIDEBAR_W_COLLAPSED : SIDEBAR_W;
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      {/* Fixed sidebar */}
       <div style={{ position: "fixed", left: 0, top: 0, height: "100vh", zIndex: 1000 }}>
-        <Sidebar />
+        <Sidebar collapsed={collapsed} onToggle={handleToggle} />
       </div>
-      
-      <div style={{ 
-        flex: 1, 
-        marginLeft: `${sidebarWidth}px`, // Dynamic sidebar width
-        display: "flex",
-        flexDirection: "column",
-        transition: "margin-left 0.3s ease" // Smooth transition
-      }}>
-        <Navbar />
-        <div style={{ 
+
+      {/* Main content shifts with sidebar */}
+      <div
+        style={{
           flex: 1,
+          marginLeft: sidebarWidth,
+          display: "flex",
+          flexDirection: "column",
+          transition: "margin-left 0.25s ease",
+          minWidth: 0,
+        }}
+      >
+        <Navbar onToggleSidebar={handleToggle} sidebarCollapsed={collapsed} />
+
+        <div style={{ 
+          flex: 1, 
           padding: "20px", 
           overflow: "auto",
-          height: "calc(100vh - 48px)" // Account for navbar height
+          backgroundColor: 'var(--bg-page)',
+          color: 'var(--text-primary)',
+          transition: 'background-color 0.25s ease, color 0.25s ease'
         }}>
           <Outlet />
         </div>
@@ -48,5 +45,3 @@ function Layout() {
     </div>
   );
 }
-
-export default Layout;

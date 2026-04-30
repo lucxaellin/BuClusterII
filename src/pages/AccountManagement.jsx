@@ -103,7 +103,7 @@ const AccountManagement = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
@@ -118,10 +118,10 @@ const AccountManagement = () => {
         gap: '20px' 
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -137,10 +137,10 @@ const AccountManagement = () => {
               <Users size={20} color="#0074AD" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Total Faculty
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 {facultyAccounts.length}
               </p>
             </div>
@@ -148,10 +148,10 @@ const AccountManagement = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -167,10 +167,10 @@ const AccountManagement = () => {
               <Mail size={20} color="#10b981" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Active Accounts
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 {facultyAccounts.filter(f => f.status === 'Active').length}
               </p>
             </div>
@@ -178,10 +178,10 @@ const AccountManagement = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -197,10 +197,10 @@ const AccountManagement = () => {
               <Shield size={20} color="#f59e0b" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Admin Accounts
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 {facultyAccounts.filter(f => f.role === 'Admin').length}
               </p>
             </div>
@@ -231,7 +231,7 @@ const AccountManagement = () => {
             style={{
               width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
@@ -252,8 +252,8 @@ const AccountManagement = () => {
               gap: '8px',
               padding: '12px 16px',
               backgroundColor: '#ffffff',
-              color: '#374151',
-              border: '1px solid #e5e7eb',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -272,8 +272,8 @@ const AccountManagement = () => {
               top: 'calc(100% + 4px)',
               left: 0,
               right: 0,
-              backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               zIndex: 1000,
@@ -330,9 +330,9 @@ const AccountManagement = () => {
 
       {/* Faculty Accounts Table */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         flex: 1,
@@ -352,7 +352,7 @@ const AccountManagement = () => {
           borderBottom: '1px solid #e5e7eb',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
           fontFamily: "'Inter', sans-serif",
@@ -381,7 +381,7 @@ const AccountManagement = () => {
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: '#1f2937', 
+              color: 'var(--text-primary)', 
               fontWeight: '500'
             }}>
               {faculty.name}
@@ -421,7 +421,7 @@ const AccountManagement = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
@@ -475,7 +475,7 @@ const AccountManagement = () => {
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             padding: '24px',
             width: '90%',
@@ -502,7 +502,7 @@ const AccountManagement = () => {
               handleAddFaculty(formData);
             }}>
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Faculty Name <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -512,7 +512,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -523,7 +523,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Email Address <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -533,7 +533,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -544,7 +544,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Department <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <select
@@ -553,7 +553,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -568,7 +568,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Position <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -578,7 +578,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -595,11 +595,11 @@ const AccountManagement = () => {
                   style={{
                     padding: '12px 24px',
                     backgroundColor: '#ffffff',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     cursor: 'pointer'
                   }}
                 >
@@ -641,7 +641,7 @@ const AccountManagement = () => {
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             padding: '24px',
             width: '90%',
@@ -672,7 +672,7 @@ const AccountManagement = () => {
               handleEditFaculty(formData);
             }}>
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Faculty Name <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -683,7 +683,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -693,7 +693,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Email Address <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -715,14 +715,14 @@ const AccountManagement = () => {
                   }}
                 />
                 {selectedFaculty.role === 'Admin' && (
-                  <p style={{ fontSize: '12px', color: '#6b7280', margin: '4px 0 0' }}>
+                  <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0' }}>
                     Admin email cannot be changed
                   </p>
                 )}
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Department <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <select
@@ -733,7 +733,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -749,7 +749,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Position <span style={{ color: '#ef4444' }}>*</span>
                 </label>
                 <input
@@ -761,7 +761,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -773,7 +773,7 @@ const AccountManagement = () => {
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '6px' }}>
                   Account Status
                 </label>
                 <select
@@ -783,7 +783,7 @@ const AccountManagement = () => {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     outline: 'none',
@@ -808,11 +808,11 @@ const AccountManagement = () => {
                   style={{
                     padding: '12px 24px',
                     backgroundColor: '#ffffff',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     cursor: 'pointer'
                   }}
                 >

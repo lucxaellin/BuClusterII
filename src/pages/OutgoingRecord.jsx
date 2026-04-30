@@ -724,8 +724,8 @@ const OutgoingRecords = () => {
         top: '100%',
         left: 0,
         right: 0,
-        backgroundColor: 'white',
-        border: '1px solid #e5e7eb',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid var(--border-color)',
         borderRadius: '8px',
         padding: '16px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -781,7 +781,7 @@ const OutgoingRecords = () => {
             <div key={day} style={{
               fontSize: '12px',
               fontWeight: '600',
-              color: '#6b7280',
+              color: 'var(--text-secondary)',
               textAlign: 'center'
             }}>
               {day}
@@ -912,7 +912,7 @@ const OutgoingRecords = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           margin: '8px 2px 0',
           fontFamily: "'Inter', sans-serif",
           fontWeight: '400'
@@ -960,7 +960,7 @@ type="text"
               width: '185%',
               display: 'flex',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
@@ -981,8 +981,8 @@ type="text"
               gap: '8px',
               padding: '12px 16px',
               backgroundColor: '#ffffff',
-              color: '#6b7280',
-              border: '1px solid #e5e7eb',
+              color: 'var(--text-secondary)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -1020,9 +1020,9 @@ type="text"
       <div style={{
         flex: 1,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -1037,7 +1037,7 @@ type="text"
           borderBottom: '1px solid #e5e7eb',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
           fontFamily: "'Inter', sans-serif",
@@ -1074,19 +1074,19 @@ type="text"
             }}>
 
               {/* Date */}
-              <div style={{ fontSize: '14px', color: '#6b7280', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'left' }}>
                 {displayDate(file.date)}
               </div>
 
               {/* Page Number */}
-              <div style={{ fontSize: '14px', color: '#6b7280', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: 'var(--text-secondary)', textAlign: 'left' }}>
                 {file.pageNumber}
               </div>
 
               {/* Particulars */}
               <div style={{ 
                 fontSize: '14px', 
-                color: '#1f2937', 
+                color: 'var(--text-primary)', 
                 fontWeight: '500',
                 display: 'flex',
                 flexDirection: 'column',
@@ -1208,7 +1208,7 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -1226,7 +1226,7 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -1250,9 +1250,9 @@ type="text"
         justifyContent: 'space-between',
         marginTop: '16px',
         padding: '12px 16px',
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '8px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         fontFamily: "'Inter', sans-serif",
         flexShrink: 0
       }}>
@@ -1287,8 +1287,8 @@ type="text"
                 style={{
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
-                  color: '#6b7280',
-                  border: '1px solid #e5e7eb',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1328,8 +1328,8 @@ type="text"
                 style={{
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
-                  color: '#6b7280',
-                  border: '1px solid #e5e7eb',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1376,7 +1376,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '500px',
@@ -1395,7 +1395,7 @@ type="text"
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 margin: 0,
                 fontFamily: "'Public Sans', sans-serif"
               }}>
@@ -1443,7 +1443,7 @@ type="text"
                     style={{
                       width: '100%',
                       padding: '12px 40px 12px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
@@ -1476,7 +1476,7 @@ type="text"
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px'
                 }}>
                   Format: MM/DD/YYYY (e.g., 02/15/2025)
@@ -1503,7 +1503,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -1533,7 +1533,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -1568,7 +1568,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -1580,7 +1580,7 @@ type="text"
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px',
                   textAlign: 'right'
                 }}>
@@ -1658,7 +1658,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -1831,10 +1831,10 @@ type="text"
                 onClick={handleCloseModal}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
@@ -1881,7 +1881,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '95%',
             maxWidth: '800px',
@@ -1984,7 +1984,7 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
@@ -2011,7 +2011,7 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
@@ -2031,7 +2031,7 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
@@ -2084,7 +2084,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2130,7 +2130,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2176,7 +2176,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2222,7 +2222,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2269,7 +2269,7 @@ type="text"
                   <div style={{
                     fontSize: '13px',
                     fontWeight: '600',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     marginBottom: '8px',
                     fontFamily: "'Inter', sans-serif",
                     textTransform: 'uppercase',
@@ -2301,7 +2301,7 @@ type="text"
                       style={{
                         width: '300px',
                         padding: '8px 12px',
-                        border: '1px solid #e5e7eb',
+                        border: '1px solid var(--border-color)',
                         borderRadius: '6px',
                         fontSize: '14px',
                         fontFamily: "'Inter', sans-serif",
@@ -2349,7 +2349,7 @@ type="text"
                     padding: '12px 24px',
                     border: '1px solid #cbd5e1',
                     borderRadius: '10px',
-                    backgroundColor: 'white',
+                    backgroundColor: 'var(--bg-surface)',
                     color: '#475569',
                     fontSize: '14px',
                     fontWeight: '600',
@@ -2420,7 +2420,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '500px',
@@ -2440,7 +2440,7 @@ type="text"
                 margin: 0,
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 Add New Record
@@ -2491,7 +2491,7 @@ type="text"
                     style={{
                       width: '100%',
                       padding: '12px 40px 12px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: "Inter, sans-serif",
@@ -2524,7 +2524,7 @@ type="text"
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px'
                 }}>
                   Format: MM/DD/YYYY (e.g., 02/15/2025)
@@ -2555,7 +2555,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -2585,7 +2585,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -2620,7 +2620,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -2632,7 +2632,7 @@ type="text"
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px',
                   textAlign: 'right'
                 }}>
@@ -2710,7 +2710,7 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
@@ -2895,10 +2895,10 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
@@ -2993,7 +2993,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '400px',
@@ -3011,7 +3011,7 @@ type="text"
                 margin: 0,
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 Confirm Delete
@@ -3050,7 +3050,7 @@ type="text"
                     margin: 0,
                     fontSize: '16px',
                     fontWeight: '500',
-                    color: '#1f2937',
+                    color: 'var(--text-primary)',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Are you sure you want to delete this record?
@@ -3058,7 +3058,7 @@ type="text"
                   <p style={{
                     margin: '4px 0 0 0',
                     fontSize: '14px',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     {fileToDelete?.name}
@@ -3068,7 +3068,7 @@ type="text"
               <p style={{
                 margin: 0,
                 fontSize: '14px',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 This action cannot be undone. The file will be permanently removed from the system.
@@ -3090,10 +3090,10 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',

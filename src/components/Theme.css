@@ -1,0 +1,34 @@
+/*
+  Add this to your global CSS (e.g. index.css or App.css).
+  The Navbar sets data-theme="dark" on <html> when dark mode is active.
+  Scope any component styles you want to theme under these selectors.
+*/
+
+/* ── Light (default) ── */
+:root {
+  --bg-page:       #f5f6fa;
+  --bg-surface:    #ffffff;
+  --bg-surface2:   #f0f2f5;
+  --border-color:  #e5e7eb;
+  --text-primary:  #111827;
+  --text-secondary:#6b7280;
+  --text-muted:    #9ca3af;
+}
+
+/* ── Dark ── */
+[data-theme="dark"] {
+  --bg-page:       #0f1117;
+  --bg-surface:    #1a1d27;
+  --bg-surface2:   #22263a;
+  --border-color:  #2e3347;
+  --text-primary:  #f1f3f9;
+  --text-secondary:#9aa5be;
+  --text-muted:    #5a6484;
+}
+
+/* ── Apply to page body ── */
+body {
+  background-color: var(--bg-page);
+  color:            var(--text-primary);
+  transition:       background-color 0.25s ease, color 0.25s ease;
+}

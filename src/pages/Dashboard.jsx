@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)',
       padding: '24px',
       display: 'flex',
@@ -17,7 +17,7 @@ const Dashboard = () => {
         <h1 style={{ 
           fontSize: '28px', 
           fontWeight: '600', 
-          color: '#0074AD', 
+          color: 'var(--text-primary)', 
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
@@ -25,7 +25,7 @@ const Dashboard = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
@@ -40,10 +40,10 @@ const Dashboard = () => {
         gap: '20px' 
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '24px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -59,10 +59,10 @@ const Dashboard = () => {
               <FileText size={24} color="#0074AD" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Total Documents
               </p>
-              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 1,234
               </p>
             </div>
@@ -70,10 +70,10 @@ const Dashboard = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '24px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -89,10 +89,10 @@ const Dashboard = () => {
               <Users size={24} color="#10b981" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Active Users
               </p>
-              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 89
               </p>
             </div>
@@ -100,10 +100,10 @@ const Dashboard = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '24px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -119,10 +119,10 @@ const Dashboard = () => {
               <TrendingUp size={24} color="#f59e0b" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Monthly Activity
               </p>
-              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 +23%
               </p>
             </div>
@@ -130,10 +130,10 @@ const Dashboard = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '24px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -149,10 +149,10 @@ const Dashboard = () => {
               <AlertCircle size={24} color="#ef4444" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                 Pending Tasks
               </p>
-              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+              <p style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                 12
               </p>
             </div>
@@ -162,9 +162,9 @@ const Dashboard = () => {
 
       {/* Recent Activity */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden'
       }}>
@@ -177,7 +177,7 @@ const Dashboard = () => {
             margin: 0,
             fontSize: '18px',
             fontWeight: '600',
-            color: '#1f2937',
+            color: 'var(--text-primary)',
             fontFamily: "'Inter', sans-serif"
           }}>
             Recent Activity
@@ -193,10 +193,10 @@ const Dashboard = () => {
                 backgroundColor: '#10b981'
               }} />
               <div style={{ flex: 1 }}>
-                <p style={{ margin: 0, fontSize: '14px', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                   New document uploaded by Ms. Mitch
                 </p>
-                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                   2 hours ago
                 </p>
               </div>
@@ -209,10 +209,10 @@ const Dashboard = () => {
                 backgroundColor: '#f59e0b'
               }} />
               <div style={{ flex: 1 }}>
-                <p style={{ margin: 0, fontSize: '14px', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                   Outgoing document processed by Ms. Mau
                 </p>
-                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                   5 hours ago
                 </p>
               </div>
@@ -225,10 +225,10 @@ const Dashboard = () => {
                 backgroundColor: '#0074AD'
               }} />
               <div style={{ flex: 1 }}>
-                <p style={{ margin: 0, fontSize: '14px', color: '#1f2937', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>
                   System backup completed
                 </p>
-                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#6b7280', fontFamily: "'Inter', sans-serif" }}>
+                <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
                   1 day ago
                 </p>
               </div>
