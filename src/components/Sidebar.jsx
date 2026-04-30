@@ -381,7 +381,7 @@ function BurgerButton({ isCollapsed, onToggle }) {
 export default function Sidebar() {
   const [active,       setActive]       = useState("Dashboard");
   const [activeSubItem, setActiveSubItem] = useState(null);
-  const [isCollapsed, setIsCollapsed]   = useState(false);
+  const [isCollapsed, setIsCollapsed]   = useState(true);
 
   const handleNav = (label) => {
     setActive(label);

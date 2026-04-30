@@ -2971,7 +2971,7 @@ type="text"
                   fontFamily: "'Inter', sans-serif"
                 }}
               >
-                Upload File
+                Add Record
               </button>
             </div>
           </div>

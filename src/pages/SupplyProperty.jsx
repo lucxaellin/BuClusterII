@@ -1143,7 +1143,7 @@ const SupplyProperty = () => {
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-start' }}>
               <button
                 onClick={() => {
                   setSelectedFaculty(faculty);
@@ -1162,7 +1162,7 @@ const SupplyProperty = () => {
                 }}
                 title="Edit"
               >
-                <Edit2 size={16} color="#6b7280" />
+                Edit
               </button>
               <button
                 onClick={() => {
@@ -1182,7 +1182,7 @@ const SupplyProperty = () => {
                 }}
                 title="Delete"
               >
-                <Trash2 size={16} color="#ef4444" />
+                Delete
               </button>
             </div>
           </div>

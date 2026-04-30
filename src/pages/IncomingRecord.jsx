@@ -1217,7 +1217,7 @@ type="text"
                     transition: 'all 0.2s'
                   }}
                 >
-                  <Edit size={16} color="#6b7280" />
+                  Edit
                 </button>
 
                 <button
@@ -1235,7 +1235,7 @@ type="text"
                     transition: 'all 0.2s'
                   }}
                 >
-                  <Trash2 size={16} color="#6b7280" />
+                  Delete
                 </button>
               </div>
             </div>
@@ -2971,7 +2971,7 @@ type="text"
                   fontFamily: "'Inter', sans-serif"
                 }}
               >
-                Upload File
+                Add Record
               </button>
             </div>
           </div>

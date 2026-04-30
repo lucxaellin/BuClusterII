@@ -1266,7 +1266,7 @@ const AccuredLeave = () => {
                   transition: 'all 0.2s'
                 }}
               >
-                <User size={16} color="#6b7280" />
+                Edit
               </button>
               <button
                 title="Delete"
@@ -1295,7 +1295,7 @@ const AccuredLeave = () => {
                   e.target.style.borderColor = '#e5e7eb';
                 }}
               >
-                <FileText size={16} color="#ef4444" />
+                Delete
               </button>
             </div>
           </div>
