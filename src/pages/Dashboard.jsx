@@ -51,12 +51,12 @@ const Dashboard = () => {
               width: '48px',
               height: '48px',
               borderRadius: '8px',
-              backgroundColor: '#f0f9ff',
+              backgroundColor: 'var(--icon-bg-blue)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <FileText size={24} color="#0074AD" />
+              <FileText size={24} color="#3b74f0" />
             </div>
             <div>
               <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
@@ -81,7 +81,7 @@ const Dashboard = () => {
               width: '48px',
               height: '48px',
               borderRadius: '8px',
-              backgroundColor: '#f0fdf4',
+              backgroundColor: 'var(--icon-bg-green)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -111,7 +111,7 @@ const Dashboard = () => {
               width: '48px',
               height: '48px',
               borderRadius: '8px',
-              backgroundColor: '#fef3c7',
+              backgroundColor: 'var(--icon-bg-amber)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -171,7 +171,7 @@ const Dashboard = () => {
         <div style={{
           padding: '20px 24px',
           borderBottom: '1px solid #e5e7eb',
-          backgroundColor: '#f9fafb'
+          backgroundColor: 'var(--bg-surface2)'
         }}>
           <h2 style={{
             margin: 0,
@@ -222,7 +222,7 @@ const Dashboard = () => {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                backgroundColor: '#0074AD'
+                backgroundColor: '#3b74f0'
               }} />
               <div style={{ flex: 1 }}>
                 <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-primary)', fontFamily: "'Inter', sans-serif" }}>

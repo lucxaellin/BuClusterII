@@ -724,8 +724,8 @@ const BUOU52 = () => {
         top: '100%',
         left: 0,
         right: 0,
-        backgroundColor: 'white',
-        border: '1px solid #e5e7eb',
+        backgroundColor: 'var(--bg-surface)',
+        border: '1px solid #9ca3af',
         borderRadius: '8px',
         padding: '16px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -753,7 +753,7 @@ const BUOU52 = () => {
           <div style={{
             fontSize: '14px',
             fontWeight: '600',
-            color: '#374151'
+            color: 'var(--text-secondary)'
           }}>
             {monthNames[pickerMonth]} {pickerYear}
           </div>
@@ -781,7 +781,7 @@ const BUOU52 = () => {
             <div key={day} style={{
               fontSize: '12px',
               fontWeight: '600',
-              color: '#6b7280',
+              color: 'var(--text-secondary)',
               textAlign: 'center'
             }}>
               {day}
@@ -891,7 +891,7 @@ const BUOU52 = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)', // Account for padding
       padding: '24px',
       display: 'flex',
@@ -900,19 +900,19 @@ const BUOU52 = () => {
       boxSizing: 'border-box'
     }}>
       {/* Header - Fixed */}
-      <div style={{ marginBottom: '32px', flexShrink: 0 }}>
+      <div style={{ marginBottom: '20px', flexShrink: 0 }}>
         <h1 style={{ 
           fontSize: '28px', 
           fontWeight: '600', 
-          color: '#0074AD', 
+          color: 'var(--text-primary)', 
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          BU OPEN UNIVERSITY RECORDS BU-LB-CLUSTER II-52
+          BU OPEN UNIVERSITY BU-LB-CLUSTER II-52
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           margin: '8px 2px 0',
           fontFamily: "'Inter', sans-serif",
           fontWeight: '400'
@@ -949,7 +949,7 @@ const BUOU52 = () => {
               padding: 0
             }}
           >
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
 type="text"
@@ -960,13 +960,14 @@ type="text"
               width: '185%',
               display: 'flex',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid #9ca3af',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -980,9 +981,10 @@ type="text"
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#ffffff',
-              color: '#6b7280',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              color: 'var(--text-primary)',
+              color: 'var(--text-secondary)',
+              border: '1px solid #9ca3af',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -1000,7 +1002,7 @@ type="text"
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#FF9500',
+              backgroundColor: '#3b74f0',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
@@ -1020,9 +1022,9 @@ type="text"
       <div style={{
         flex: 1,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid #9ca3af',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -1033,11 +1035,11 @@ type="text"
           display: 'grid',
           gridTemplateColumns: '100px 50px 2fr 1fr 1fr 1fr 1fr 1fr 100px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: 'var(--bg-surface2)',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-secondary)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
           fontFamily: "'Inter', sans-serif",
@@ -1065,28 +1067,28 @@ type="text"
               display: 'grid',
               gridTemplateColumns: '100px 50px 2fr 1fr 1fr 1fr 1fr 1fr 85px',
               padding: expandedRows.has(file.id) ? '20px' : '16px 20px',
-              borderBottom: '1px solid #f3f4f6',
+              borderBottom: '1px solid var(--border-color)',
               alignItems: expandedRows.has(file.id) ? 'start' : 'center',
-              backgroundColor: selectedFile && selectedFile.id === file.id ? '#f0f9ff' : 'white',
+              backgroundColor: selectedFile && selectedFile.id === file.id ? 'var(--bg-hover)' : 'var(--bg-surface)',
               transition: 'all 0.2s',
               cursor: 'pointer',
               minHeight: expandedRows.has(file.id) ? 'auto' : '60px'
             }}>
 
               {/* Date */}
-              <div style={{ fontSize: '14px', color: '#6b7280', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: file.date ? 'white' : '#d1d5db', textAlign: 'left' }}>
                 {displayDate(file.date)}
               </div>
 
               {/* Page Number */}
-              <div style={{ fontSize: '14px', color: '#6b7280', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: file.pageNumber ? 'white' : '#d1d5db', textAlign: 'left' }}>
                 {file.pageNumber}
               </div>
 
               {/* Particulars */}
               <div style={{ 
                 fontSize: '14px', 
-                color: '#1f2937', 
+                color: 'var(--text-primary)', 
                 fontWeight: '500',
                 display: 'flex',
                 flexDirection: 'column',
@@ -1110,7 +1112,7 @@ type="text"
                           wordBreak: 'break-word',
                           lineHeight: '1.5',
                           fontSize: '13px',
-                          color: '#4b5563',
+                          color: 'var(--text-secondary)',
                           marginBottom: '8px',
                           textAlign: 'justify',
                           textJustify: 'inter-word',
@@ -1125,7 +1127,7 @@ type="text"
                             toggleRowExpansion(file.id);
                           }}
                           style={{
-                            color: '#0074AD',
+                            color: '#3b74f0',
                             fontSize: '12px',
                             cursor: 'pointer',
                             textDecoration: 'underline'
@@ -1136,7 +1138,7 @@ type="text"
                     ) : (
                       <div>
                         <span style={{ 
-                          color: '#0074AD',
+                          color: '#3b74f0',
                           fontSize: '12px',
                           cursor: 'pointer',
                           textDecoration: 'underline'
@@ -1152,7 +1154,7 @@ type="text"
               {/* Admin */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.admin ? '#1f2937' : '#6b7280',
+                color: file.admin ? 'white' : '#d1d5db',
                 fontWeight: file.admin ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1162,7 +1164,7 @@ type="text"
               {/* Dean */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.dean ? '#1f2937' : '#6b7280',
+                color: file.dean ? 'white' : '#d1d5db',
                 fontWeight: file.dean ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1172,7 +1174,7 @@ type="text"
               {/* BAC */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.bac ? '#1f2937' : '#6b7280',
+                color: file.bac ? 'white' : '#d1d5db',
                 fontWeight: file.bac ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1182,7 +1184,7 @@ type="text"
               {/* Budget */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.budget ? '#1f2937' : '#6b7280',
+                color: file.budget ? 'white' : '#d1d5db',
                 fontWeight: file.budget ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1192,7 +1194,7 @@ type="text"
               {/* Accounting */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.accounting ? '#1f2937' : '#6b7280',
+                color: file.accounting ? 'white' : '#d1d5db',
                 fontWeight: file.accounting ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1208,16 +1210,17 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    color: 'white'
                   }}
                 >
-                  <Edit size={16} color="#6b7280" />
+                  Edit
                 </button>
 
                 <button
@@ -1226,16 +1229,17 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    color: 'white'
                   }}
                 >
-                  <Trash2 size={16} color="#6b7280" />
+                  Delete
                 </button>
               </div>
             </div>
@@ -1250,13 +1254,13 @@ type="text"
         justifyContent: 'space-between',
         marginTop: '16px',
         padding: '12px 16px',
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '8px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid #9ca3af',
         fontFamily: "'Inter', sans-serif",
         flexShrink: 0
       }}>
-        <div style={{ fontSize: '14px', color: '#6b7280' }}>
+        <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
           Showing {indexOfFirstRow + 1} to {Math.min(indexOfLastRow, files.length)} of {files.length} entries
         </div>
         
@@ -1267,8 +1271,8 @@ type="text"
             disabled={currentPage === 1}
             style={{
               padding: '8px 12px',
-              backgroundColor: currentPage === 1 ? '#f3f4f6' : '#0074AD',
-              color: currentPage === 1 ? '#9ca3af' : 'white',
+              backgroundColor: currentPage === 1 ? 'var(--bg-surface2)' : '#3b74f0',
+              color: currentPage === 1 ? 'var(--text-tertiary)' : 'white',
               border: 'none',
               borderRadius: '6px',
               fontSize: '14px',
@@ -1287,8 +1291,8 @@ type="text"
                 style={{
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
-                  color: '#6b7280',
-                  border: '1px solid #e5e7eb',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid #9ca3af',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1297,7 +1301,7 @@ type="text"
               >
                 1
               </button>
-              {startPage > 2 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+              {startPage > 2 && <span style={{ padding: '8px 4px', color: 'var(--text-muted)' }}>...</span>}
             </>
           )}
           
@@ -1307,8 +1311,8 @@ type="text"
               onClick={() => handlePageChange(startPage + index)}
               style={{
                 padding: '8px 12px',
-                backgroundColor: currentPage === startPage + index ? '#0074AD' : 'transparent',
-                color: currentPage === startPage + index ? 'white' : '#6b7280',
+                backgroundColor: currentPage === startPage + index ? '#3b74f0' : 'transparent',
+                color: currentPage === startPage + index ? 'white' : 'var(--text-muted)',
                 border: currentPage === startPage + index ? 'none' : '1px solid #e5e7eb',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -1322,14 +1326,14 @@ type="text"
           
           {endPage < totalPages && (
             <>
-              {endPage < totalPages - 1 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+              {endPage < totalPages - 1 && <span style={{ padding: '8px 4px', color: 'var(--text-muted)' }}>...</span>}
               <button
                 onClick={() => handlePageChange(totalPages)}
                 style={{
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
-                  color: '#6b7280',
-                  border: '1px solid #e5e7eb',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid #9ca3af',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1347,8 +1351,8 @@ type="text"
             disabled={currentPage === totalPages}
             style={{
               padding: '8px 12px',
-              backgroundColor: currentPage === totalPages ? '#f3f4f6' : '#0074AD',
-              color: currentPage === totalPages ? '#9ca3af' : 'white',
+              backgroundColor: currentPage === totalPages ? 'var(--bg-surface2)' : '#3b74f0',
+              color: currentPage === totalPages ? 'var(--text-tertiary)' : 'white',
               border: 'none',
               borderRadius: '6px',
               fontSize: '14px',
@@ -1376,7 +1380,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '500px',
@@ -1390,12 +1394,12 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 margin: 0,
                 fontFamily: "'Public Sans', sans-serif"
               }}>
@@ -1414,7 +1418,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -1426,7 +1430,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1443,12 +1447,14 @@ type="text"
                     style={{
                       width: '100%',
                       padding: '12px 40px 12px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid #9ca3af',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
                       outline: 'none',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                      color: '#6b7280'
                     }}
                   />
                   <button
@@ -1468,7 +1474,7 @@ type="text"
                       justifyContent: 'center'
                     }}
                   >
-                    <Calendar size={18} color="#6b7280" />
+                    <Calendar size={18} color="var(--text-muted)" />
                   </button>
                   
                   {/* Date Picker Popup */}
@@ -1476,7 +1482,7 @@ type="text"
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px'
                 }}>
                   Format: MM/DD/YYYY (e.g., 02/15/2025)
@@ -1489,7 +1495,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1503,12 +1509,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -1519,7 +1527,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1533,12 +1541,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -1549,7 +1559,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1568,19 +1578,21 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
                     boxSizing: 'border-box',
                     resize: 'vertical',
-                    minHeight: '80px'
+                    minHeight: '80px',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px',
                   textAlign: 'right'
                 }}>
@@ -1594,7 +1606,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1607,10 +1619,10 @@ type="text"
                       onClick={() => setSelectedAdmin(selectedAdmin === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid white',
                         borderRadius: '8px',
-                        backgroundColor: selectedAdmin === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedAdmin === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -1621,14 +1633,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAdmin !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAdmin !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -1644,7 +1656,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1658,12 +1670,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -1674,7 +1688,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1689,8 +1703,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedBac === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedBac === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedBac === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -1701,14 +1715,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBac !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBac !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -1724,7 +1738,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1739,8 +1753,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedBudget === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedBudget === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedBudget === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -1751,14 +1765,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBudget !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBudget !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -1774,7 +1788,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -1789,8 +1803,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedAccounting === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedAccounting === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedAccounting === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -1801,14 +1815,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAccounting !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAccounting !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -1831,10 +1845,10 @@ type="text"
                 onClick={handleCloseModal}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid #9ca3af',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
@@ -1850,7 +1864,7 @@ type="text"
                   padding: '12px 24px',
                   border: 'none',
                   borderRadius: '8px',
-                  backgroundColor: '#0074AD',
+                  backgroundColor: '#3b74f0',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1881,7 +1895,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '95%',
             maxWidth: '800px',
@@ -1894,9 +1908,9 @@ type="text"
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              padding: '28px 32px',
-              borderBottom: '1px solid #e5e7eb',
-              background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)'
+              padding: '20px 24px',
+              borderBottom: '1px solid var(--border-color)',
+              background: 'var(--bg-surface2)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div>
@@ -1904,7 +1918,7 @@ type="text"
                     margin: 0,
                     fontSize: '22px',
                     fontWeight: '700',
-                    color: '#1e293b',
+                    color: 'var(--text-primary)',
                     fontFamily: "'Inter', sans-serif",
                     letterSpacing: '-0.025em'
                   }}>
@@ -1913,7 +1927,7 @@ type="text"
                   <p style={{
                     margin: '4px 0 0 0',
                     fontSize: '14px',
-                    color: '#64748b',
+                    color: 'var(--text-secondary)',
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: '400'
                   }}>
@@ -1924,8 +1938,8 @@ type="text"
               <button
                 onClick={() => setShowFilterModal(false)}
                 style={{
-                  background: 'white',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid #9ca3af',
                   cursor: 'pointer',
                   padding: '8px',
                   borderRadius: '8px',
@@ -1936,12 +1950,12 @@ type="text"
                   boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
                 }}
                 onMouseOver={(e) => {
-                  e.target.style.backgroundColor = '#f8fafc';
-                  e.target.style.borderColor = '#cbd5e1';
+                  e.target.style.backgroundColor = 'var(--bg-hover)';
+                  e.target.style.borderColor = 'white';
                 }}
                 onMouseOut={(e) => {
-                  e.target.style.backgroundColor = 'white';
-                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.backgroundColor = 'var(--bg-surface)';
+                  e.target.style.borderColor = 'white';
                 }}
               >
                 <X size={18} color="#64748b" />
@@ -1950,16 +1964,16 @@ type="text"
 
             {/* Modal Body */}
             <div style={{ 
-              padding: '32px',
-              background: '#ffffff'
+              padding: '16px',
+              background: 'var(--bg-surface)'
             }}>
               {/* Date Filter */}
               <div style={{ 
-                marginBottom: '32px',
-                padding: '20px',
-                background: '#f8fafc',
+                marginBottom: '20px',
+                padding: '16px',
+                background: 'var(--bg-surface2)',
                 borderRadius: '12px',
-                border: '1px solid #e2e8f0'
+                border: '1px solid var(--border-color)'
               }}>
                 <div style={{
                   display: 'flex',
@@ -1970,7 +1984,7 @@ type="text"
                   <label style={{
                     fontSize: '15px',
                     fontWeight: '600',
-                    color: '#1e293b',
+                    color: 'var(--text-primary)',
                     fontFamily: "'Inter', sans-serif",
                     letterSpacing: '0.025em'
                   }}>
@@ -1984,11 +1998,12 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid #9ca3af',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Month</option>
@@ -2011,11 +2026,12 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid #9ca3af',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Day</option>
@@ -2031,11 +2047,12 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid #9ca3af',
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Year</option>
@@ -2050,11 +2067,11 @@ type="text"
 
               {/* Officer Filter */}
               <div style={{ 
-                marginBottom: '32px',
-                padding: '20px',
-                background: '#f8fafc',
+                marginBottom: '20px',
+                padding: '16px',
+                background: 'var(--bg-surface2)',
                 borderRadius: '12px',
-                border: '1px solid #e2e8f0'
+                border: '1px solid var(--border-color)'
               }}>
                 <div style={{
                   display: 'flex',
@@ -2065,7 +2082,7 @@ type="text"
                   <label style={{
                     fontSize: '15px',
                     fontWeight: '600',
-                    color: '#1e293b',
+                    color: 'var(--text-primary)',
                     fontFamily: "'Inter', sans-serif",
                     letterSpacing: '0.025em'
                   }}>
@@ -2084,7 +2101,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2101,7 +2118,7 @@ type="text"
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontFamily: "'Inter', sans-serif",
-                          color: '#374151'
+                          color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2116,7 +2133,9 @@ type="text"
                             style={{
                               width: '16px',
                               height: '16px',
-                              cursor: 'pointer'
+                              cursor: 'pointer',
+                              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                              accentColor: '#3b74f0'
                             }}
                           />
                           {officer}
@@ -2130,7 +2149,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2147,7 +2166,7 @@ type="text"
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontFamily: "'Inter', sans-serif",
-                          color: '#374151'
+                          color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2176,7 +2195,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2193,7 +2212,7 @@ type="text"
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontFamily: "'Inter', sans-serif",
-                          color: '#374151'
+                          color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2222,7 +2241,7 @@ type="text"
                     <div style={{
                       fontSize: '13px',
                       fontWeight: '600',
-                      color: '#6b7280',
+                      color: 'var(--text-secondary)',
                       marginBottom: '8px',
                       fontFamily: "'Inter', sans-serif",
                       textTransform: 'uppercase',
@@ -2239,7 +2258,7 @@ type="text"
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontFamily: "'Inter', sans-serif",
-                          color: '#374151'
+                          color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2269,7 +2288,7 @@ type="text"
                   <div style={{
                     fontSize: '13px',
                     fontWeight: '600',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     marginBottom: '8px',
                     fontFamily: "'Inter', sans-serif",
                     textTransform: 'uppercase',
@@ -2301,12 +2320,14 @@ type="text"
                       style={{
                         width: '300px',
                         padding: '8px 12px',
-                        border: '1px solid #e5e7eb',
+                        border: '1px solid #9ca3af',
                         borderRadius: '6px',
                         fontSize: '14px',
                         fontFamily: "'Inter', sans-serif",
                         outline: 'none',
-                        boxSizing: 'border-box'
+                        boxSizing: 'border-box',
+                        backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                        color: '#6b7280'
                       }}
                     />
                                       </div>
@@ -2320,13 +2341,13 @@ type="text"
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              padding: '24px 32px',
-              borderTop: '1px solid #e2e8f0',
-              background: '#f8fafc'
+              padding: '16px 20px',
+              borderTop: '1px solid var(--border-color)',
+              background: 'var(--bg-surface2)'
             }}>
               <div style={{
                 fontSize: '13px',
-                color: '#64748b',
+                color: 'var(--text-secondary)',
                 fontFamily: "'Inter', sans-serif",
                 fontStyle: 'italic'
               }}>
@@ -2347,10 +2368,10 @@ type="text"
                   }}
                   style={{
                     padding: '12px 24px',
-                    border: '1px solid #cbd5e1',
+                    border: '1px solid #9ca3af',
                     borderRadius: '10px',
-                    backgroundColor: 'white',
-                    color: '#475569',
+                    backgroundColor: 'var(--bg-surface)',
+                    color: 'white',
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -2359,13 +2380,13 @@ type="text"
                     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
                   }}
                   onMouseOver={(e) => {
-                    e.target.style.backgroundColor = '#f8fafc';
-                    e.target.style.borderColor = '#94a3b8';
+                    e.target.style.backgroundColor = 'var(--bg-hover)';
+                    e.target.style.borderColor = 'white';
                     e.target.style.transform = 'translateY(-1px)';
                   }}
                   onMouseOut={(e) => {
-                    e.target.style.backgroundColor = 'white';
-                    e.target.style.borderColor = '#cbd5e1';
+                    e.target.style.backgroundColor = 'var(--bg-surface)';
+                    e.target.style.borderColor = 'white';
                     e.target.style.transform = 'translateY(0px)';
                   }}
                 >
@@ -2420,7 +2441,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '500px',
@@ -2434,13 +2455,13 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 margin: 0,
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 Add New Record
@@ -2462,7 +2483,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -2474,7 +2495,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2491,12 +2512,14 @@ type="text"
                     style={{
                       width: '100%',
                       padding: '12px 40px 12px 12px',
-                      border: '1px solid #e5e7eb',
+                      border: '1px solid #9ca3af',
                       borderRadius: '8px',
                       fontSize: '14px',
                       fontFamily: "Inter, sans-serif",
                       outline: 'none',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                      color: '#6b7280'
                     }}
                   />
                   <button
@@ -2516,7 +2539,7 @@ type="text"
                       justifyContent: 'center'
                     }}
                   >
-                    <Calendar size={18} color="#6b7280" />
+                    <Calendar size={18} color="var(--text-muted)" />
                   </button>
                   
                   {/* Date Picker Popup */}
@@ -2524,7 +2547,7 @@ type="text"
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px'
                 }}>
                   Format: MM/DD/YYYY (e.g., 02/15/2025)
@@ -2537,7 +2560,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2555,12 +2578,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -2571,7 +2596,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2585,12 +2610,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -2601,7 +2628,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2620,19 +2647,20 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
                     boxSizing: 'border-box',
                     resize: 'vertical',
-                    minHeight: '80px'
-                  }}
+                    minHeight: '80px',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'                  }}
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: '#6b7280',
+                  color: 'var(--text-secondary)',
                   marginTop: '4px',
                   textAlign: 'right'
                 }}>
@@ -2646,7 +2674,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2659,10 +2687,10 @@ type="text"
                       onClick={() => setSelectedAdmin(selectedAdmin === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid white',
                         borderRadius: '8px',
-                        backgroundColor: selectedAdmin === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedAdmin === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -2673,14 +2701,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAdmin !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAdmin !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -2696,7 +2724,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2710,12 +2738,14 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid #9ca3af',
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                    color: '#6b7280'
                   }}
                 />
               </div>
@@ -2726,7 +2756,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2741,8 +2771,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedBac === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedBac === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedBac === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -2753,14 +2783,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBac !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBac !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -2776,7 +2806,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2791,8 +2821,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedBudget === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedBudget === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedBudget === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -2803,14 +2833,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBudget !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBudget !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -2826,7 +2856,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -2841,8 +2871,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedAccounting === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedAccounting === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedAccounting === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -2853,14 +2883,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAccounting !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-hover)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAccounting !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'white';
                         }
                       }}
                     >
@@ -2895,10 +2925,10 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid #9ca3af',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
@@ -2993,7 +3023,7 @@ type="text"
           zIndex: 1000
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-surface)',
             borderRadius: '12px',
             width: '90%',
             maxWidth: '400px',
@@ -3005,13 +3035,13 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 margin: 0,
                 fontSize: '20px',
                 fontWeight: '600',
-                color: '#1f2937',
+                color: 'var(--text-primary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 Confirm Delete
@@ -3032,7 +3062,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -3050,7 +3080,7 @@ type="text"
                     margin: 0,
                     fontSize: '16px',
                     fontWeight: '500',
-                    color: '#1f2937',
+                    color: 'var(--text-primary)',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Are you sure you want to delete this record?
@@ -3058,7 +3088,7 @@ type="text"
                   <p style={{
                     margin: '4px 0 0 0',
                     fontSize: '14px',
-                    color: '#6b7280',
+                    color: 'var(--text-secondary)',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     {fileToDelete?.name}
@@ -3068,7 +3098,7 @@ type="text"
               <p style={{
                 margin: 0,
                 fontSize: '14px',
-                color: '#6b7280',
+                color: 'var(--text-secondary)',
                 fontFamily: "'Inter', sans-serif"
               }}>
                 This action cannot be undone. The file will be permanently removed from the system.
@@ -3090,10 +3120,10 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid #9ca3af',
                   borderRadius: '8px',
-                  backgroundColor: 'white',
-                  color: '#6b7280',
+                  backgroundColor: 'var(--bg-surface)',
+                  color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',

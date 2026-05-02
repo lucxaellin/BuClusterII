@@ -1,7 +1,6 @@
 /*
-  Add this to your global CSS (e.g. index.css or App.css).
+  Complete Dark Mode System - All components use these variables
   The Navbar sets data-theme="dark" on <html> when dark mode is active.
-  Scope any component styles you want to theme under these selectors.
 */
 
 /* ── Light (default) ── */
@@ -9,21 +8,43 @@
   --bg-page:       #f5f6fa;
   --bg-surface:    #ffffff;
   --bg-surface2:   #f0f2f5;
-  --border-color:  #e5e7eb;
+  --bg-surface3:   #f9fafb;
+  --bg-hover:      #f0f9ff;
+  --border-color:  #d1d5db;
+  --border-color2: #d1d5db;
   --text-primary:  #111827;
-  --text-secondary:#6b7280;
-  --text-muted:    #9ca3af;
+  --text-secondary:#4b5563;
+  --text-muted:    #6b7280;
+  --text-tertiary: #9ca3af;
+  --input-bg:      #ffffff;
+  --input-border:  #e5e7eb;
+  --icon-bg-blue:  #f0f9ff;
+  --icon-bg-green: #f0fdf4;
+  --icon-bg-amber: #fffbeb;
+  --icon-bg-red:   #fef2f2;
+  --shadow-color:  rgba(0, 0, 0, 0.1);
 }
 
 /* ── Dark ── */
 [data-theme="dark"] {
-  --bg-page:       #0f1117;
-  --bg-surface:    #1a1d27;
-  --bg-surface2:   #22263a;
+  --bg-page:       #0b0d12;
+  --bg-surface:    #151821;
+  --bg-surface2:   #1e222d;
+  --bg-surface3:   #252a38;
+  --bg-hover:      #252a3d;
   --border-color:  #2e3347;
+  --border-color2: #3a4056;
   --text-primary:  #f1f3f9;
-  --text-secondary:#9aa5be;
-  --text-muted:    #5a6484;
+  --text-secondary:#a0aec0;
+  --text-muted:    #718096;
+  --text-tertiary: #4a5568;
+  --input-bg:      #1e222d;
+  --input-border:  #2e3347;
+  --icon-bg-blue:  #1e3a5f;
+  --icon-bg-green: #1a4731;
+  --icon-bg-amber: #451a03;
+  --icon-bg-red:   #451515;
+  --shadow-color:  rgba(0, 0, 0, 0.3);
 }
 
 /* ── Apply to page body ── */
@@ -31,4 +52,9 @@ body {
   background-color: var(--bg-page);
   color:            var(--text-primary);
   transition:       background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ── Force dark mode on all elements ── */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

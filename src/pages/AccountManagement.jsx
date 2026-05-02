@@ -83,7 +83,8 @@ const AccountManagement = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
+      color: 'var(--text-primary)',
       height: 'calc(100vh - 48px)',
       padding: '24px',
       display: 'flex',
@@ -95,7 +96,7 @@ const AccountManagement = () => {
         <h1 style={{ 
           fontSize: '28px', 
           fontWeight: '600', 
-          color: '#0074AD', 
+          color: 'var(--text-primary)', 
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
@@ -129,12 +130,12 @@ const AccountManagement = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0f9ff',
+              backgroundColor: 'var(--icon-bg-blue)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <Users size={20} color="#0074AD" />
+              <Users size={20} color="#3b74f0" />
             </div>
             <div>
               <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
@@ -159,7 +160,7 @@ const AccountManagement = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0fdf4',
+              backgroundColor: 'var(--icon-bg-green)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -189,7 +190,7 @@ const AccountManagement = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#fef3c7',
+              backgroundColor: 'var(--icon-bg-amber)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -221,7 +222,7 @@ const AccountManagement = () => {
             cursor: 'pointer',
             padding: 0
           }}>
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
             type="text"
@@ -237,7 +238,9 @@ const AccountManagement = () => {
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -251,7 +254,7 @@ const AccountManagement = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#ffffff',
+              backgroundColor: 'var(--bg-surface)',
               color: 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
@@ -263,7 +266,7 @@ const AccountManagement = () => {
             }}
           >
             <span>{selectedDepartment}</span>
-            <ChevronDown size={16} color="#6b7280" />
+            <ChevronDown size={16} color="var(--text-muted)" />
           </button>
           
           {showDepartmentDropdown && (
@@ -293,8 +296,8 @@ const AccountManagement = () => {
                     padding: '10px 16px',
                     textAlign: 'left',
                     border: 'none',
-                    backgroundColor: selectedDepartment === dept ? '#f0f9ff' : 'white',
-                    color: selectedDepartment === dept ? '#0074AD' : '#374151',
+                    backgroundColor: selectedDepartment === dept ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                    color: selectedDepartment === dept ? '#3b74f0' : 'var(--text-primary)',
                     cursor: 'pointer',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif"
@@ -314,7 +317,7 @@ const AccountManagement = () => {
             alignItems: 'center',
             gap: '8px',
             padding: '12px 16px',
-            backgroundColor: '#0074AD',
+            backgroundColor: '#3b74f0',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -348,8 +351,8 @@ const AccountManagement = () => {
           display: 'grid',
           gridTemplateColumns: '1.5fr 2.2fr 1fr 1.2fr 1fr 120px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: 'var(--bg-surface2)',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
           color: 'var(--text-secondary)',
@@ -374,7 +377,7 @@ const AccountManagement = () => {
             display: 'grid',
             gridTemplateColumns: '1.5fr 2.2fr 1fr 1.2fr 1fr 120px',
             padding: '16px 20px',
-            borderBottom: '1px solid #f3f4f6',
+            borderBottom: '1px solid var(--border-color)',
             alignItems: 'center',
             transition: 'background-color 0.2s',
             fontFamily: "'Public Sans', sans-serif"
@@ -388,14 +391,14 @@ const AccountManagement = () => {
             </div>
             <div style={{ 
               fontSize: '14px', 
-              color: '#6b7280'
+              color: 'var(--text-secondary)'
             }}>
               {faculty.email}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
               {faculty.department}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
               {faculty.position}
             </div>
             <div>
@@ -430,7 +433,7 @@ const AccountManagement = () => {
                   transition: 'all 0.2s'
                 }}
               >
-                <Edit size={16} color="#6b7280" />
+                <Edit size={16} color="var(--text-muted)" />
               </button>
               <button
                 onClick={() => {
@@ -441,8 +444,8 @@ const AccountManagement = () => {
                 disabled={faculty.role === 'Admin'}
                 style={{
                   padding: '6px',
-                  backgroundColor: faculty.role === 'Admin' ? '#f9fafb' : 'transparent',
-                  border: faculty.role === 'Admin' ? '#e5e7eb' : '1px solid #e5e7eb',
+                  backgroundColor: faculty.role === 'Admin' ? 'var(--bg-surface2)' : 'transparent',
+                  border: faculty.role === 'Admin' ? 'var(--border-color)' : '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: faculty.role === 'Admin' ? 'not-allowed' : 'pointer',
                   display: 'flex',
@@ -452,7 +455,7 @@ const AccountManagement = () => {
                   opacity: faculty.role === 'Admin' ? 0.5 : 1
                 }}
               >
-                <Trash2 size={16} color={faculty.role === 'Admin' ? '#9ca3af' : '#dc3545'} />
+                <Trash2 size={16} color={faculty.role === 'Admin' ? 'var(--text-tertiary)' : '#dc3545'} />
               </button>
             </div>
           </div>
@@ -483,10 +486,10 @@ const AccountManagement = () => {
             boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937' }}>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 Add New Faculty Account
               </h2>
-              <button onClick={() => setShowAddForm(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>
+              <button onClick={() => setShowAddForm(false)} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-muted)' }}>
                 ×
               </button>
             </div>
@@ -558,7 +561,9 @@ const AccountManagement = () => {
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: '#ffffff'
+                    backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+                    color: 'var(--text-primary)'
                   }}
                 >
                   {departments.filter(d => d !== 'All Departments' && d !== 'IT').map(dept => (
@@ -594,7 +599,7 @@ const AccountManagement = () => {
                   onClick={() => setShowAddForm(false)}
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface)',
                     border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
@@ -609,7 +614,7 @@ const AccountManagement = () => {
                   type="submit"
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: '#0074AD',
+                    backgroundColor: '#3b74f0',
                     border: 'none',
                     borderRadius: '6px',
                     fontSize: '14px',
@@ -649,13 +654,13 @@ const AccountManagement = () => {
             boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937' }}>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 Edit Faculty Account
               </h2>
               <button onClick={() => {
                 setShowEditForm(false);
                 setSelectedFaculty(null);
-              }} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>
+              }} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-muted)' }}>
                 ×
               </button>
             </div>
@@ -738,7 +743,8 @@ const AccountManagement = () => {
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: selectedFaculty.role === 'Admin' ? '#f9fafb' : '#ffffff',
+                    backgroundColor: selectedFaculty.role === 'Admin' ? 'var(--bg-surface2)' : 'var(--input-bg)',
+                    color: 'var(--text-primary)',
                     cursor: selectedFaculty.role === 'Admin' ? 'not-allowed' : 'pointer'
                   }}
                 >
@@ -788,7 +794,8 @@ const AccountManagement = () => {
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: selectedFaculty.role === 'Admin' ? '#f9fafb' : '#ffffff',
+                    backgroundColor: selectedFaculty.role === 'Admin' ? 'var(--bg-surface2)' : 'var(--input-bg)',
+                    color: 'var(--text-primary)',
                     cursor: selectedFaculty.role === 'Admin' ? 'not-allowed' : 'pointer'
                   }}
                 >
@@ -807,7 +814,8 @@ const AccountManagement = () => {
                   }}
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
                     border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
@@ -822,7 +830,7 @@ const AccountManagement = () => {
                   type="submit"
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: '#0074AD',
+                    backgroundColor: '#3b74f0',
                     border: 'none',
                     borderRadius: '6px',
                     fontSize: '14px',

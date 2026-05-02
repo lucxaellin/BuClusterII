@@ -355,8 +355,8 @@ function ProfileTab({ toast }) {
             <div style={{ fontSize: 15, fontWeight: 700, color: '#111827', fontFamily: FONT }}>
               {form.firstName} {form.lastName}
             </div>
-            <div style={{ fontSize: 12, color: '#6b7280', fontFamily: FONT, marginTop: 2 }}>{form.position}</div>
-            <div style={{ fontSize: 12, color: '#6b7280', fontFamily: FONT }}>{form.department}</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: FONT, marginTop: 2 }}>{form.position}</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: FONT }}>{form.department}</div>
           </div>
         </div>
       </Card>

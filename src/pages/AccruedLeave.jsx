@@ -1,7 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, User, Search, Filter, Plus, ChevronDown } from 'lucide-react';
 
 const AccuredLeave = () => {
+  // Add CSS for calendar icon theming in modals
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Light mode - black calendar icon */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      input[type="date"]::-moz-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      
+      /* Dark mode - white calendar icon */
+      @media (prefers-color-scheme: dark) {
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+        input[type="date"]::-moz-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+      }
+      
+      /* Dark mode using data attribute or class */
+      [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+      .dark input[type="date"]::-webkit-calendar-picker-indicator,
+      body.dark input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+      
+      [data-theme="dark"] input[type="date"]::-moz-calendar-picker-indicator,
+      .dark input[type="date"]::-moz-calendar-picker-indicator,
+      body.dark input[type="date"]::-moz-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
   const [searchTerm, setSearchTerm] = useState('');
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState(false);
@@ -106,7 +154,7 @@ const AccuredLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: '#6b7280'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -115,8 +163,8 @@ const AccuredLeave = () => {
 
           {/* Filter Fields */}
           <div style={{
-            backgroundColor: '#f8fafc',
-            border: '1px solid #e2e8f0',
+            backgroundColor: 'var(--bg-page)',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px'
           }}>
@@ -143,7 +191,9 @@ const AccuredLeave = () => {
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -171,7 +221,8 @@ const AccuredLeave = () => {
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: '#ffffff'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               >
                 <option value="">All Positions</option>
@@ -195,12 +246,12 @@ const AccuredLeave = () => {
               onClick={handleClear}
               style={{
                 padding: '10px 20px',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -211,12 +262,12 @@ const AccuredLeave = () => {
               onClick={onClose}
               style={{
                 padding: '10px 20px',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -227,7 +278,7 @@ const AccuredLeave = () => {
               onClick={handleApply}
               style={{
                 padding: '10px 20px',
-                backgroundColor: '#0074AD',
+                backgroundColor: '#3b74f0',
                 border: 'none',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -320,7 +371,7 @@ const AccuredLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: '#6b7280'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -329,8 +380,8 @@ const AccuredLeave = () => {
 
           {/* Form Fields */}
           <div style={{
-            backgroundColor: '#f8fafc',
-            border: '1px solid #e2e8f0',
+            backgroundColor: 'var(--bg-page)',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px'
           }}>
@@ -357,7 +408,9 @@ const AccuredLeave = () => {
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter faculty name"
               />
@@ -386,7 +439,9 @@ const AccuredLeave = () => {
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter division or office"
               />
@@ -415,7 +470,9 @@ const AccuredLeave = () => {
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -443,7 +500,9 @@ const AccuredLeave = () => {
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter position"
               />
@@ -472,7 +531,8 @@ const AccuredLeave = () => {
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: '#ffffff'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               >
                 <option value="BUGS">BUGS</option>
@@ -508,6 +568,8 @@ const AccuredLeave = () => {
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                   minHeight: '80px',
                   resize: 'vertical'
                 }}
@@ -527,12 +589,12 @@ const AccuredLeave = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -543,7 +605,7 @@ const AccuredLeave = () => {
               onClick={handleSave}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#0074AD',
+                backgroundColor: '#3b74f0',
                 border: 'none',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -657,7 +719,7 @@ const AccuredLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: '#6b7280'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -666,8 +728,8 @@ const AccuredLeave = () => {
 
           {/* Faculty Information Table */}
           <div style={{
-            backgroundColor: '#f8fafc',
-            border: '1px solid #e2e8f0',
+            backgroundColor: 'var(--bg-page)',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px',
             overflowX: 'auto'
@@ -675,7 +737,7 @@ const AccuredLeave = () => {
             <h3 style={{
               fontSize: '18px',
               fontWeight: '600',
-              color: '#1e293b',
+              color: 'var(--text-primary)',
               marginBottom: '12px',
               fontFamily: "'Inter', sans-serif"
             }}>
@@ -686,7 +748,7 @@ const AccuredLeave = () => {
             <div style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr 0.5fr 0.5fr 0.5fr 0.8fr 1fr',
-              backgroundColor: '#f1f5f9',
+              backgroundColor: 'var(--bg-surface2)',
               padding: '8px',
               borderRadius: '6px',
               marginBottom: '8px',
@@ -711,16 +773,17 @@ const AccuredLeave = () => {
               gridTemplateColumns: '1fr 1fr 0.5fr 0.5fr 0.5fr 0.8fr 1fr',
               padding: '8px',
               gap: '8px',
-              borderBottom: '1px solid #e2e8f0',
+              borderBottom: '1px solid var(--border-color)',
               fontSize: '14px',
               color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -733,16 +796,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -755,16 +820,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -777,16 +844,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -799,16 +868,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -821,16 +892,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="date"
@@ -843,16 +916,18 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: '#ffffff'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -865,7 +940,8 @@ const AccuredLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                     outline: 'none'
                   }}
                 />
@@ -884,7 +960,8 @@ const AccuredLeave = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -900,7 +977,7 @@ const AccuredLeave = () => {
               onClick={handleSave}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#0074AD',
+                backgroundColor: '#3b74f0',
                 border: 'none',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -960,7 +1037,7 @@ const AccuredLeave = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)',
       padding: '24px',
       display: 'flex',
@@ -1027,7 +1104,8 @@ const AccuredLeave = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#ffffff',
+              backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
@@ -1040,7 +1118,7 @@ const AccuredLeave = () => {
               }}
           >
             <span>{selectedDepartment}</span>
-            <ChevronDown size={16} color="#6b7280" />
+            <ChevronDown size={16} color="var(--text-muted)" />
           </button>
           
           {showDepartmentDropdown && (
@@ -1078,7 +1156,7 @@ const AccuredLeave = () => {
                     transition: 'background-color 0.2s'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#f9fafb';
+                    e.target.style.backgroundColor = 'var(--bg-surface2)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
@@ -1109,7 +1187,7 @@ const AccuredLeave = () => {
 
       {/* Search and Actions */}
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <div style={{ flex: 1, position: 'relative', maxWidth: '800px' }}>
+        <div style={{ flex: 1, position: 'relative', maxWidth: '1000px' }}>
           <button style={{
             position: 'absolute',
             left: '12px',
@@ -1120,7 +1198,7 @@ const AccuredLeave = () => {
             cursor: 'pointer',
             padding: 0
           }}>
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
             type="text"
@@ -1136,7 +1214,10 @@ const AccuredLeave = () => {
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
+              backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
             }}
           />
         </div>
@@ -1147,9 +1228,9 @@ const AccuredLeave = () => {
             alignItems: 'center',
             gap: '8px',
             padding: '12px 16px',
-            backgroundColor: '#ffffff',
-            color: '#6B7280',
-            border: '1px solid #E5E7EB',
+            backgroundColor: 'var(--bg-surface2)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: '500',
@@ -1167,7 +1248,7 @@ const AccuredLeave = () => {
             alignItems: 'center',
             gap: '8px',
             padding: '12px 16px',
-            backgroundColor: '#0074AD',
+            backgroundColor: '#3b74f0',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -1195,8 +1276,8 @@ const AccuredLeave = () => {
           display: 'grid',
           gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 0.8fr 1fr 120px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: 'var(--bg-surface2)',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
           color: 'var(--text-secondary)',
@@ -1220,34 +1301,34 @@ const AccuredLeave = () => {
             display: 'grid',
             gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 0.8fr 1fr 120px',
             padding: '16px 20px',
-            borderBottom: '1px solid #f3f4f6',
+            borderBottom: '1px solid var(--border-color)',
             alignItems: 'center',
             transition: 'background-color 0.2s',
             fontFamily: "'Public Sans', sans-serif"
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: 'var(--text-primary)', 
+              color: 'var(--text-primary)',
               fontWeight: '500'
             }}>
               {credit.facultyName}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.position || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.serviceCreditEarned || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.leaveTakenUndertime || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.balance || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.asOf || new Date().toLocaleDateString()}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.reason || 'N/A'}
             </div>
             <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-start' }}>
@@ -1263,7 +1344,8 @@ const AccuredLeave = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  color: 'var(--text-primary)',
                 }}
               >
                 Edit
@@ -1284,7 +1366,8 @@ const AccuredLeave = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  color: 'var(--text-primary)',
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.backgroundColor = '#fee2e2';
@@ -1292,7 +1375,7 @@ const AccuredLeave = () => {
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.backgroundColor = 'transparent';
-                  e.target.style.borderColor = '#e5e7eb';
+                  e.target.style.borderColor = 'var(--border-color)';
                 }}
               >
                 Delete

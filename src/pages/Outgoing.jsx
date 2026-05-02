@@ -340,7 +340,7 @@ const Outgoing = () => {
   const totalPages = Math.ceil(filteredFiles.length / rowsPerPage);
 
   // Reset to page 1 when search or filter terms change
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, filterReceivedBy, filterMonth, filterDay, filterYear]);
 
@@ -449,7 +449,7 @@ const Outgoing = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)', // Account for padding
       padding: '24px',
       display: 'flex',
@@ -462,11 +462,11 @@ const Outgoing = () => {
         <h1 style={{ 
           fontSize: '28px', 
           fontWeight: '600', 
-          color: '#0074AD', 
+          color: 'var(--text-primary)', 
           margin: 0,
           fontFamily: "'Public Sans', sans-serif"
         }}>
-          OUTGOING DOCUMENTS BU-LB-CLUSTER II-80
+          INCOMING DOCUMENTS BU-LB-CLUSTER II-04
         </h1>
         <p style={{
           fontSize: '16px',
@@ -479,43 +479,28 @@ const Outgoing = () => {
         </p>
       </div>
 
-      {/* Search and Filter Section - Fixed */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '24px',
-        gap: '16px',
-        flexShrink: 0
-      }}>
-        {/* Search Bar */}
-        <div style={{ 
-          position: 'relative', 
-          flex: 1,
-          maxWidth: '400px'
-        }}>
-          <button
-            onClick={() => console.log('Search clicked')}
-            style={{
-              position: 'absolute',
-              left: '12px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0
-            }}
-          >
-            <Search size={20} color="#6b7280" />
+      {/* Search and Actions */}
+      <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px' }}>
+        <div style={{ flex: 1, position: 'relative', maxWidth: '1000px' }}>
+          <button style={{
+            position: 'absolute',
+            left: '12px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0
+          }}>
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
-type="text"
-            placeholder="Search File"
+            type="text"
+            placeholder="Search faculty"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: '198%',
+              width: '100%',
               padding: '12px 16px 12px 44px',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
@@ -523,54 +508,51 @@ type="text"
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
-
-        {/* Filter and Add Buttons */}
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            onClick={() => setShowFilterModal(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 16px',
-              backgroundColor: '#ffffff',
-              color: 'var(--text-secondary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
-              transition: 'all 0.2s'
-            }}>
+        <button 
+          onClick={() => setShowFilterModal(true)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: 'var(--bg-surface2)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            fontFamily: "'Inter', sans-serif",
+            transition: 'all 0.2s'
+          }}>
             <Filter size={20} />
             Filter
           </button>
-          <button 
-            onClick={() => setShowUploadModal(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 16px',
-              backgroundColor: '#FF9500',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
-              transition: 'background-color 0.2s'
-            }}>
+        <button 
+          onClick={() => setShowUploadModal(true)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: '#3b74f0',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            fontFamily: "'Inter', sans-serif",
+            transition: 'background-color 0.2s'
+          }}>
             <Plus size={20} />
-            Add New File
+            Add Faculty
           </button>
-        </div>
       </div>
 
       {/* Files Table - Scrollable Rows Only */}
@@ -588,10 +570,10 @@ type="text"
         {/* Table Header - Fixed */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '40px 2fr 1fr 1fr 1fr 139px 150px',
+          gridTemplateColumns: '2fr 1fr 1fr 1fr 139px 150px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: 'var(--bg-surface2)',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
           color: 'var(--text-secondary)',
@@ -600,7 +582,6 @@ type="text"
           fontFamily: "'Inter', sans-serif",
           flexShrink: 0
         }}>
-          <div></div>
           <div>FILE NAME</div>
           <div>TYPE</div>
           <div>DATE</div>
@@ -618,24 +599,13 @@ type="text"
           {currentRows.map((file) => (
             <div key={file.id} style={{
               display: 'grid',
-              gridTemplateColumns: '40px 2fr 1fr 1fr 1fr 120px 150px',
+              gridTemplateColumns: '2fr 1fr 1fr 1fr 120px 150px',
               padding: '16px 20px',
-              borderBottom: '1px solid #f3f4f6',
+              borderBottom: '1px solid var(--border-color)',
               alignItems: 'center',
               transition: 'background-color 0.2s',
               fontFamily: "'Public Sans', sans-serif"
             }}>
-              {/* Checkbox */}
-              <div>
-                <input
-                  type="checkbox"
-                  style={{
-                    width: '16px',
-                    height: '16px',
-                    cursor: 'pointer'
-                  }}
-                />
-              </div>
 
               {/* File Name */}
               <div style={{ 
@@ -646,22 +616,22 @@ type="text"
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <FileText size={20} color="#6b7280" />
+                <FileText size={20} color="var(--text-muted)" />
                 {file.name}
               </div>
 
               {/* Type */}
-              <div style={{ fontSize: '14px', color: '#6b7280' }}>
+              <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
                 {file.type}
               </div>
 
               {/* Date */}
-              <div style={{ fontSize: '14px', color: '#6b7280' }}>
+              <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
                 {file.date}
               </div>
 
               {/* Size */}
-              <div style={{ fontSize: '14px', color: '#6b7280' }}>
+              <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
                 {file.size}
               </div>
 
@@ -673,7 +643,7 @@ type="text"
                 alignItems: 'center',
                 gap: '6px'
               }}>
-                <User size={16} color="#6b7280" />
+                <User size={16} color="var(--text-muted)" />
                 {file.receivedBy}
               </div>
 
@@ -694,7 +664,7 @@ type="text"
                     transition: 'all 0.2s'
                   }}
                 >
-                  <Eye size={16} color="#6b7280" />
+                  <Eye size={16} color="var(--text-muted)" />
                 </button>
                 <button
                   onClick={() => handleViewClick(file)}
@@ -711,7 +681,7 @@ type="text"
                     transition: 'all 0.2s'
                   }}
                 >
-                  <Edit size={16} color="#6b7280" />
+                  <Edit size={16} color="var(--text-muted)" />
                 </button>
                 <button
                   onClick={() => handleDownloadFile(file)}
@@ -728,7 +698,7 @@ type="text"
                     transition: 'all 0.2s'
                   }}
                 >
-                  <Download size={16} color="#6b7280" />
+                  <Download size={16} color="var(--text-muted)" />
                 </button>
                 <button
                   onClick={() => handleDeleteClick(file)}
@@ -766,7 +736,7 @@ type="text"
         fontFamily: "'Inter', sans-serif",
         flexShrink: 0
       }}>
-        <div style={{ fontSize: '14px', color: '#6b7280' }}>
+        <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
           Showing {indexOfFirstRow + 1} to {Math.min(indexOfLastRow, files.length)} of {files.length} entries
         </div>
         
@@ -777,8 +747,8 @@ type="text"
             disabled={currentPage === 1}
             style={{
               padding: '8px 12px',
-              backgroundColor: currentPage === 1 ? '#f3f4f6' : '#0074AD',
-              color: currentPage === 1 ? '#9ca3af' : 'white',
+              backgroundColor: currentPage === 1 ? 'var(--bg-surface2)' : '#3b74f0',
+              color: currentPage === 1 ? 'var(--text-tertiary)' : 'white',
               border: 'none',
               borderRadius: '6px',
               fontSize: '14px',
@@ -807,7 +777,7 @@ type="text"
               >
                 1
               </button>
-              {startPage > 2 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+              {startPage > 2 && <span style={{ padding: '8px 4px', color: 'var(--text-muted)' }}>...</span>}
             </>
           )}
           
@@ -817,9 +787,9 @@ type="text"
               onClick={() => handlePageChange(startPage + index)}
               style={{
                 padding: '8px 12px',
-                backgroundColor: currentPage === startPage + index ? '#0074AD' : 'transparent',
-                color: currentPage === startPage + index ? 'white' : '#6b7280',
-                border: currentPage === startPage + index ? 'none' : '1px solid #e5e7eb',
+                backgroundColor: currentPage === startPage + index ? '#3b74f0' : 'transparent',
+                color: currentPage === startPage + index ? 'white' : 'var(--text-muted)',
+                border: currentPage === startPage + index ? 'none' : '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
@@ -832,7 +802,7 @@ type="text"
           
           {endPage < totalPages && (
             <>
-              {endPage < totalPages - 1 && <span style={{ padding: '8px 4px', color: '#6b7280' }}>...</span>}
+              {endPage < totalPages - 1 && <span style={{ padding: '8px 4px', color: 'var(--text-muted)' }}>...</span>}
               <button
                 onClick={() => handlePageChange(totalPages)}
                 style={{
@@ -857,8 +827,8 @@ type="text"
             disabled={currentPage === totalPages}
             style={{
               padding: '8px 12px',
-              backgroundColor: currentPage === totalPages ? '#f3f4f6' : '#0074AD',
-              color: currentPage === totalPages ? '#9ca3af' : 'white',
+              backgroundColor: currentPage === totalPages ? 'var(--bg-surface2)' : '#3b74f0',
+              color: currentPage === totalPages ? 'var(--text-tertiary)' : 'white',
               border: 'none',
               borderRadius: '6px',
               fontSize: '14px',
@@ -900,7 +870,7 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 fontSize: '20px',
@@ -924,7 +894,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -936,7 +906,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -954,7 +924,9 @@ type="text"
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
                     outline: 'none',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -965,7 +937,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Public Sans', sans-serif"
                 }}>
@@ -980,8 +952,8 @@ type="text"
                         padding: '12px 16px',
                         border: selectedRecipient === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: selectedRecipient === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: selectedRecipient === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -992,14 +964,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (selectedRecipient !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-page)';
+                          e.target.style.borderColor = '#3b74f0';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedRecipient !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1041,7 +1013,7 @@ type="text"
                   padding: '12px 24px',
                   border: 'none',
                   borderRadius: '8px',
-                  backgroundColor: '#0074AD',
+                  backgroundColor: '#3b74f0',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1086,7 +1058,7 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 margin: 0,
@@ -1110,7 +1082,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -1122,7 +1094,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Inter', sans-serif"
                 }}>
@@ -1139,7 +1111,8 @@ type="text"
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Month</option>
@@ -1166,7 +1139,8 @@ type="text"
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Day</option>
@@ -1186,7 +1160,8 @@ type="text"
                       borderRadius: '6px',
                       fontSize: '14px',
                       fontFamily: "'Inter', sans-serif",
-                      backgroundColor: '#ffffff'
+                      backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Year</option>
@@ -1205,7 +1180,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Inter', sans-serif"
                 }}>
@@ -1221,7 +1196,8 @@ type="text"
                     borderRadius: '6px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff'
+                    backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                   }}
                 >
                   <option value="">All</option>
@@ -1271,7 +1247,7 @@ type="text"
                   padding: '12px 24px',
                   border: 'none',
                   borderRadius: '8px',
-                  backgroundColor: '#0074AD',
+                  backgroundColor: '#3b74f0',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1316,7 +1292,7 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 margin: 0,
@@ -1344,7 +1320,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 
@@ -1356,18 +1332,18 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Inter', sans-serif"
                 }}>
                   Choose File (Max 10MB)
                 </label>
                 <div style={{
-                  border: '2px dashed #e5e7eb',
+                  border: '2px dashed var(--border-color)',
                   borderRadius: '8px',
                   padding: '32px',
                   textAlign: 'center',
-                  backgroundColor: '#f9fafb',
+                  backgroundColor: 'var(--bg-surface2)',
                   transition: 'border-color 0.2s'
                 }}>
                   <input
@@ -1402,7 +1378,7 @@ type="text"
                     }}
                   >
                     <div style={{ marginBottom: '12px' }}>
-                      <FileText size={48} color="#6b7280" />
+                      <FileText size={48} color="var(--text-muted)" />
                     </div>
                     <p style={{
                       margin: 0,
@@ -1432,7 +1408,7 @@ type="text"
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: '#374151',
+                  color: 'var(--text-secondary)',
                   marginBottom: '8px',
                   fontFamily: "'Inter', sans-serif"
                 }}>
@@ -1447,8 +1423,8 @@ type="text"
                         padding: '12px 16px',
                         border: uploadRecipient === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
                         borderRadius: '8px',
-                        backgroundColor: uploadRecipient === recipient ? '#f0f9ff' : 'white',
-                        color: '#374151',
+                        backgroundColor: uploadRecipient === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                        color: 'var(--text-secondary)',
                         fontSize: '14px',
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -1459,14 +1435,14 @@ type="text"
                       }}
                       onMouseEnter={(e) => {
                         if (uploadRecipient !== recipient) {
-                          e.target.style.backgroundColor = '#f8f9fa';
-                          e.target.style.borderColor = '#0074AD';
+                          e.target.style.backgroundColor = 'var(--bg-page)';
+                          e.target.style.borderColor = '#3b74f0';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (uploadRecipient !== recipient) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.backgroundColor = 'var(--bg-surface)';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1530,7 +1506,7 @@ type="text"
                   padding: '12px 24px',
                   border: 'none',
                   borderRadius: '8px',
-                  backgroundColor: '#0074AD',
+                  backgroundColor: '#3b74f0',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1573,7 +1549,7 @@ type="text"
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: '24px',
-              borderBottom: '1px solid #e5e7eb'
+              borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
                 margin: 0,
@@ -1600,7 +1576,7 @@ type="text"
                   justifyContent: 'center'
                 }}
               >
-                <X size={20} color="#6b7280" />
+                <X size={20} color="var(--text-muted)" />
               </button>
             </div>
 

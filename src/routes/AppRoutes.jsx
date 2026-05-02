@@ -4,7 +4,6 @@ import Homepage from "../pages/Homepage";
 import Dashboard from "../pages/Dashboard";
 import Incoming from "../pages/Incoming";
 import Outgoing from "../pages/Outgoing";
-import DisbursementVoucher from "../pages/DisbursementVoucher";
 import TemplateCopies from "../pages/TemplateCopies";
 import ServiceLeaveCredit from "../pages/ServiceLeaveCredit";
 import SupplyProperty from "../pages/SupplyProperty";
@@ -45,7 +44,6 @@ export default function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/incoming" element={<Incoming />} />
         <Route path="/outgoing" element={<Outgoing />} />
-        <Route path="/disbursement-voucher" element={<DisbursementVoucher />} />
         <Route path="/template-copies" element={<TemplateCopies />} />
         <Route path="/accrued-leave" element={<AccruedLeave />} />
         <Route path="/teachers-leave" element={<TeachersLeave />} />
@@ -58,6 +56,7 @@ export default function AppRoutes() {
         <Route path="/incoming-record" element={<IncomingRecord />} />
         <Route path="/outgoing-record" element={<OutgoingRecord />} />
         <Route path="/AccruedLeave" element={<Navigate to="/accrued-leave" replace />} />
+        <Route path="/TeachersLeave" element={<Navigate to="/teachers-leave" replace />} />
         <Route path="/settings" element={<Navigate to="/account-management" replace />} />
 
         <Route path="/bugs01" element={<BUGS01 />} />

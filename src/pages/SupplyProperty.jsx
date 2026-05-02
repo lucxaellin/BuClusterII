@@ -1,7 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Package, User, Building2, Briefcase, Calendar, Search, Filter, Plus, Edit2, Trash2, X, ChevronDown } from 'lucide-react';
 
 const SupplyProperty = () => {
+  // Add CSS for white calendar icons in dark mode
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Light mode - black calendar icon */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      input[type="date"]::-moz-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      
+      /* Dark mode - white calendar icon */
+      @media (prefers-color-scheme: dark) {
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+        input[type="date"]::-moz-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+      }
+      
+      /* Dark mode using data attribute or class */
+      [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+      .dark input[type="date"]::-webkit-calendar-picker-indicator,
+      body.dark input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+      
+      [data-theme="dark"] input[type="date"]::-moz-calendar-picker-indicator,
+      .dark input[type="date"]::-moz-calendar-picker-indicator,
+      body.dark input[type="date"]::-moz-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
   const [facultyList, setFacultyList] = useState([
     {
       id: 1,
@@ -261,7 +308,7 @@ const SupplyProperty = () => {
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '12px',
           padding: '24px',
           width: '90%',
@@ -271,18 +318,18 @@ const SupplyProperty = () => {
           boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937' }}>
+            <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)' }}>
               Add New Faculty
             </h2>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-muted)' }}>
               ×
             </button>
           </div>
 
-          <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px' }}>
+          <div style={{ backgroundColor: 'var(--bg-page)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '20px' }}>
             {/* Faculty Info */}
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Faculty Name <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -292,18 +339,22 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)'
                 }}
                 placeholder="Enter faculty name"
               />
             </div>
 
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Department
               </label>
               <select
@@ -312,12 +363,17 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box',
-                  backgroundColor: '#ffffff'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)',
+                  backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                 }}
               >
                 {departments.filter(d => d !== 'All Departments').map(dept => (
@@ -327,7 +383,7 @@ const SupplyProperty = () => {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Position <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -337,19 +393,23 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)'
                 }}
                 placeholder="e.g., Professor, Instructor"
               />
             </div>
 
             {/* Add Items Section */}
-            <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px', marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '12px' }}>
+            <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '12px' }}>
                 Add Items
               </label>
               
@@ -362,10 +422,22 @@ const SupplyProperty = () => {
                   style={{
                     flex: 1,
                     padding: '8px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
-                    outline: 'none'
+                    outline: 'none',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                        backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                    '::-webkit-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    },
+                    '::-moz-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    }
                   }}
                 />
                 <input
@@ -374,17 +446,27 @@ const SupplyProperty = () => {
                   onChange={(e) => setCurrentItem(prev => ({ ...prev, dateIssued: e.target.value }))}
                   style={{
                     padding: '8px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
-                    outline: 'none'
+                    outline: 'none',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                    '::-webkit-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    },
+                    '::-moz-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    }
                   }}
                 />
                 <button
                   onClick={handleAddItem}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#0074AD',
+                    backgroundColor: '#3b74f0',
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
@@ -398,18 +480,18 @@ const SupplyProperty = () => {
 
               {/* Items List */}
               {formData.items.length > 0 && (
-                <div style={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '12px' }}>
+                <div style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '12px' }}>
                   {formData.items.map((item) => (
                     <div key={item.id} style={{ 
                       display: 'flex', 
                       justifyContent: 'space-between', 
                       alignItems: 'center',
                       padding: '8px 0',
-                      borderBottom: '1px solid #f3f4f6'
+                      borderBottom: '1px solid var(--border-color)'
                     }}>
                       <div>
                         <div style={{ fontSize: '14px', fontWeight: '500' }}>{item.itemName}</div>
-                        <div style={{ fontSize: '12px', color: '#6b7280' }}>Issued: {item.dateIssued}</div>
+                        <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Issued: {item.dateIssued}</div>
                       </div>
                       <button
                         onClick={() => handleRemoveItem(item.id)}
@@ -435,12 +517,13 @@ const SupplyProperty = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+                border: '1px solid #4b5563',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-muted)',
                 cursor: 'pointer'
               }}
             >
@@ -450,7 +533,7 @@ const SupplyProperty = () => {
               onClick={handleSave}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#0074AD',
+                backgroundColor: '#3b74f0',
                 border: 'none',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -524,7 +607,7 @@ const SupplyProperty = () => {
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           borderRadius: '12px',
           padding: '24px',
           width: '90%',
@@ -534,17 +617,17 @@ const SupplyProperty = () => {
           boxShadow: '0 20px 25px rgba(0, 0, 0, 0.15)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: '#1f2937' }}>
+            <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '600', color: 'var(--text-primary)' }}>
               Edit Faculty
             </h2>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: '#6b7280' }}>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text-muted)' }}>
               ×
             </button>
           </div>
 
-          <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px' }}>
+          <div style={{ backgroundColor: 'var(--bg-page)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '20px' }}>
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Faculty Name <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -554,17 +637,21 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)'
                 }}
               />
             </div>
 
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Department
               </label>
               <select
@@ -573,12 +660,17 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box',
-                  backgroundColor: '#ffffff'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)',
+                  backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
                 }}
               >
                 {departments.filter(d => d !== 'All Departments').map(dept => (
@@ -588,7 +680,7 @@ const SupplyProperty = () => {
             </div>
 
             <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#374151', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: 'var(--text-secondary)', marginBottom: '6px' }}>
                 Position <span style={{ color: '#ef4444' }}>*</span>
               </label>
               <input
@@ -598,18 +690,22 @@ const SupplyProperty = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   outline: 'none',
-                  boxSizing: 'border-box'
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                                      boxSizing: 'border-box',
+                  backgroundColor: 'var(--input-bg)',
+                  color: 'var(--text-primary)'
                 }}
               />
             </div>
 
             {/* Edit Items Section */}
-            <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px', marginBottom: '16px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '12px' }}>
+            <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '12px' }}>
                 Manage Items
               </label>
               
@@ -622,10 +718,20 @@ const SupplyProperty = () => {
                   style={{
                     flex: 1,
                     padding: '8px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
-                    outline: 'none'
+                    outline: 'none',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                    '::-webkit-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    },
+                    '::-moz-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    }
                   }}
                 />
                 <input
@@ -634,17 +740,27 @@ const SupplyProperty = () => {
                   onChange={(e) => setCurrentItem(prev => ({ ...prev, dateIssued: e.target.value }))}
                   style={{
                     padding: '8px 12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '6px',
                     fontSize: '14px',
-                    outline: 'none'
+                    outline: 'none',
+                    backgroundColor: 'var(--input-bg)',
+                    color: 'var(--text-primary)',
+                    '::-webkit-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    },
+                    '::-moz-calendar-picker-indicator': {
+                      filter: 'invert(100%)',
+                      cursor: 'pointer'
+                    }
                   }}
                 />
                 <button
                   onClick={handleAddItem}
                   style={{
                     padding: '8px 16px',
-                    backgroundColor: '#0074AD',
+                    backgroundColor: '#3b74f0',
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
@@ -658,18 +774,18 @@ const SupplyProperty = () => {
 
               {/* Items List */}
               {formData.items.length > 0 && (
-                <div style={{ backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '12px' }}>
+                <div style={{ backgroundColor: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '12px' }}>
                   {formData.items.map((item) => (
                     <div key={item.id} style={{ 
                       display: 'flex', 
                       justifyContent: 'space-between', 
                       alignItems: 'center',
                       padding: '8px 0',
-                      borderBottom: '1px solid #f3f4f6'
+                      borderBottom: '1px solid var(--border-color)'
                     }}>
                       <div>
                         <div style={{ fontSize: '14px', fontWeight: '500' }}>{item.itemName}</div>
-                        <div style={{ fontSize: '12px', color: '#6b7280' }}>Issued: {item.dateIssued}</div>
+                        <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Issued: {item.dateIssued}</div>
                       </div>
                       <button
                         onClick={() => handleRemoveItem(item.id)}
@@ -695,12 +811,13 @@ const SupplyProperty = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+                border: '1px solid #4b5563',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#6b7280',
+                color: 'var(--text-muted)',
                 cursor: 'pointer'
               }}
             >
@@ -710,7 +827,7 @@ const SupplyProperty = () => {
               onClick={handleSave}
               style={{
                 padding: '12px 24px',
-                backgroundColor: '#0074AD',
+                backgroundColor: '#3b74f0',
                 border: 'none',
                 borderRadius: '6px',
                 fontSize: '14px',
@@ -741,7 +858,7 @@ const SupplyProperty = () => {
       zIndex: 1000
     }}>
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
         padding: '24px',
         width: '90%',
@@ -753,7 +870,7 @@ const SupplyProperty = () => {
             width: '48px',
             height: '48px',
             borderRadius: '50%',
-            backgroundColor: '#fef3c7',
+            backgroundColor: 'var(--icon-bg-amber)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -761,10 +878,10 @@ const SupplyProperty = () => {
           }}>
             <Trash2 size={24} color="#f59e0b" />
           </div>
-          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: '#1f2937' }}>
+          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: 'var(--text-primary)' }}>
             Delete Faculty?
           </h3>
-          <p style={{ margin: '8px 0 0 0', fontSize: '14px', color: '#6b7280' }}>
+          <p style={{ margin: '8px 0 0 0', fontSize: '14px', color: 'var(--text-muted)' }}>
             Are you sure you want to delete <strong>{faculty.facultyName}</strong>? This action cannot be undone.
           </p>
         </div>
@@ -775,12 +892,13 @@ const SupplyProperty = () => {
             style={{
               flex: 1,
               padding: '12px',
-              backgroundColor: '#ffffff',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+              border: '1px solid #4b5563',
               borderRadius: '6px',
               fontSize: '14px',
               fontWeight: '500',
-              color: '#6b7280',
+              color: 'var(--text-muted)',
               cursor: 'pointer'
             }}
           >
@@ -810,7 +928,7 @@ const SupplyProperty = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)',
       padding: '24px',
       display: 'flex',
@@ -830,7 +948,7 @@ const SupplyProperty = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-muted)',
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
@@ -845,10 +963,10 @@ const SupplyProperty = () => {
         gap: '20px' 
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -856,18 +974,18 @@ const SupplyProperty = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0f9ff',
+              backgroundColor: 'var(--icon-bg-blue)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <User size={20} color="#0074AD" />
+              <User size={20} color="#3b74f0" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)' }}>
                 Total Faculty
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937' }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 {facultyList.length}
               </p>
             </div>
@@ -875,10 +993,10 @@ const SupplyProperty = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -886,7 +1004,7 @@ const SupplyProperty = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0fdf4',
+              backgroundColor: 'var(--icon-bg-green)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -894,10 +1012,10 @@ const SupplyProperty = () => {
               <Package size={20} color="#10b981" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)' }}>
                 Total Items Lent
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937' }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 {facultyList.reduce((sum, f) => sum + f.items.length, 0)}
               </p>
             </div>
@@ -905,10 +1023,10 @@ const SupplyProperty = () => {
         </div>
 
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-surface)',
           padding: '20px',
           borderRadius: '12px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid var(--border-color)',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -916,7 +1034,7 @@ const SupplyProperty = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#fef3c7',
+              backgroundColor: 'var(--icon-bg-amber)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -924,10 +1042,10 @@ const SupplyProperty = () => {
               <Building2 size={20} color="#f59e0b" />
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)' }}>
                 Departments
               </p>
-              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: '#1f2937' }}>
+              <p style={{ margin: 0, fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)' }}>
                 {new Set(facultyList.map(f => f.department)).size}
               </p>
             </div>
@@ -937,7 +1055,7 @@ const SupplyProperty = () => {
 
       {/* Search and Actions */}
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <div style={{ flex: 1, position: 'relative' }}>
+        <div style={{ flex: 1, position: 'relative', maxWidth: '1000px' }}>
           <button style={{
             position: 'absolute',
             left: '12px',
@@ -948,7 +1066,7 @@ const SupplyProperty = () => {
             cursor: 'pointer',
             padding: 0
           }}>
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
             type="text"
@@ -958,12 +1076,13 @@ const SupplyProperty = () => {
             style={{
               width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -977,9 +1096,9 @@ const SupplyProperty = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#ffffff',
-              color: '#374151',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -989,7 +1108,7 @@ const SupplyProperty = () => {
             }}
           >
             <span>{selectedDepartment}</span>
-            <ChevronDown size={16} color="#6b7280" />
+            <ChevronDown size={16} color="var(--text-muted)" />
           </button>
           
           {showDepartmentDropdown && (
@@ -998,8 +1117,8 @@ const SupplyProperty = () => {
               top: 'calc(100% + 4px)',
               left: 0,
               right: 0,
-              backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               zIndex: 1000,
@@ -1019,8 +1138,8 @@ const SupplyProperty = () => {
                     padding: '10px 16px',
                     textAlign: 'left',
                     border: 'none',
-                    backgroundColor: selectedDepartment === dept ? '#f0f9ff' : 'white',
-                    color: selectedDepartment === dept ? '#0074AD' : '#374151',
+                    backgroundColor: selectedDepartment === dept ? 'var(--bg-hover)' : 'var(--bg-surface)',
+                    color: selectedDepartment === dept ? 'var(--text-primary)' : 'var(--text-secondary)',
                     cursor: 'pointer',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif"
@@ -1040,7 +1159,7 @@ const SupplyProperty = () => {
             alignItems: 'center',
             gap: '8px',
             padding: '12px 16px',
-            backgroundColor: '#0074AD',
+            backgroundColor: '#3b74f0',
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -1056,32 +1175,31 @@ const SupplyProperty = () => {
 
       {/* Faculty Table */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden',
         flex: 1,
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <div style={{
-          overflowY: 'auto',
-          flex: 1
-        }}>
-        {/* Table Header */}
+        {/* Fixed Table Header */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '2fr 1fr 1.5fr 2fr 120px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: 'var(--bg-surface2)',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-muted)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
-          fontFamily: "'Inter', sans-serif"
+          fontFamily: "'Inter', sans-serif",
+          position: 'sticky',
+          top: 0,
+          zIndex: 10
         }}>
           <div>Faculty Name</div>
           <div>Department</div>
@@ -1090,37 +1208,41 @@ const SupplyProperty = () => {
           <div>Actions</div>
         </div>
 
-        {/* Faculty Rows */}
+        {/* Scrollable Table Body */}
+        <div style={{
+          overflowY: 'auto',
+          flex: 1
+        }}>
         {filteredFaculty.map((faculty) => (
           <div key={faculty.id} style={{
             display: 'grid',
             gridTemplateColumns: '2fr 1fr 1.5fr 2fr 120px',
             padding: '16px 20px',
-            borderBottom: '1px solid #f3f4f6',
+            borderBottom:'1px solid var(--border-color)',
             alignItems: 'center',
             transition: 'background-color 0.2s',
             fontFamily: "'Public Sans', sans-serif"
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: '#1f2937', 
+              color: 'var(--text-primary)', 
               fontWeight: '500',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}>
-              <User size={18} color="#6b7280" />
+              <User size={18} color="var(--text-muted)" />
               {faculty.facultyName}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)' }}>
               {faculty.department}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)' }}>
               {faculty.position}
             </div>
             <div>
               {faculty.items.length === 0 ? (
-                <span style={{ fontSize: '14px', color: '#9ca3af' }}>
+                <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
                   No items assigned
                 </span>
               ) : (
@@ -1131,11 +1253,11 @@ const SupplyProperty = () => {
                       alignItems: 'center',
                       gap: '6px',
                       fontSize: '13px',
-                      color: '#374151'
+                      color: 'var(--text-primary)'
                     }}>
-                      <Package size={12} color="#6b7280" />
+                      <Package size={12} color="var(--text-muted)" />
                       <span>{item.itemName}</span>
-                      <span style={{ fontSize: '11px', color: '#9ca3af' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                         ({item.dateIssued})
                       </span>
                     </div>
@@ -1152,13 +1274,14 @@ const SupplyProperty = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  color: 'var(--text-primary)'
                 }}
                 title="Edit"
               >
@@ -1172,13 +1295,14 @@ const SupplyProperty = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  color: 'var(--text-primary)'
                 }}
                 title="Delete"
               >

@@ -93,12 +93,12 @@ const ServiceLeaveCredit = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0f9ff',
+              backgroundColor: 'var(--icon-bg-blue)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <User size={20} color="#0074AD" />
+              <User size={20} color="#3b74f0" />
             </div>
             <div>
               <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', fontFamily: "'Inter', sans-serif" }}>
@@ -123,7 +123,7 @@ const ServiceLeaveCredit = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#f0fdf4',
+              backgroundColor: 'var(--icon-bg-green)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -153,7 +153,7 @@ const ServiceLeaveCredit = () => {
               width: '40px',
               height: '40px',
               borderRadius: '8px',
-              backgroundColor: '#fef3c7',
+              backgroundColor: 'var(--icon-bg-amber)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -225,12 +225,13 @@ const ServiceLeaveCredit = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: '#ffffff',
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
               border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
-              color: '#374151',
+              color: 'var(--text-secondary)',
               cursor: 'pointer',
               fontFamily: "'Inter', sans-serif",
               minWidth: '200px',
@@ -238,7 +239,7 @@ const ServiceLeaveCredit = () => {
             }}
           >
             <span>{selectedDepartment}</span>
-            <ChevronDown size={16} color="#6b7280" />
+            <ChevronDown size={16} color="var(--text-muted)" />
           </button>
           
           {showDepartmentDropdown && (
@@ -272,11 +273,11 @@ const ServiceLeaveCredit = () => {
                     cursor: 'pointer',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    color: '#374151',
+                    color: 'var(--text-secondary)',
                     transition: 'background-color 0.2s'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#f9fafb';
+                    e.target.style.backgroundColor = 'var(--bg-surface2)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
@@ -304,7 +305,7 @@ const ServiceLeaveCredit = () => {
             cursor: 'pointer',
             padding: 0
           }}>
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
             type="text"
@@ -320,7 +321,8 @@ const ServiceLeaveCredit = () => {
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -329,7 +331,8 @@ const ServiceLeaveCredit = () => {
           alignItems: 'center',
           gap: '8px',
           padding: '12px 16px',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
           color: 'var(--text-secondary)',
           border: '1px solid var(--border-color)',
           borderRadius: '8px',
@@ -347,7 +350,7 @@ const ServiceLeaveCredit = () => {
           alignItems: 'center',
           gap: '8px',
           padding: '12px 16px',
-          backgroundColor: '#0074AD',
+          backgroundColor: '#3b74f0',
           color: 'white',
           border: 'none',
           borderRadius: '8px',
@@ -375,7 +378,7 @@ const ServiceLeaveCredit = () => {
           display: 'grid',
           gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 120px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
+          backgroundColor: 'var(--bg-surface2)',
           borderBottom: '1px solid #e5e7eb',
           fontSize: '12px',
           fontWeight: '600',
@@ -412,19 +415,19 @@ const ServiceLeaveCredit = () => {
               alignItems: 'center',
               gap: '8px'
             }}>
-              <User size={20} color="#6b7280" />
+              <User size={20} color="var(--text-muted)" />
               {credit.employee}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {credit.type}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {credit.days}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {credit.used}
             </div>
-            <div style={{ fontSize: '14px', fontWeight: '500', color: '#1f2937' }}>
+            <div style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)' }}>
               {credit.balance}
             </div>
             <div>
@@ -455,7 +458,7 @@ const ServiceLeaveCredit = () => {
                   transition: 'all 0.2s'
                 }}
               >
-                <FileText size={16} color="#6b7280" />
+                <FileText size={16} color="var(--text-muted)" />
               </button>
             </div>
           </div>

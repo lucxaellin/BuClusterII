@@ -13,7 +13,7 @@ const TemplateCopies = () => {
   return (
     <div style={{ 
       fontFamily: "'Inter', sans-serif", 
-      backgroundColor: '#f8f9fa',
+      backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)',
       padding: '24px',
       display: 'flex',
@@ -33,7 +33,7 @@ const TemplateCopies = () => {
         </h1>
         <p style={{
           fontSize: '16px',
-          color: '#6b7280',
+          color: 'var(--text-muted)',
           margin: '8px 0 0 0',
           fontFamily: "'Inter', sans-serif"
         }}>
@@ -54,7 +54,7 @@ const TemplateCopies = () => {
             cursor: 'pointer',
             padding: 0
           }}>
-            <Search size={20} color="#6b7280" />
+            <Search size={20} color="var(--text-muted)" />
           </button>
           <input
             type="text"
@@ -62,13 +62,14 @@ const TemplateCopies = () => {
             style={{
               width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #e5e7eb',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: '#ffffff'
+              backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -77,9 +78,10 @@ const TemplateCopies = () => {
           alignItems: 'center',
           gap: '8px',
           padding: '12px 16px',
-          backgroundColor: '#ffffff',
-          color: '#6b7280',
-          border: '1px solid #e5e7eb',
+          backgroundColor: 'var(--input-bg)',
+              color: 'var(--text-primary)',
+          color: 'var(--text-muted)',
+          border: '1px solid var(--border-color)',
           borderRadius: '8px',
           fontSize: '14px',
           fontWeight: '500',
@@ -95,7 +97,7 @@ const TemplateCopies = () => {
           alignItems: 'center',
           gap: '8px',
           padding: '12px 16px',
-          backgroundColor: '#0074AD',
+          backgroundColor: '#3b74f0',
           color: 'white',
           border: 'none',
           borderRadius: '8px',
@@ -114,7 +116,7 @@ const TemplateCopies = () => {
       <div style={{
         backgroundColor: 'white',
         borderRadius: '12px',
-        border: '1px solid #e5e7eb',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden'
       }}>
@@ -123,11 +125,11 @@ const TemplateCopies = () => {
           display: 'grid',
           gridTemplateColumns: '2fr 1fr 1fr 1fr 120px',
           padding: '16px 20px',
-          backgroundColor: '#f9fafb',
+          backgroundColor: 'var(--bg-surface2)',
           borderBottom: '1px solid #e5e7eb',
           fontSize: '12px',
           fontWeight: '600',
-          color: '#6b7280',
+          color: 'var(--text-muted)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
           fontFamily: "'Inter', sans-serif"
@@ -152,22 +154,22 @@ const TemplateCopies = () => {
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: '#1f2937', 
+              color: 'var(--text-primary)', 
               fontWeight: '500',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}>
-              <Copy size={20} color="#6b7280" />
+              <Copy size={20} color="var(--text-muted)" />
               {template.name}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {template.type}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {template.date}
             </div>
-            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
               {template.downloads}
             </div>
             <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end' }}>
@@ -176,7 +178,7 @@ const TemplateCopies = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
@@ -185,14 +187,14 @@ const TemplateCopies = () => {
                   transition: 'all 0.2s'
                 }}
               >
-                <Eye size={16} color="#6b7280" />
+                <Eye size={16} color="var(--text-muted)" />
               </button>
               <button
                 title="Download"
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #e5e7eb',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
@@ -201,7 +203,7 @@ const TemplateCopies = () => {
                   transition: 'all 0.2s'
                 }}
               >
-                <Download size={16} color="#6b7280" />
+                <Download size={16} color="var(--text-muted)" />
               </button>
             </div>
           </div>
