@@ -1,7 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, User, Search, Filter, Plus, ChevronDown } from 'lucide-react';
 
 const TeachersLeave = () => {
+  // Add CSS for calendar icon theming in modals
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Light mode - black calendar icon */
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      input[type="date"]::-moz-calendar-picker-indicator {
+        filter: none !important;
+        cursor: pointer !important;
+      }
+      
+      /* Dark mode - white calendar icon */
+      @media (prefers-color-scheme: dark) {
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+        input[type="date"]::-moz-calendar-picker-indicator {
+          filter: invert(1) !important;
+          cursor: pointer !important;
+        }
+      }
+      
+      /* Dark mode using data attribute or class */
+      [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+      .dark input[type="date"]::-webkit-calendar-picker-indicator,
+      body.dark input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+      
+      [data-theme="dark"] input[type="date"]::-moz-calendar-picker-indicator,
+      .dark input[type="date"]::-moz-calendar-picker-indicator,
+      body.dark input[type="date"]::-moz-calendar-picker-indicator {
+        filter: invert(1) !important;
+        cursor: pointer !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const [selectedDepartment, setSelectedDepartment] = useState('All Departments');
   const [searchTerm, setSearchTerm] = useState('');
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState(false);
@@ -106,7 +154,7 @@ const TeachersLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: 'white'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -116,7 +164,7 @@ const TeachersLeave = () => {
           {/* Filter Fields */}
           <div style={{
             backgroundColor: 'var(--bg-page)',
-            border: '1px solid #4b5563',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px'
           }}>
@@ -138,14 +186,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -167,16 +215,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '10px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white',
-                  backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               >
                 <option value="">All Positions</option>
@@ -200,13 +246,12 @@ const TeachersLeave = () => {
               onClick={handleClear}
               style={{
                 padding: '10px 20px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)',
-                border: '1px solid #4b5563',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -217,13 +262,12 @@ const TeachersLeave = () => {
               onClick={onClose}
               style={{
                 padding: '10px 20px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)',
-                border: '1px solid #4b5563',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -327,7 +371,7 @@ const TeachersLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: 'white'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -337,7 +381,7 @@ const TeachersLeave = () => {
           {/* Form Fields */}
           <div style={{
             backgroundColor: 'var(--bg-page)',
-            border: '1px solid #4b5563',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px'
           }}>
@@ -359,14 +403,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter faculty name"
               />
@@ -390,14 +434,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter division or office"
               />
@@ -421,14 +465,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               />
             </div>
@@ -451,14 +495,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
                 placeholder="Enter position"
               />
@@ -481,16 +525,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white',
-                  backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                 }}
               >
                 <option value="BUGS">BUGS</option>
@@ -520,14 +562,14 @@ const TeachersLeave = () => {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontFamily: "'Inter', sans-serif",
                   outline: 'none',
                   boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white',
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
                   minHeight: '80px',
                   resize: 'vertical'
                 }}
@@ -547,13 +589,12 @@ const TeachersLeave = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)',
-                border: '1px solid #4b5563',
+                backgroundColor: 'var(--bg-surface2)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontFamily: "'Inter', sans-serif"
               }}
@@ -678,7 +719,7 @@ const TeachersLeave = () => {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: 'white'
+                color: 'var(--text-primary)',
               }}
             >
               ×
@@ -688,7 +729,7 @@ const TeachersLeave = () => {
           {/* Faculty Information Table */}
           <div style={{
             backgroundColor: 'var(--bg-page)',
-            border: '1px solid #4b5563',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             padding: '20px',
             overflowX: 'auto'
@@ -696,7 +737,7 @@ const TeachersLeave = () => {
             <h3 style={{
               fontSize: '18px',
               fontWeight: '600',
-              color: '#1e293b',
+              color: 'var(--text-primary)',
               marginBottom: '12px',
               fontFamily: "'Inter', sans-serif"
             }}>
@@ -732,17 +773,17 @@ const TeachersLeave = () => {
               gridTemplateColumns: '1fr 1fr 0.5fr 0.5fr 0.5fr 0.8fr 1fr',
               padding: '8px',
               gap: '8px',
-              borderBottom: '1px solid #4b5563',
+              borderBottom: '1px solid var(--border-color)',
               fontSize: '14px',
               color: 'var(--text-primary)',
               fontFamily: "'Inter', sans-serif"
             }}>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -755,7 +796,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -763,10 +804,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -779,7 +820,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -787,10 +828,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -803,7 +844,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -811,10 +852,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -827,7 +868,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -835,10 +876,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -851,7 +892,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -859,10 +900,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="date"
@@ -875,7 +916,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -883,10 +924,10 @@ const TeachersLeave = () => {
               </div>
               <div style={{
                 padding: '8px',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '4px',
-                backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
               }}>
                 <input
                   type="text"
@@ -899,7 +940,7 @@ const TeachersLeave = () => {
                     borderRadius: '4px',
                     fontSize: '14px',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: 'var(--input-bg)',
+                    backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
                     outline: 'none'
                   }}
@@ -919,9 +960,9 @@ const TeachersLeave = () => {
               onClick={onClose}
               style={{
                 padding: '12px 24px',
-                backgroundColor: 'var(--input-bg)',
+                backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
-                border: '1px solid #4b5563',
+                border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
@@ -1029,7 +1070,7 @@ const TeachersLeave = () => {
         backgroundColor: 'var(--bg-surface)',
         padding: '20px',
         borderRadius: '12px',
-        border: '1px solid #4b5563',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         justifyContent: 'space-between',
@@ -1063,9 +1104,9 @@ const TeachersLeave = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '12px 16px',
-              backgroundColor: 'var(--input-bg)',
+              backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)',
-              border: '1px solid #4b5563',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -1087,7 +1128,7 @@ const TeachersLeave = () => {
               left: 0,
               right: 0,
               backgroundColor: 'var(--bg-surface)',
-              border: '1px solid #4b5563',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               boxShadow: '0 4px 6px rgba(0, 71, 151, 0.1)',
               zIndex: 1000,
@@ -1146,7 +1187,7 @@ const TeachersLeave = () => {
 
       {/* Search and Actions */}
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <div style={{ flex: 1, position: 'relative', maxWidth: '800px' }}>
+        <div style={{ flex: 1, position: 'relative', maxWidth: '1000px' }}>
           <button style={{
             position: 'absolute',
             left: '12px',
@@ -1167,16 +1208,16 @@ const TeachersLeave = () => {
             style={{
               width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #4b5563',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
               fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-                  backgroundColor: 'var(--input-bg)',
-                  color: 'white',
-              backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)'
+                  backgroundColor: 'var(--bg-surface2)',
+                  color: 'var(--text-primary)',
+              backgroundColor: 'var(--bg-surface2)',
+              color: 'var(--text-primary)',
             }}
           />
         </div>
@@ -1187,10 +1228,9 @@ const TeachersLeave = () => {
             alignItems: 'center',
             gap: '8px',
             padding: '12px 16px',
-            backgroundColor: 'var(--input-bg)',
-              color: 'var(--text-primary)',
-            color: 'white',
-            border: '1px solid #4b5563',
+            backgroundColor: 'var(--bg-surface2)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: '500',
@@ -1227,7 +1267,7 @@ const TeachersLeave = () => {
       <div style={{
         backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #4b5563',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         overflow: 'hidden'
       }}>
@@ -1237,7 +1277,7 @@ const TeachersLeave = () => {
           gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 0.8fr 1fr 120px',
           padding: '16px 20px',
           backgroundColor: 'var(--bg-surface2)',
-          borderBottom: '1px solid #4b5563',
+          borderBottom: '1px solid var(--border-color)',
           fontSize: '12px',
           fontWeight: '600',
           color: 'var(--text-secondary)',
@@ -1261,34 +1301,34 @@ const TeachersLeave = () => {
             display: 'grid',
             gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 0.8fr 1fr 120px',
             padding: '16px 20px',
-            borderBottom: '1px solid #4b5563',
+            borderBottom: '1px solid var(--border-color)',
             alignItems: 'center',
             transition: 'background-color 0.2s',
             fontFamily: "'Public Sans', sans-serif"
           }}>
             <div style={{ 
               fontSize: '14px', 
-              color: 'var(--text-primary)', 
+              color: 'var(--text-primary)',
               fontWeight: '500'
             }}>
               {credit.facultyName}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.position || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.serviceCreditEarned || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.leaveTakenUndertime || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.balance || '0'}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.asOf || new Date().toLocaleDateString()}
             </div>
-            <div style={{ fontSize: '14px', color: 'white' }}>
+            <div style={{ fontSize: '14px', color: 'var(--text-primary)', }}>
               {credit.reason || 'N/A'}
             </div>
             <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-start' }}>
@@ -1298,14 +1338,14 @@ const TeachersLeave = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   transition: 'all 0.2s',
-                  color: 'white'
+                  color: 'var(--text-primary)',
                 }}
               >
                 Edit
@@ -1320,14 +1360,14 @@ const TeachersLeave = () => {
                 style={{
                   padding: '6px',
                   backgroundColor: 'transparent',
-                  border: '1px solid #4b5563',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '4px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   transition: 'all 0.2s',
-                  color: 'white'
+                  color: 'var(--text-primary)',
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.backgroundColor = '#fee2e2';
@@ -1335,7 +1375,7 @@ const TeachersLeave = () => {
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.backgroundColor = 'transparent';
-                  e.target.style.borderColor = '#4b5563';
+                  e.target.style.borderColor = 'var(--border-color)';
                 }}
               >
                 Delete

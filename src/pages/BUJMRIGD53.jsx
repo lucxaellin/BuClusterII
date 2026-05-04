@@ -579,10 +579,18 @@ const BUJMRIGD53 = () => {
   const [selectedBudget, setSelectedBudget] = useState('');
   const [selectedAccounting, setSelectedAccounting] = useState('');
   
-  // Date picker state
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [pickerMonth, setPickerMonth] = useState(new Date().getMonth());
-  const [pickerYear, setPickerYear] = useState(new Date().getFullYear());
+  // Date conversion helper functions
+  const convertToISODate = (mmddyyyy) => {
+    if (!mmddyyyy) return '';
+    const [month, day, year] = mmddyyyy.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  };
+
+  const convertToMMDDYYYY = (isoDate) => {
+    if (!isoDate) return '';
+    const [year, month, day] = isoDate.split('-');
+    return `${month}/${day}/${year}`;
+  };
 
   // State for expanded rows
   const [expandedRows, setExpandedRows] = useState(new Set());
@@ -640,165 +648,6 @@ const BUJMRIGD53 = () => {
     if (value.length <= 10) {
       setSelectedDate(value);
     }
-  };
-
-  // Date picker functions
-  const getDaysInMonth = (month, year) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-
-  const getFirstDayOfMonth = (month, year) => {
-    return new Date(year, month, 1).getDay();
-  };
-
-  const handleDateSelect = (day) => {
-    const month = String(pickerMonth + 1).padStart(2, '0');
-    const dayStr = String(day).padStart(2, '0');
-    const formattedDate = `${month}/${dayStr}/${pickerYear}`;
-    setSelectedDate(formattedDate);
-    setShowDatePicker(false);
-  };
-
-  const handleMonthChange = (direction) => {
-    if (direction === 'prev') {
-      if (pickerMonth === 0) {
-        setPickerMonth(11);
-        setPickerYear(pickerYear - 1);
-      } else {
-        setPickerMonth(pickerMonth - 1);
-      }
-    } else {
-      if (pickerMonth === 11) {
-        setPickerMonth(0);
-        setPickerYear(pickerYear + 1);
-      } else {
-        setPickerMonth(pickerMonth + 1);
-      }
-    }
-  };
-
-  const renderCalendar = () => {
-    const daysInMonth = getDaysInMonth(pickerMonth, pickerYear);
-    const firstDay = getFirstDayOfMonth(pickerMonth, pickerYear);
-    const days = [];
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                      'July', 'August', 'September', 'October', 'November', 'December'];
-    
-    // Add empty cells for days before month starts
-    for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} style={{ width: '30px', height: '30px' }}></div>);
-    }
-    
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const isSelected = selectedDate === `${String(pickerMonth + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}/${pickerYear}`;
-      days.push(
-        <div
-          key={day}
-          onClick={() => handleDateSelect(day)}
-          style={{
-            width: '30px',
-            height: '30px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            borderRadius: '4px',
-            backgroundColor: isSelected ? '#0074AD' : 'transparent',
-            color: isSelected ? 'white' : '#374151',
-            fontSize: '14px',
-            border: isSelected ? 'none' : '1px solid #e5e7eb',
-            '&:hover': {
-              backgroundColor: isSelected ? '#0056b3' : '#f3f4f6'
-            }
-          }}
-        >
-          {day}
-        </div>
-      );
-    }
-    
-    return (
-      <div style={{
-        position: 'absolute',
-        top: '100%',
-        left: 0,
-        right: 0,
-        backgroundColor: 'var(--bg-surface)',
-        border: '1px solid #9ca3af',
-        borderRadius: '8px',
-        padding: '16px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        zIndex: 1000,
-        marginTop: '4px'
-      }}>
-        {/* Header */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '12px'
-        }}>
-          <button
-            onClick={() => handleMonthChange('prev')}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '4px'
-            }}
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <div style={{
-            fontSize: '14px',
-            fontWeight: '600',
-            color: 'var(--text-secondary)'
-          }}>
-            {monthNames[pickerMonth]} {pickerYear}
-          </div>
-          <button
-            onClick={() => handleMonthChange('next')}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '4px'
-            }}
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
-        
-        {/* Days of week */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: '2px',
-          marginBottom: '8px'
-        }}>
-          {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-            <div key={day} style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: 'var(--text-secondary)',
-              textAlign: 'center'
-            }}>
-              {day}
-            </div>
-          ))}
-        </div>
-        
-        {/* Calendar days */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(7, 1fr)',
-          gap: '2px'
-        }}>
-          {days}
-        </div>
-      </div>
-    );
   };
 
   const truncateText = (text, maxLength = 50) => {
@@ -890,7 +739,7 @@ const BUJMRIGD53 = () => {
 
   return (
     <div style={{ 
-      fontFamily: "'Inter', sans-serif", 
+       
       backgroundColor: 'var(--bg-page)',
       height: 'calc(100vh - 48px)', // Account for padding
       padding: '24px',
@@ -906,116 +755,89 @@ const BUJMRIGD53 = () => {
           fontWeight: '600', 
           color: 'var(--text-primary)', 
           margin: 0,
-          fontFamily: "'Public Sans', sans-serif"
         }}>
-          BU JESSIE ROBREDO BU-LB-CLUSTER II-53
+          BU JMRIGD BU-LB-CLUSTER II-53
         </h1>
         <p style={{
           fontSize: '16px',
           color: 'var(--text-secondary)',
           margin: '8px 2px 0',
-          fontFamily: "'Inter', sans-serif",
-          fontWeight: '400'
+                    fontWeight: '400'
         }}>
           Bicol University Cluster II Administrative Office
         </p>
       </div>
 
-      {/* Search and Filter Section - Fixed */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginBottom: '24px',
-        gap: '16px',
-        flexShrink: 0
-      }}>
-        {/* Search Bar */}
-        <div style={{ 
-          position: 'relative', 
-          flex: 1,
-          maxWidth: '400px'
-        }}>
-          <button
-            onClick={() => console.log('Search clicked')}
-            style={{
-              position: 'absolute',
-              left: '12px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0
-            }}
-          >
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '20px' }}>
+        <div style={{ flex: 1, position: 'relative', maxWidth: '1000px' }}>
+          <button style={{
+            position: 'absolute',
+            left: '12px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0
+          }}>
             <Search size={20} color="var(--text-muted)" />
           </button>
           <input
-type="text"
-            placeholder="Search File"
+            type="text"
+            placeholder="Search faculty records..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
-              width: '185%',
-              display: 'flex',
+              width: '100%',
               padding: '12px 16px 12px 44px',
-              border: '1px solid #9ca3af',
+              border: '1px solid var(--border-color)',
               borderRadius: '8px',
               fontSize: '14px',
-              fontFamily: "'Inter', sans-serif",
               outline: 'none',
               boxSizing: 'border-box',
-              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+              backgroundColor: 'var(--bg-surface2)',
               color: 'var(--text-primary)'
             }}
           />
         </div>
-
-        {/* Filter and Add Buttons */}
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            onClick={() => setShowFilterModal(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 16px',
-              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-              color: 'var(--text-primary)',
-              color: 'var(--text-secondary)',
-              border: '1px solid #9ca3af',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
-              transition: 'all 0.2s'
-            }}>
+        <button 
+          onClick={() => setShowFilterModal(true)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: 'var(--bg-surface2)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            transition: 'all 0.2s'
+          }}>
             <Filter size={20} />
             Filter
           </button>
-          <button 
-            onClick={() => setShowUploadModal(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 16px',
-              backgroundColor: '#3b74f0',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              fontFamily: "'Inter', sans-serif",
-              transition: 'background-color 0.2s'
-            }}>
+        <button 
+          onClick={() => setShowUploadModal(true)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 16px',
+            backgroundColor: '#3b74f0',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
+          }}>
             <Plus size={20} />
-            Add New Record
+            Add Faculty
           </button>
-        </div>
       </div>
 
       {/* Files Table - Scrollable Rows Only */}
@@ -1024,7 +846,7 @@ type="text"
         overflow: 'hidden',
         backgroundColor: 'var(--bg-surface)',
         borderRadius: '12px',
-        border: '1px solid #9ca3af',
+        border: '1px solid var(--border-color)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -1042,8 +864,7 @@ type="text"
           color: 'var(--text-secondary)',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
-          fontFamily: "'Inter', sans-serif",
-          flexShrink: 0
+                    flexShrink: 0
         }}>
           <div style={{ textAlign: 'left' }}>DATE</div>
           <div style={{ textAlign: 'left' }}>PN</div>
@@ -1076,12 +897,12 @@ type="text"
             }}>
 
               {/* Date */}
-              <div style={{ fontSize: '14px', color: file.date ? 'white' : '#d1d5db', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: file.date ? 'var(--text-primary)' : 'var(--text-tertiary)', textAlign: 'left' }}>
                 {displayDate(file.date)}
               </div>
 
               {/* Page Number */}
-              <div style={{ fontSize: '14px', color: file.pageNumber ? 'white' : '#d1d5db', textAlign: 'left' }}>
+              <div style={{ fontSize: '14px', color: file.pageNumber ? 'var(--text-primary)' : 'var(--text-tertiary)', textAlign: 'left' }}>
                 {file.pageNumber}
               </div>
 
@@ -1154,7 +975,7 @@ type="text"
               {/* Admin */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.admin ? 'white' : '#d1d5db',
+                color: file.admin ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 fontWeight: file.admin ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1164,7 +985,7 @@ type="text"
               {/* Dean */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.dean ? 'white' : '#d1d5db',
+                color: file.dean ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 fontWeight: file.dean ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1174,7 +995,7 @@ type="text"
               {/* BAC */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.bac ? 'white' : '#d1d5db',
+                color: file.bac ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 fontWeight: file.bac ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1184,7 +1005,7 @@ type="text"
               {/* Budget */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.budget ? 'white' : '#d1d5db',
+                color: file.budget ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 fontWeight: file.budget ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1194,7 +1015,7 @@ type="text"
               {/* Accounting */}
               <div style={{ 
                 fontSize: '14px', 
-                color: file.accounting ? 'white' : '#d1d5db',
+                color: file.accounting ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 fontWeight: file.accounting ? '500' : '400',
                 textAlign: 'left'
               }}>
@@ -1210,14 +1031,14 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'all 0.2s',
-                    color: 'white'
+                    color: 'var(--text-primary)'
                   }}
                 >
                   Edit
@@ -1229,14 +1050,14 @@ type="text"
                   style={{
                     padding: '6px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '4px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'all 0.2s',
-                    color: 'white'
+                    color: 'var(--text-primary)'
                   }}
                 >
                   Delete
@@ -1256,9 +1077,8 @@ type="text"
         padding: '12px 16px',
         backgroundColor: 'var(--bg-surface)',
         borderRadius: '8px',
-        border: '1px solid #9ca3af',
-        fontFamily: "'Inter', sans-serif",
-        flexShrink: 0
+        border: '1px solid var(--border-color)',
+                flexShrink: 0
       }}>
         <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
           Showing {indexOfFirstRow + 1} to {Math.min(indexOfLastRow, files.length)} of {files.length} entries
@@ -1292,7 +1112,7 @@ type="text"
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
                   color: 'var(--text-secondary)',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1313,7 +1133,7 @@ type="text"
                 padding: '8px 12px',
                 backgroundColor: currentPage === startPage + index ? '#3b74f0' : 'transparent',
                 color: currentPage === startPage + index ? 'white' : 'var(--text-muted)',
-                border: currentPage === startPage + index ? 'none' : '1px solid #e5e7eb',
+                border: currentPage === startPage + index ? 'none' : '1px solid var(--border-color)',
                 borderRadius: '6px',
                 fontSize: '14px',
                 fontWeight: '500',
@@ -1333,7 +1153,7 @@ type="text"
                   padding: '8px 12px',
                   backgroundColor: 'transparent',
                   color: 'var(--text-secondary)',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -1397,11 +1217,10 @@ type="text"
               borderBottom: '1px solid var(--border-color)'
             }}>
               <h2 style={{
+                margin: 0,
                 fontSize: '20px',
                 fontWeight: '600',
                 color: 'var(--text-primary)',
-                margin: 0,
-                fontFamily: "'Public Sans', sans-serif"
               }}>
                 Document Details
               </h2>
@@ -1432,54 +1251,29 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Date (MM/DD/YYYY)
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type="text"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    placeholder="MM/DD/YYYY"
-                    maxLength={10}
-                    onFocus={() => setShowDatePicker(false)}
-                    style={{
-                      width: '100%',
-                      padding: '12px 40px 12px 12px',
-                      border: '1px solid #9ca3af',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      fontFamily: "'Inter', sans-serif",
-                      outline: 'none',
-                      boxSizing: 'border-box',
-                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                      color: '#6b7280'
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowDatePicker(!showDatePicker)}
-                    style={{
-                      position: 'absolute',
-                      right: '8px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Calendar size={18} color="var(--text-muted)" />
-                  </button>
-                  
-                  {/* Date Picker Popup */}
-                  {showDatePicker && renderCalendar()}
-                </div>
+                <input
+                  type="date"
+                  value={selectedDate ? convertToISODate(selectedDate) : ''}
+                  onChange={(e) => {
+                    const isoDate = e.target.value;
+                    const formattedDate = isoDate ? convertToMMDDYYYY(isoDate) : '';
+                    setSelectedDate(formattedDate);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                                        outline: 'none',
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)',
+                    color: 'var(--text-primary)'
+                  }}
+                />
                 <div style={{
                   fontSize: '12px',
                   color: 'var(--text-secondary)',
@@ -1497,7 +1291,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Page Number
                 </label>
@@ -1509,14 +1302,13 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -1529,7 +1321,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Title
                 </label>
@@ -1541,14 +1332,13 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -1561,7 +1351,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Particulars
                 </label>
@@ -1578,16 +1367,15 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
                     resize: 'vertical',
                     minHeight: '80px',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
                 <div style={{
@@ -1608,7 +1396,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Admin
                 </label>
@@ -1619,7 +1406,7 @@ type="text"
                       onClick={() => setSelectedAdmin(selectedAdmin === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid white',
+                        border: selectedAdmin === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedAdmin === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -1627,20 +1414,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAdmin !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAdmin !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1658,7 +1444,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Dean
                 </label>
@@ -1670,14 +1455,13 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -1690,7 +1474,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   BAC
                 </label>
@@ -1701,7 +1484,7 @@ type="text"
                       onClick={() => setSelectedBac(selectedBac === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedBac === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedBac === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedBac === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -1709,20 +1492,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBac !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBac !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1740,7 +1522,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Budget
                 </label>
@@ -1751,7 +1532,7 @@ type="text"
                       onClick={() => setSelectedBudget(selectedBudget === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedBudget === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedBudget === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedBudget === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -1759,20 +1540,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBudget !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBudget !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1790,7 +1570,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Accounting
                 </label>
@@ -1801,7 +1580,7 @@ type="text"
                       onClick={() => setSelectedAccounting(selectedAccounting === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAccounting === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedAccounting === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedAccounting === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -1809,20 +1588,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAccounting !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAccounting !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -1839,21 +1617,20 @@ type="text"
               justifyContent: 'flex-end',
               gap: '12px',
               padding: '24px',
-              borderTop: '1px solid #e5e7eb'
+              borderTop: '1px solid var(--border-color)'
             }}>
               <button
                 onClick={handleCloseModal}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   backgroundColor: 'var(--bg-surface)',
                   color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  transition: 'all 0.2s'
+                                    transition: 'all 0.2s'
                 }}
               >
                 Cancel
@@ -1869,8 +1646,7 @@ type="text"
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  transition: 'all 0.2s'
+                                    transition: 'all 0.2s'
                 }}
               >
                 Save changes
@@ -1919,8 +1695,7 @@ type="text"
                     fontSize: '22px',
                     fontWeight: '700',
                     color: 'var(--text-primary)',
-                    fontFamily: "'Inter', sans-serif",
-                    letterSpacing: '-0.025em'
+                                        letterSpacing: '-0.025em'
                   }}>
                     Filter Documents
                   </h2>
@@ -1928,8 +1703,7 @@ type="text"
                     margin: '4px 0 0 0',
                     fontSize: '14px',
                     color: 'var(--text-secondary)',
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: '400'
+                                        fontWeight: '400'
                   }}>
                     Filter by date and officers
                   </p>
@@ -1939,7 +1713,7 @@ type="text"
                 onClick={() => setShowFilterModal(false)}
                 style={{
                   background: 'var(--bg-surface)',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   cursor: 'pointer',
                   padding: '8px',
                   borderRadius: '8px',
@@ -1951,11 +1725,11 @@ type="text"
                 }}
                 onMouseOver={(e) => {
                   e.target.style.backgroundColor = 'var(--bg-hover)';
-                  e.target.style.borderColor = 'white';
+                  e.target.style.borderColor = 'var(--border-color)';
                 }}
                 onMouseOut={(e) => {
                   e.target.style.backgroundColor = 'var(--bg-surface)';
-                  e.target.style.borderColor = 'white';
+                  e.target.style.borderColor = 'var(--border-color)';
                 }}
               >
                 <X size={18} color="#64748b" />
@@ -1985,8 +1759,7 @@ type="text"
                     fontSize: '15px',
                     fontWeight: '600',
                     color: 'var(--text-primary)',
-                    fontFamily: "'Inter', sans-serif",
-                    letterSpacing: '0.025em'
+                                        letterSpacing: '0.025em'
                   }}>
                     Date Range
                   </label>
@@ -1998,12 +1771,11 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #9ca3af',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
-                      fontFamily: "'Inter', sans-serif",
-                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-              color: 'var(--text-primary)'
+                                            backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                      color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Month</option>
@@ -2026,12 +1798,11 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #9ca3af',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
-                      fontFamily: "'Inter', sans-serif",
-                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-              color: 'var(--text-primary)'
+                                            backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                      color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Day</option>
@@ -2047,12 +1818,11 @@ type="text"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
-                      border: '1px solid #9ca3af',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '6px',
                       fontSize: '14px',
-                      fontFamily: "'Inter', sans-serif",
-                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-              color: 'var(--text-primary)'
+                                            backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                      color: 'var(--text-primary)'
                     }}
                   >
                     <option value="">Year</option>
@@ -2083,8 +1853,7 @@ type="text"
                     fontSize: '15px',
                     fontWeight: '600',
                     color: 'var(--text-primary)',
-                    fontFamily: "'Inter', sans-serif",
-                    letterSpacing: '0.025em'
+                                        letterSpacing: '0.025em'
                   }}>
                     Section Officers
                   </label>
@@ -2103,8 +1872,7 @@ type="text"
                       fontWeight: '600',
                       color: 'var(--text-secondary)',
                       marginBottom: '8px',
-                      fontFamily: "'Inter', sans-serif",
-                      textTransform: 'uppercase',
+                                            textTransform: 'uppercase',
                       letterSpacing: '0.5px'
                     }}>
                       Admin
@@ -2117,8 +1885,7 @@ type="text"
                           gap: '8px',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontFamily: "'Inter', sans-serif",
-                          color: 'var(--text-secondary)'
+                                                    color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2134,7 +1901,7 @@ type="text"
                               width: '16px',
                               height: '16px',
                               cursor: 'pointer',
-                              backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
+                              backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
                               accentColor: '#3b74f0'
                             }}
                           />
@@ -2151,8 +1918,7 @@ type="text"
                       fontWeight: '600',
                       color: 'var(--text-secondary)',
                       marginBottom: '8px',
-                      fontFamily: "'Inter', sans-serif",
-                      textTransform: 'uppercase',
+                                            textTransform: 'uppercase',
                       letterSpacing: '0.5px'
                     }}>
                       Bac
@@ -2165,8 +1931,7 @@ type="text"
                           gap: '8px',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontFamily: "'Inter', sans-serif",
-                          color: 'var(--text-secondary)'
+                                                    color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2197,8 +1962,7 @@ type="text"
                       fontWeight: '600',
                       color: 'var(--text-secondary)',
                       marginBottom: '8px',
-                      fontFamily: "'Inter', sans-serif",
-                      textTransform: 'uppercase',
+                                            textTransform: 'uppercase',
                       letterSpacing: '0.5px'
                     }}>
                       Budget
@@ -2211,8 +1975,7 @@ type="text"
                           gap: '8px',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontFamily: "'Inter', sans-serif",
-                          color: 'var(--text-secondary)'
+                                                    color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2243,8 +2006,7 @@ type="text"
                       fontWeight: '600',
                       color: 'var(--text-secondary)',
                       marginBottom: '8px',
-                      fontFamily: "'Inter', sans-serif",
-                      textTransform: 'uppercase',
+                                            textTransform: 'uppercase',
                       letterSpacing: '0.5px'
                     }}>
                       Accounting
@@ -2257,8 +2019,7 @@ type="text"
                           gap: '8px',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontFamily: "'Inter', sans-serif",
-                          color: 'var(--text-secondary)'
+                                                    color: 'var(--text-secondary)'
                         }}>
                           <input
                             type="checkbox"
@@ -2290,8 +2051,7 @@ type="text"
                     fontWeight: '600',
                     color: 'var(--text-secondary)',
                     marginBottom: '8px',
-                    fontFamily: "'Inter', sans-serif",
-                    textTransform: 'uppercase',
+                                        textTransform: 'uppercase',
                     letterSpacing: '0.5px'
                   }}>
                     Dean
@@ -2320,14 +2080,13 @@ type="text"
                       style={{
                         width: '300px',
                         padding: '8px 12px',
-                        border: '1px solid #9ca3af',
+                        border: '1px solid var(--border-color)',
                         borderRadius: '6px',
                         fontSize: '14px',
-                        fontFamily: "'Inter', sans-serif",
-                        outline: 'none',
+                                                outline: 'none',
                         boxSizing: 'border-box',
-                        backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                        color: '#6b7280'
+                        backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                        color: 'var(--text-primary)'
                       }}
                     />
                                       </div>
@@ -2348,8 +2107,7 @@ type="text"
               <div style={{
                 fontSize: '13px',
                 color: 'var(--text-secondary)',
-                fontFamily: "'Inter', sans-serif",
-                fontStyle: 'italic'
+                                fontStyle: 'italic'
               }}>
                 Select multiple options to refine your search
               </div>
@@ -2368,25 +2126,24 @@ type="text"
                   }}
                   style={{
                     padding: '12px 24px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '10px',
                     backgroundColor: 'var(--bg-surface)',
                     color: 'white',
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer',
-                    fontFamily: "'Inter', sans-serif",
-                    transition: 'all 0.2s ease',
+                                        transition: 'all 0.2s ease',
                     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
                   }}
                   onMouseOver={(e) => {
                     e.target.style.backgroundColor = 'var(--bg-hover)';
-                    e.target.style.borderColor = 'white';
+                    e.target.style.borderColor = 'var(--border-color)';
                     e.target.style.transform = 'translateY(-1px)';
                   }}
                   onMouseOut={(e) => {
                     e.target.style.backgroundColor = 'var(--bg-surface)';
-                    e.target.style.borderColor = 'white';
+                    e.target.style.borderColor = 'var(--border-color)';
                     e.target.style.transform = 'translateY(0px)';
                   }}
                 >
@@ -2403,8 +2160,7 @@ type="text"
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer',
-                    fontFamily: "'Inter', sans-serif",
-                    transition: 'all 0.2s ease',
+                                        transition: 'all 0.2s ease',
                     boxShadow: '0 4px 6px -1px rgba(59, 130, 246, 0.3)'
                   }}
                   onMouseOver={(e) => {
@@ -2462,7 +2218,6 @@ type="text"
                 fontSize: '20px',
                 fontWeight: '600',
                 color: 'var(--text-primary)',
-                fontFamily: "'Inter', sans-serif"
               }}>
                 Add New Record
               </h2>
@@ -2497,54 +2252,29 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Date (MM/DD/YYYY) *
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type="text"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    placeholder="MM/DD/YYYY"
-                    maxLength={10}
-                    onFocus={() => setShowDatePicker(false)}
-                    style={{
-                      width: '100%',
-                      padding: '12px 40px 12px 12px',
-                      border: '1px solid #9ca3af',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      fontFamily: "Inter, sans-serif",
-                      outline: 'none',
-                      boxSizing: 'border-box',
-                      backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                      color: '#6b7280'
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowDatePicker(!showDatePicker)}
-                    style={{
-                      position: 'absolute',
-                      right: '8px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Calendar size={18} color="var(--text-muted)" />
-                  </button>
-                  
-                  {/* Date Picker Popup */}
-                  {showDatePicker && renderCalendar()}
-                </div>
+                <input
+                  type="date"
+                  value={selectedDate ? convertToISODate(selectedDate) : ''}
+                  onChange={(e) => {
+                    const isoDate = e.target.value;
+                    const formattedDate = isoDate ? convertToMMDDYYYY(isoDate) : '';
+                    setSelectedDate(formattedDate);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '1px solid var(--border-color)',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    backgroundColor: 'var(--bg-surface2)',
+                    color: 'var(--text-primary)'
+                  }}
+                />
                 <div style={{
                   fontSize: '12px',
                   color: 'var(--text-secondary)',
@@ -2562,31 +2292,29 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Page Number *
                 </label>
-                <input
-                  type="text"
-                  value={selectedPageNumber}
-                  onChange={(e) => {
-                    // Only allow numbers and hyphens
-                    const value = e.target.value.replace(/[^0-9-]/g, '');
-                    setSelectedPageNumber(value);
-                  }}
-                  placeholder="e.g., 1-5, 3, 7-12"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    border: '1px solid #9ca3af',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
-                  }}
+                  <input
+                    type="text"
+                    value={selectedPageNumber}
+                    onChange={(e) => {
+                      // Only allow numbers and hyphens
+                      const value = e.target.value.replace(/[^0-9-]/g, '');
+                      setSelectedPageNumber(value);
+                    }}
+                    placeholder="e.g., 1-5, 3, 7-12"
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                                            outline: 'none',
+                      boxSizing: 'border-box',
+                      backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                      color: 'var(--text-primary)'
+                    }}
                 />
               </div>
 
@@ -2598,7 +2326,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Title
                 </label>
@@ -2610,14 +2337,13 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -2630,7 +2356,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Particulars
                 </label>
@@ -2647,16 +2372,16 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
                     resize: 'vertical',
                     minHeight: '80px',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'                  }}
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
+                  }}
                 />
                 <div style={{
                   fontSize: '12px',
@@ -2676,7 +2401,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Admin
                 </label>
@@ -2687,7 +2411,7 @@ type="text"
                       onClick={() => setSelectedAdmin(selectedAdmin === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAdmin === recipient ? '2px solid #0074AD' : '1px solid white',
+                        border: selectedAdmin === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedAdmin === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -2695,20 +2419,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAdmin !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAdmin !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -2726,7 +2449,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Dean
                 </label>
@@ -2738,14 +2460,13 @@ type="text"
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #9ca3af',
+                    border: '1px solid var(--border-color)',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    fontFamily: "'Inter', sans-serif",
-                    outline: 'none',
+                                        outline: 'none',
                     boxSizing: 'border-box',
-                    backgroundColor: 'var(--bg-surface2)', border: '1px solid #9ca3af',
-                    color: '#6b7280'
+                    backgroundColor: 'var(--bg-surface2)', border: '1px solid var(--border-color)',
+                    color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -2758,7 +2479,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   BAC
                 </label>
@@ -2769,7 +2489,7 @@ type="text"
                       onClick={() => setSelectedBac(selectedBac === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedBac === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedBac === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedBac === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -2777,20 +2497,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBac !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBac !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -2808,7 +2527,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Budget
                 </label>
@@ -2819,7 +2537,7 @@ type="text"
                       onClick={() => setSelectedBudget(selectedBudget === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedBudget === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedBudget === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedBudget === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -2827,20 +2545,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedBudget !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedBudget !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -2858,7 +2575,6 @@ type="text"
                   fontWeight: '500',
                   color: 'var(--text-secondary)',
                   marginBottom: '8px',
-                  fontFamily: "'Public Sans', sans-serif"
                 }}>
                   Accounting
                 </label>
@@ -2869,7 +2585,7 @@ type="text"
                       onClick={() => setSelectedAccounting(selectedAccounting === recipient ? '' : recipient)}
                       style={{
                         padding: '12px 16px',
-                        border: selectedAccounting === recipient ? '2px solid #0074AD' : '1px solid #e5e7eb',
+                        border: selectedAccounting === recipient ? '2px solid var(--accent-color)' : '1px solid var(--border-color)',
                         borderRadius: '8px',
                         backgroundColor: selectedAccounting === recipient ? 'var(--bg-hover)' : 'var(--bg-surface)',
                         color: 'var(--text-secondary)',
@@ -2877,20 +2593,19 @@ type="text"
                         fontWeight: '500',
                         cursor: 'pointer',
                         textAlign: 'left',
-                        fontFamily: "'Inter', sans-serif",
-                        transition: 'all 0.2s',
+                                                transition: 'all 0.2s',
                         whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         if (selectedAccounting !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-hover)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (selectedAccounting !== recipient) {
                           e.target.style.backgroundColor = 'var(--bg-surface)';
-                          e.target.style.borderColor = 'white';
+                          e.target.style.borderColor = 'var(--border-color)';
                         }
                       }}
                     >
@@ -2907,7 +2622,7 @@ type="text"
               justifyContent: 'flex-end',
               gap: '12px',
               padding: '24px',
-              borderTop: '1px solid #e5e7eb'
+              borderTop: '1px solid var(--border-color)'
             }}>
               <button
                 onClick={() => {
@@ -2925,15 +2640,14 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   backgroundColor: 'var(--bg-surface)',
                   color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  transition: 'all 0.2s'
+                                    transition: 'all 0.2s'
                 }}
               >
                 Cancel
@@ -2988,7 +2702,7 @@ type="text"
                                    selectedTitle && selectedTitle.trim() !== '' && 
                                    fileName && fileName.trim() !== '' && 
                                    selectedPageNumber && selectedPageNumber.trim() !== '') 
-                                   ? '#0074AD' : '#9ca3af',
+                                   ? '#0074AD' : 'var(--border-color)',
                   color: 'white',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -2998,7 +2712,6 @@ type="text"
                           selectedPageNumber && selectedPageNumber.trim() !== '') 
                           ? 'pointer' : 'not-allowed',
                   transition: 'all 0.2s',
-                  fontFamily: "'Inter', sans-serif"
                 }}
               >
                 Add Record
@@ -3042,7 +2755,6 @@ type="text"
                 fontSize: '20px',
                 fontWeight: '600',
                 color: 'var(--text-primary)',
-                fontFamily: "'Inter', sans-serif"
               }}>
                 Confirm Delete
               </h2>
@@ -3081,7 +2793,6 @@ type="text"
                     fontSize: '16px',
                     fontWeight: '500',
                     color: 'var(--text-primary)',
-                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Are you sure you want to delete this record?
                   </p>
@@ -3089,7 +2800,6 @@ type="text"
                     margin: '4px 0 0 0',
                     fontSize: '14px',
                     color: 'var(--text-secondary)',
-                    fontFamily: "'Inter', sans-serif"
                   }}>
                     {fileToDelete?.name}
                   </p>
@@ -3099,7 +2809,6 @@ type="text"
                 margin: 0,
                 fontSize: '14px',
                 color: 'var(--text-secondary)',
-                fontFamily: "'Inter', sans-serif"
               }}>
                 This action cannot be undone. The file will be permanently removed from the system.
               </p>
@@ -3111,7 +2820,7 @@ type="text"
               justifyContent: 'flex-end',
               gap: '12px',
               padding: '24px',
-              borderTop: '1px solid #e5e7eb'
+              borderTop: '1px solid var(--border-color)'
             }}>
               <button
                 onClick={() => {
@@ -3120,15 +2829,14 @@ type="text"
                 }}
                 style={{
                   padding: '12px 24px',
-                  border: '1px solid #9ca3af',
+                  border: '1px solid var(--border-color)',
                   borderRadius: '8px',
                   backgroundColor: 'var(--bg-surface)',
                   color: 'var(--text-secondary)',
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  transition: 'all 0.2s'
+                                    transition: 'all 0.2s'
                 }}
               >
                 Cancel
@@ -3144,8 +2852,7 @@ type="text"
                   fontSize: '14px',
                   fontWeight: '500',
                   cursor: 'pointer',
-                  fontFamily: "'Inter', sans-serif",
-                  transition: 'all 0.2s'
+                                    transition: 'all 0.2s'
                 }}
               >
                 Delete
